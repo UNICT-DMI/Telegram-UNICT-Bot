@@ -1,0 +1,15 @@
+token: ""
+dev_group_chatid: 
+
+notices_urls: {
+    "DIPARTIMENTO": {
+        "channel": "@channel",
+        "base_url": "http://www.dip.unict.it",
+        "CdL L-31": "http://www.dip.unict.it/corsi/L-31/avvisi/",
+    },
+    "DIPARTIMENTO2": {
+        "channel": "@channel2",
+        "base_url": "http://www.dip.unict.it",
+        "CdL LM-40": "http://www.dip.unict.it/corsi/LM-40/avvisi/",
+    }
+}

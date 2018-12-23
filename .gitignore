@@ -1,0 +1,6 @@
+# Custom
+logs/errors.txt
+logs/logs.txt
+config/settings.yaml
+module/*.pyc
+.vscode
