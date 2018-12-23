@@ -1,6 +1,6 @@
-# Custom
-logs/errors.txt
-logs/logs.txt
-config/settings.yaml
+logs/*
+data/avvisi/*
 module/*.pyc
+config/settings.yaml
 .vscode
+.sonarlint
