@@ -80,7 +80,12 @@ def scrape_notices(bot, job):
 
     for i in notices_urls_cp:
         ch = notices_urls_cp[i]["channel"].replace("@", "")
-        folder = ''.join([k for k in i if not k.isdigit() and not k == "_"])
+
+        # handle multi-channel but same department
+        if i.find("_") > -1:
+            folder = i[0:i.find("_")]
+        else:
+            folder = i
 
         pending_path = "data/avvisi/"+str(folder)+"/"+str(ch)+"_avvisi.dat"
         archive_path = "data/avvisi/"+str(folder)+"/"+str(ch)+"_avvisi_in_sospeso.dat"
