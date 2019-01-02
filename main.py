@@ -28,11 +28,13 @@ def main():
 	dp = updater.dispatcher
 	dp.add_handler(MessageHandler(Filters.all, logging_message),1)
 
+	# start command
 	dp.add_handler(CommandHandler('start', start))
 
+	# callback handlers
 	dp.add_handler(CallbackQueryHandler(callback_handle))
 
-  # devs commands
+  	# devs commands
 	dp.add_handler(CommandHandler('chatid',give_chat_id))
 	dp.add_handler(CommandHandler('send_log', send_log))
 	dp.add_handler(CommandHandler('errors', send_errors))

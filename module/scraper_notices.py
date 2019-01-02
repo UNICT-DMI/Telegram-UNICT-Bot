@@ -77,6 +77,7 @@ def spam_news(bot, notice_p, channel):
                 open("logs/errors.txt", "a+").write("{} {}\n".format(error, channel))
         os.remove(notice_p)
 
+# broadcasts a news passed as a direct message in parameters
 def spam_news_direct(bot, notice_message, channel):
     if notice_message != "":
         try:
@@ -90,6 +91,7 @@ def send_news_approve_message(bot, notice_p, channel_folder, pending_approval_fo
 
         if notice_message != "":
             try:
+                # notice disk id is used to identify an approval pending message. OS clock's used for this
                 notice_disk_id = time.clock()
                 approving_notice_filename = "{}/{}/{}_{}.dat".format(channel_folder, pending_approval_folder, channel, notice_disk_id)
 
@@ -100,9 +102,11 @@ def send_news_approve_message(bot, notice_p, channel_folder, pending_approval_fo
                         if exc.errno != errno.EEXIST:
                             raise
 
+                # write notice data into a file
                 with open(approving_notice_filename, 'w') as fw:
                     fw.writelines(notice_message[0:])
 
+                # reply buttons layout
                 keyboard_markup = [
                     [InlineKeyboardButton("Accetta", callback_data="news:approved:{}:{}:{}".format(channel, channel_folder, notice_disk_id)),
                     InlineKeyboardButton("Rifiuta", callback_data="news:rejected:{}:{}:{}".format(channel, channel_folder, notice_disk_id))]
@@ -110,6 +114,7 @@ def send_news_approve_message(bot, notice_p, channel_folder, pending_approval_fo
 
                 reply_markup = InlineKeyboardMarkup(keyboard_markup)
 
+                # finally, send the message to the approval group
                 bot.sendMessage(chat_id=group_chatid, text=notice_message, parse_mode='HTML', reply_markup=reply_markup)
             except Exception as error:
                 open("logs/errors.txt", "a+").write("send_news_approve_message: {} {}\n".format(error, channel))
