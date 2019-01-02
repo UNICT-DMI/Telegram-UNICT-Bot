@@ -2,7 +2,7 @@
 
 # Telegram libraries
 import telegram
-from telegram.ext import Updater, Filters, MessageHandler, CommandHandler
+from telegram.ext import Updater, Filters, MessageHandler, CommandHandler, CallbackQueryHandler
 
 # Config libraries
 from functions import TOKEN, yaml
@@ -11,6 +11,7 @@ from functions import TOKEN, yaml
 from functions import start
 from module.dev_functions import logging_message, give_chat_id, send_log, send_errors
 from module.scraper_notices import scrape_notices
+from module.callback_functions import callback_handle
 
 import logging
 
@@ -28,6 +29,8 @@ def main():
 	dp.add_handler(MessageHandler(Filters.all, logging_message),1)
 
 	dp.add_handler(CommandHandler('start', start))
+
+	dp.add_handler(CallbackQueryHandler(callback_handle))
 
   # devs commands
 	dp.add_handler(CommandHandler('chatid',give_chat_id))

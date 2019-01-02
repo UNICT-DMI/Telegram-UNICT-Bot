@@ -1,5 +1,6 @@
 token: ""
 dev_group_chatid: 
+approve_group_chatid:
 news_interval: 60
 
 notices_urls: {
