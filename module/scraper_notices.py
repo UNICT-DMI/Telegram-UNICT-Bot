@@ -110,8 +110,8 @@ def send_news_approve_message(bot, notice_p, channel_folder, channel, group_chat
 
                 # reply buttons layout
                 keyboard_markup = [
-                    [InlineKeyboardButton("Accetta", callback_data="news:approved:{}:{}:{}".format(channel, channel_folder, notice_disk_id)),
-                    InlineKeyboardButton("Rifiuta", callback_data="news:rejected:{}:{}:{}".format(channel, channel_folder, notice_disk_id))]
+                    [InlineKeyboardButton("Accetta ✔", callback_data="news:approved:{}:{}:{}".format(channel, channel_folder, notice_disk_id)),
+                    InlineKeyboardButton("Rifiuta ❌", callback_data="news:rejected:{}:{}:{}".format(channel, channel_folder, notice_disk_id))]
                 ]
 
                 reply_markup = InlineKeyboardMarkup(keyboard_markup)
