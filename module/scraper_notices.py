@@ -11,7 +11,6 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 with open('config/settings.yaml', 'r') as yaml_config:
     config_map = yaml.load(yaml_config)
     notices_urls = config_map["notices_urls"]
-    approve_group_chatid = config_map["approve_group_chatid"]
 
 def get_links(label, url):
     req = requests.get(url)
@@ -85,7 +84,10 @@ def spam_news_direct(bot, notice_message, channel):
         except Exception as error:
             open("logs/errors.txt", "a+").write("{} {}\n".format(error, channel))
 
-def send_news_approve_message(bot, notice_p, channel_folder, pending_approval_folder, channel, group_chatid):
+def send_news_approve_message(bot, notice_p, channel_folder, channel, group_chatid):
+    # maybe pending approval folder should be settable, to be reviewed
+    pending_approval_folder = "in_approvazione"
+
     if os.path.isfile(notice_p):
         notice_message = open(notice_p).read()
 
@@ -168,6 +170,10 @@ def scrape_notices(bot, job):
             pending_notice = pull_pending_notice(pending_path)
             if pending_notice:
                 get_notice_content(pending_notice, base_url, archive_path, notice_path)
-        
-        send_news_approve_message(bot, notice_path, "data/avvisi/"+str(folder), "in_approvazione", notices_urls[i]["channel"], approve_group_chatid)
-        # spam_news(bot, notice_path, notices_urls[i]["channel"])
+
+        approve_group_chatid = notices_urls[i]["approve_group_chatid"]
+
+        if approve_group_chatid:
+            send_news_approve_message(bot, notice_path, "data/avvisi/"+str(folder), notices_urls[i]["channel"], approve_group_chatid)
+        else:
+            spam_news(bot, notice_path, notices_urls[i]["channel"])

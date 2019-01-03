@@ -39,7 +39,6 @@ def main():
 	dp.add_handler(CommandHandler('send_log', send_log))
 	dp.add_handler(CommandHandler('errors', send_errors))
 
-
 	#JobQueue
 	j = updater.job_queue
 	j.run_repeating(scrape_notices, interval=config_map["news_interval"], first=0) # job_news
