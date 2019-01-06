@@ -66,12 +66,13 @@ def get_notice_content(notice_dict, base_url, archive_p, notice_p):
     with open(notice_p, 'w') as fw:
         fw.write(formatted_notice)
 
-def spam_news(bot, notice_p, channel):
+def spam_news(bot, notice_p, channels):
     if os.path.isfile(notice_p):
         message = open(notice_p).read()
         if message != "":
             try:
-                bot.sendMessage(chat_id=channel, text=message, parse_mode='HTML')
+                for channel in channels:
+                    bot.sendMessage(chat_id=channel, text=message, parse_mode='HTML')
             except Exception as error:
                 open("logs/errors.txt", "a+").write("{} {}\n".format(error, channel))
         os.remove(notice_p)
@@ -84,7 +85,7 @@ def spam_news_direct(bot, notice_message, channel):
         except Exception as error:
             open("logs/errors.txt", "a+").write("{} {}\n".format(error, channel))
 
-def send_news_approve_message(bot, notice_p, channel_folder, channel, group_chatid):
+def send_news_approve_message(bot, notice_p, channel_folder, dep_name, page_name, group_chatid):
     # maybe pending approval folder should be settable, to be reviewed
     pending_approval_folder = "in_approvazione"
 
@@ -95,7 +96,7 @@ def send_news_approve_message(bot, notice_p, channel_folder, channel, group_chat
             try:
                 # notice disk id is used to identify an approval pending message. OS clock's used for this
                 notice_disk_id = time.clock()
-                approving_notice_filename = "{}/{}/{}_{}.dat".format(channel_folder, pending_approval_folder, channel, notice_disk_id)
+                approving_notice_filename = "{}/{}/{}_{}.dat".format(channel_folder, pending_approval_folder, page_name, notice_disk_id)
 
                 if not os.path.exists(os.path.dirname(approving_notice_filename)):
                     try:
@@ -110,8 +111,8 @@ def send_news_approve_message(bot, notice_p, channel_folder, channel, group_chat
 
                 # reply buttons layout
                 keyboard_markup = [
-                    [InlineKeyboardButton("Accetta ✔", callback_data="news:approved:{}:{}:{}".format(channel, channel_folder, notice_disk_id)),
-                    InlineKeyboardButton("Rifiuta ❌", callback_data="news:rejected:{}:{}:{}".format(channel, channel_folder, notice_disk_id))]
+                    [InlineKeyboardButton("Accetta ✔", callback_data="news:approved:{}:{}:{}:{}".format(dep_name, page_name, channel_folder, notice_disk_id)),
+                    InlineKeyboardButton("Rifiuta ❌", callback_data="news:rejected:{}:{}:{}:{}".format(dep_name, page_name, channel_folder, notice_disk_id))]
                 ]
 
                 reply_markup = InlineKeyboardMarkup(keyboard_markup)
@@ -127,53 +128,61 @@ def scrape_notices(bot, job):
     notices_urls_cp = copy.deepcopy(notices_urls)
 
     for i in notices_urls_cp:
-        ch = notices_urls_cp[i]["channel"].replace("@", "")
-
         # handle multi-channel but same department
         if i.find("_") > -1:
             folder = i[0:i.find("_")]
         else:
             folder = i
 
-        pending_path = "data/avvisi/"+str(folder)+"/"+str(ch)+"_avvisi_in_sospeso.dat"
-        archive_path = "data/avvisi/"+str(folder)+"/"+str(ch)+"_avvisi.dat"
-        notice_path = "data/avvisi/"+str(folder)+"/"+str(ch)+"_avviso.dat"
+        for page_name in notices_urls_cp[i]["pages"]:
+            page = notices_urls_cp[i]["pages"][page_name]
 
-        base_url = notices_urls_cp[i]["urls"][list(notices_urls_cp[i]["urls"])[0]]
-        base_url = base_url[:base_url.find(".unict.it")] + ".unict.it"
+            pending_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avvisi_in_sospeso.dat"
+            archive_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avvisi.dat"
+            notice_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avviso.dat"
 
-        if not os.path.exists("data/avvisi/"+str(folder)+"/"):
-            os.makedirs("data/avvisi/"+str(folder)+"/")
+            # base_url = notices_urls_cp[i]["urls"][list(notices_urls_cp[i]["urls"])[0]]
+            # base_url = base_url[:base_url.find(".unict.it")] + ".unict.it"
 
-        pending_notice = pull_pending_notice(pending_path)
+            base_url = page["url"]
+            base_url = base_url[:base_url.find(".unict.it")] + ".unict.it"
 
-        if pending_notice:
-            get_notice_content(pending_notice, base_url, archive_path, notice_path)
-        else:
-            notices = []
-
-            for label, url in notices_urls_cp[i]["urls"].items():
-                notices.extend(get_links(label, url))
-
-            with open(pending_path, 'a+') as pending_file_handle:
-                if os.path.isfile(archive_path):
-                    with open(archive_path, 'r') as archive_file_handle:
-                        archive_notices = archive_file_handle.read()
-
-                        for notice in notices:
-                            if str(notice) not in archive_notices:
-                                pending_file_handle.write("%s\n" % notice)
-                else:
-                    for notice in notices:
-                        pending_file_handle.write("%s\n" % notice)
+            if not os.path.exists("data/avvisi/"+str(folder)+"/"):
+                os.makedirs("data/avvisi/"+str(folder)+"/")
 
             pending_notice = pull_pending_notice(pending_path)
+
             if pending_notice:
                 get_notice_content(pending_notice, base_url, archive_path, notice_path)
+            else:
+                notices = []
 
-        approve_group_chatid = notices_urls[i]["approve_group_chatid"]
+                # for label, url in notices_urls_cp[i]["urls"].items():
+                #    notices.extend(get_links(label, url))
+                notices.extend(get_links(page_name, page["url"]))
 
-        if approve_group_chatid:
-            send_news_approve_message(bot, notice_path, "data/avvisi/"+str(folder), notices_urls[i]["channel"], approve_group_chatid)
-        else:
-            spam_news(bot, notice_path, notices_urls[i]["channel"])
+                with open(pending_path, 'a+') as pending_file_handle:
+                    if os.path.isfile(archive_path):
+                        with open(archive_path, 'r') as archive_file_handle:
+                            archive_notices = archive_file_handle.read()
+
+                            for notice in notices:
+                                if str(notice) not in archive_notices:
+                                    pending_file_handle.write("%s\n" % notice)
+                    else:
+                        for notice in notices:
+                            pending_file_handle.write("%s\n" % notice)
+
+                pending_notice = pull_pending_notice(pending_path)
+                if pending_notice:
+                    get_notice_content(pending_notice, base_url, archive_path, notice_path)
+
+            try:
+                approve_group_chatid = page["approve_group_chatid"]
+            except KeyError:
+                approve_group_chatid = None 
+
+            if approve_group_chatid:
+                send_news_approve_message(bot, notice_path, "data/avvisi/"+str(folder), folder, page_name, approve_group_chatid)
+            else:
+                spam_news(bot, notice_path, page["channels"])

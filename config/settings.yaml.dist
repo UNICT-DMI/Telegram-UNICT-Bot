@@ -4,18 +4,16 @@ approve_group_chatid:
 news_interval: 60
 
 notices_urls: {
-    "DIPARTIMENTO": {
-        "channel": "@channel",
-        "approve_group_chatid": "",
-        "urls": {
-            "CdL L-31": "http://www.dip.unict.it/corsi/L-31/avvisi/",
+    "DEPARTMENT-NAME": {
+        "pages": {
+            "PAGE-NAME": {
+                "url": "PAGE-URL",
+                "approve_group_chatid": 00000, # NOT MANDATORY 
+                "channels": [
+                    "@CHANNEL-1",
+                    "@CHANNEL-2",
+                ]
+            },
         }
     },
-    "DIPARTIMENTO2": {
-        "channel": "@channel2",
-        "approve_group_chatid": "",
-        "urls": {
-            "CdL LM-40": "http://www.dip.unict.it/corsi/LM-40/avvisi/",
-        }
-    }
 }
