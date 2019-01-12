@@ -1,4 +1,10 @@
+import yaml
+
 from module.scraper_notices import spam_news_direct
+
+with open('config/settings.yaml', 'r') as yaml_config:
+    config_map = yaml.load(yaml_config)
+    notices_urls = config_map["notices_urls"]
 
 def callback_handle(bot, update):
     query = update.callback_query
@@ -9,19 +15,24 @@ def callback_handle(bot, update):
     # check callback data type
     if callback_type == "news":
         result = query_data[1]
-        channel = query_data[2]
-        channel_folder = query_data[3]
-        notice_disk_id = query_data[4]
+        dep_name = query_data[2]
+        page_name = query_data[3]
+        channel_folder = query_data[4]
+        notice_disk_id = query_data[5]
 
         # reconstruct the file path using query data
-        notice_filename = "{}/in_approvazione/{}_{}.dat".format(channel_folder, channel, notice_disk_id)
+        notice_filename = "{}/in_approvazione/{}_{}.dat".format(channel_folder, page_name, notice_disk_id)
         notice_text = open(notice_filename).read()
 
         result_message = "rifiutato ❌"
 
         # if the news has been approved, change result message and broadcast it to the news channel
         if result == "approved":
-            spam_news_direct(bot, notice_text, channel)
+            page = notices_urls[dep_name]["pages"][page_name]
+
+            for channel in page["channels"]:
+                print("approved channel: " + channel)
+                spam_news_direct(bot, notice_text, channel)
 
             result_message = "approvato ✔"
 
