@@ -5,7 +5,7 @@ news_interval: 60
 notices_urls: {
     "DEPARTMENT-NAME": {
         "pages": {
-            "PAGE-NAME": {
+            "PAGE-NAME": { # page name has 22 charaters as limit
                 "approve_group_chatid": 00000, # NOT MANDATORY 
                 "urls": [
                     "PAGE-URL_1",
