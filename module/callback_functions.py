@@ -31,13 +31,14 @@ def callback_handle(bot, update):
             page = notices_urls[dep_name]["pages"][page_name]
 
             for channel in page["channels"]:
-                print("approved channel: " + channel)
                 spam_news_direct(bot, notice_text, channel)
 
             result_message = "approvato ✔"
 
-        bot.edit_message_text(text="<b>L'avviso è stato {}</b>:\n\n{}".format(result_message, notice_text),
-                          chat_id=query.message.chat_id,
-                          message_id=query.message.message_id,
-                          parse_mode='HTML')
-
+        try:
+            bot.edit_message_text(text="<b>L'avviso è stato {}</b>:\n\n{}".format(result_message, notice_text),
+                            chat_id=query.message.chat_id,
+                            message_id=query.message.message_id,
+                            parse_mode='HTML')
+        except:
+            pass            

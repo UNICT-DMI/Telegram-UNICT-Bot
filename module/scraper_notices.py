@@ -120,7 +120,7 @@ def send_news_approve_message(bot, notice_p, channel_folder, dep_name, page_name
                 # finally, send the message to the approval group
                 bot.sendMessage(chat_id=group_chatid, text=notice_message, parse_mode='HTML', reply_markup=reply_markup)
             except Exception as error:
-                open("logs/errors.txt", "a+").write("send_news_approve_message: {} {}\n".format(error, channel))
+                open("logs/errors.txt", "a+").write("send_news_approve_message: {} {}\n".format(error, channel_folder))
         os.remove(notice_p)
 
 
@@ -141,9 +141,6 @@ def scrape_notices(bot, job):
                 pending_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avvisi_in_sospeso.dat"
                 archive_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avvisi.dat"
                 notice_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avviso.dat"
-
-                # base_url = notices_urls_cp[i]["urls"][list(notices_urls_cp[i]["urls"])[0]]
-                # base_url = base_url[:base_url.find(".unict.it")] + ".unict.it"
 
                 for url in page["urls"]:
                     base_url = url
