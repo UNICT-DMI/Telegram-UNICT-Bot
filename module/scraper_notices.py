@@ -56,8 +56,14 @@ def pull_pending_notice(file_name):
             return ast.literal_eval(data[0])
     return None
 
-def get_notice_content(notice_dict, url, archive_p, notice_p):
+def get_notice_content(notice_dict, base_url, archive_p, notice_p):
     label = list(notice_dict.keys())[0]
+
+    post_url = notice_dict[label]
+    if not post_url.startswith("/"):
+        post_url = "/"+post_url
+
+    url = "%s%s" % (base_url, post_url)
 
     title, content = get_content(url)
 
@@ -153,13 +159,16 @@ def scrape_notices(bot, job):
                 notice_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avviso.dat"
 
                 for url in page["urls"]:
+                    base_url = url
+                    base_url = base_url[:base_url.find(".unict.it")] + ".unict.it"
+
                     if not os.path.exists("data/avvisi/"+str(folder)+"/"):
                         os.makedirs("data/avvisi/"+str(folder)+"/")
 
                     pending_notice = pull_pending_notice(pending_path)
 
                     if pending_notice:
-                        get_notice_content(pending_notice, url, archive_path, notice_path)
+                        get_notice_content(pending_notice, base_url, archive_path, notice_path)
                     else:
                         notices = []
                         link = get_links(page_name, url)
@@ -180,7 +189,7 @@ def scrape_notices(bot, job):
 
                             pending_notice = pull_pending_notice(pending_path)
                             if pending_notice:
-                                get_notice_content(pending_notice, url, archive_path, notice_path)
+                                get_notice_content(pending_notice, base_url, archive_path, notice_path)
 
                     try:
                         approve_group_chatid = page["approve_group_chatid"]
