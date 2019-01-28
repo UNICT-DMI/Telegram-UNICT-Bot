@@ -5,7 +5,7 @@ import telegram
 from telegram.ext import Updater, Filters, MessageHandler, CommandHandler, CallbackQueryHandler
 
 # Config libraries
-from functions import TOKEN, yaml
+from functions import TOKEN, config_map
 
 # commands
 from functions import start
@@ -19,9 +19,6 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 bot = telegram.Bot(TOKEN)
-
-with open('config/settings.yaml') as yaml_config:
-	config_map = yaml.load(yaml_config)
 
 def main():
 	updater = Updater(TOKEN, request_kwargs={'read_timeout': 20, 'connect_timeout': 20})
