@@ -34,8 +34,14 @@ def get_content(url):
         req = requests.get(url)
         soup = bs4.BeautifulSoup(req.content, "html.parser")
 
-        title = soup.find("h1", attrs={"class": "page-title"}).get_text()
-        content = soup.find("div", attrs={"class": "field-item even"}).get_text()
+        title = soup.find("h1", attrs={"class": "page-title"})
+        content = soup.find("div", attrs={"class": "field-item even"})
+
+        if title is not None and content is not None:
+            title = title.get_text()
+            content = content.get_text()
+        else:
+            return None,None
 
         return title, content
     except Exception as e:
