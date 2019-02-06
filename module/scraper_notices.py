@@ -47,6 +47,8 @@ def get_content(url):
         else:
             return None,None
 
+        title = "\n"+title
+
         return title, content
     except Exception as e:
         open("logs/errors.txt", "a+").write("{}\n".format(e))
