@@ -36,10 +36,14 @@ def get_content(url):
 
         title = soup.find("h1", attrs={"class": "page-title"})
         content = soup.find("div", attrs={"class": "field-item even"})
+        prof = soup.find("a", attrs={"class": "more-link"})
 
         if title is not None and content is not None:
             title = title.get_text()
             content = content.get_text()
+
+            if prof is not None:
+                title = "[" +prof.get_text().replace("Vai alla scheda del prof. ", "") + "]\n" + title
         else:
             return None,None
 
