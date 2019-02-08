@@ -1,4 +1,4 @@
 python-telegram-bot
 requests
 beautifulsoup4
-
+pyyaml
