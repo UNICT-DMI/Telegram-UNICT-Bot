@@ -6,3 +6,5 @@ Telegram channels:
 - [@IngInfoNews](https://t.me/inginfonews)
 - [@IngEleNews](https://t.me/ingelenews)
 - [@IngIndNews](https://t.me/ingindnews)
+- [@DEInews](https://t.me/deinews)
+
