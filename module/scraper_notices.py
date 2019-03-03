@@ -5,6 +5,7 @@ import os
 import copy
 import yaml
 import time
+import re
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
@@ -34,6 +35,22 @@ def get_content(url):
         req = requests.get(url)
         soup = bs4.BeautifulSoup(req.content, "html.parser")
 
+        table_content = ""
+        table = soup.find('table')
+
+        if table is not None:
+            table_body = table.find('tbody')
+
+            rows = table_body.find_all('tr')
+            for row in rows:
+                cols = row.find_all('td')
+                cols = [ele.text.strip() for ele in cols]
+                for c in cols:
+                    table_content += c + "\t"
+                table_content +="\n"
+
+            table.decompose() # remove table from content
+
         title = soup.find("h1", attrs={"class": "page-title"})
         content = soup.find("div", attrs={"class": "field-item even"})
         prof = soup.find("a", attrs={"class": "more-link"})
@@ -41,6 +58,10 @@ def get_content(url):
         if title is not None and content is not None:
             title = title.get_text()
             content = content.get_text()
+
+            content.strip() # trimming
+            content += "\n"
+            content += table_content
 
             if prof is not None:
                 title = "[" +prof.get_text().replace("Vai alla scheda del prof. ", "") + "]\n" + title
