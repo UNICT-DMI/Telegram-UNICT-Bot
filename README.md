@@ -6,10 +6,10 @@ A Telegram Bot for University of Catania
 Dipartimento Matematica e Informatica (DMI)
 - [@DMInews](https://t.me/dminews)
 
-Dipartimento di Fisica e Astronmia (DFA)
+Dipartimento di Fisica e Astronomia (DFA)
 - [@FisicaCT](https://t.me/fisicact)
 
-Dipartimento di Ingegneria Elettrica Elettronica e Informatica (DIEEI)
+Dipartimento di Ingegneria Elettrica, Elettronica e Informatica (DIEEI)
 - [@IngInfoNews](https://t.me/inginfonews)
 - [@IngEleNews](https://t.me/ingelenews)
 - [@IngIndNews](https://t.me/ingindnews)
