@@ -22,4 +22,4 @@ Dipartimento di Scienze Chimiche (DSC)
 - [@infoDSC](https://t.me/infoDSC)
 
 Dipartimento di Giuripsrudenza (LEX)
-- [@lexunictnews](https://t.me/lexunictnews)
+- [@LEXunictnews](https://t.me/lexunictnews)
