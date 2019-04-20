@@ -21,5 +21,5 @@ Dipartimento di Economia e Impresa (DEI)
 Dipartimento di Scienze Chimiche (DSC)
 - [@infoDSC](https://t.me/infoDSC)
 
-Dipartimento di Giuripsrudenza (LEX)
+Dipartimento di Giurisprudenza (LEX)
 - [@LEXunictnews](https://t.me/lexunictnews)
