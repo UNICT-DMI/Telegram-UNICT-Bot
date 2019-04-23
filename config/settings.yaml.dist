@@ -1,6 +1,8 @@
 token: ""
 dev_group_chatid: 
 news_interval: 60
+max_messages_length: 250
+max_length_footer: " ... \n\n<b>Clicca il link in cima al post per continuare a leggere</b>"
 
 notices_urls: {
     "DEPARTMENT-NAME": {

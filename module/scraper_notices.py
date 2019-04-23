@@ -89,6 +89,19 @@ def pull_pending_notice(file_name):
             return ast.literal_eval(data[0])
     return None
 
+def format_content(content):
+    max_len = config_map["max_messages_length"] 
+
+    if len(content) > max_len:
+        split_index = max_len - 1
+
+        while content[split_index] != ' ':
+            split_index = split_index - 1
+
+        content = "{}{}".format(content[:split_index], config_map["max_length_footer"])
+
+    return content
+
 def get_notice_content(notice_dict, base_url, archive_p, notice_p):
     label = list(notice_dict.keys())[0]
 
@@ -101,6 +114,8 @@ def get_notice_content(notice_dict, base_url, archive_p, notice_p):
     title, content = get_content(url)
 
     if title is not None:
+        content = format_content(content)
+
         formatted_notice = '<b>[%s]</b>\n%s\n<b>%s</b>\n%s' % (label, url, title, content)
 
         with open(archive_p, 'a') as fw:
