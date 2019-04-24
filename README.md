@@ -1,7 +1,7 @@
 # Telegram-UNICT-Bot
-A Telegram Bot for University of Catania
+Un bot di Telegram per l'Università di Catania
 
-# Telegram channels supported
+# Canali Telegram supportati
 
 Dipartimento Matematica e Informatica (DMI)
 - [@DMInews](https://t.me/dminews)
@@ -23,3 +23,12 @@ Dipartimento di Scienze Chimiche (DSC)
 
 Dipartimento di Giurisprudenza (LEX)
 - [@LEXunictnews](https://t.me/lexunictnews)
+
+Dipartimento di Scienze Biologiche, Geologiche e Ambientali (BIOGEO)
+- [@bio_unict](https://t.me/bio_unict)
+- [@geo_unict](https://t.me/geo_unict)
+- [@scienze_ambientali](https://t.me/scienze_ambientali)
+
+Dipartimento di Scienze Biomediche e Biotecnologiche (BIOMETEC)
+- [@fisioterapia_unict](https://t.me/fisioterapia_unict)
+- [@terapia_news](https://t.me/terapia_news)
