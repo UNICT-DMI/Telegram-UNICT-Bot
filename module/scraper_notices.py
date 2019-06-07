@@ -21,6 +21,9 @@ def get_links(label, url):
 
         result = soup.select("span.field-content a")
 
+        if (len(result) == 0):
+            result = soup.select("strong.field-content a")
+
         return [
             { label: link.get('href') }
             for link in result if "/docenti/" not in link.get('href')
