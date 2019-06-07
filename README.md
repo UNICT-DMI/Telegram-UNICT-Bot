@@ -16,7 +16,6 @@ Dipartimento di Ingegneria Elettrica, Elettronica e Informatica (DIEEI)
 
 Dipartimento di Economia e Impresa (DEI)
 - [@DEInews](https://t.me/deinews)
-- [@DEImagistrali](https://t.me/deimagistrali)
 
 Dipartimento di Scienze Chimiche (DSC)
 - [@infoDSC](https://t.me/infoDSC)
@@ -32,3 +31,11 @@ Dipartimento di Scienze Biologiche, Geologiche e Ambientali (BIOGEO)
 Dipartimento di Scienze Biomediche e Biotecnologiche (BIOMETEC)
 - [@fisioterapia_unict](https://t.me/fisioterapia_unict)
 - [@terapia_news](https://t.me/terapia_news)
+
+---  
+
+### ERSU NEWS
+È stato creato un canale Telegram [@ERSUnews](https://t.me/ersunews) il cui supporto è fornito dal [Telegram-ERSU-Bot](https://github.com/UNICT-DMI/Telegram-ERSU-Bot).  
+Questo canale permette di ricevere le notizie del sito ERSU ed il menu della mensa giornaliero, inoltre è supportato da un bot [@ERSUbot](https://t.me/ERSUbot) che permette di inviare segnalazioni, mediante il comando **/report**, ai rappresentanti del **Consiglio di Amministrazione ERSU** ed ai **rappresentanti delle case dello studente**.
+
+- [@ERSUnews](https://t.me/ersunews)
