@@ -35,6 +35,9 @@ Dipartimento di Scienze Biomediche e Biotecnologiche (BIOMETEC)
 Dipartimento di Scienze Politiche e Sociali (DSPS)
 - [@Servizio_Sociale_Sociologia_news](https://t.me/Servizio_Sociale_Sociologia_news)
 
+Dipartimento di Scienze Umanistiche (DISUM)
+- [@lettere_unict](https://t.me/lettere_unict)
+
 ---  
 
 ### ERSU NEWS
