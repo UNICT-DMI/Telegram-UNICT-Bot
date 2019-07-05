@@ -37,6 +37,8 @@ Dipartimento di Scienze Politiche e Sociali (DSPS)
 
 Dipartimento di Scienze Umanistiche (DISUM)
 - [@lettere_unict](https://t.me/lettere_unict)
+- [@filosofia_unict](https://t.me/filosofia_unict)
+
 
 ---  
 
