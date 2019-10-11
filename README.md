@@ -29,7 +29,6 @@ Dipartimento di Scienze Biologiche, Geologiche e Ambientali (BIOGEO)
 - [@scienze_ambientali](https://t.me/scienze_ambientali)
 
 Dipartimento di Scienze Biomediche e Biotecnologiche (BIOMETEC)
-- [@fisioterapia_unict](https://t.me/fisioterapia_unict)
 - [@terapia_unict](https://t.me/terapia_unict)
 
 Dipartimento di Scienze Politiche e Sociali (DSPS)
