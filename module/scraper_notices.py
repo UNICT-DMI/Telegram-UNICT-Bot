@@ -10,12 +10,12 @@ import re
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 with open('config/settings.yaml', 'r') as yaml_config:
-    config_map = yaml.load(yaml_config)
+    config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
     notices_urls = config_map["notices_urls"]
 
 def get_links(label, url):
     try:
-        time.sleep(1) # delay to avoid "Max retries exceeds" for too many requests 
+        time.sleep(1) # delay to avoid "Max retries exceeds" for too many requests
         req = requests.get(url)
         soup = bs4.BeautifulSoup(req.content, 'html.parser')
 
@@ -93,7 +93,7 @@ def pull_pending_notice(file_name):
     return None
 
 def format_content(content):
-    max_len = config_map["max_messages_length"] 
+    max_len = config_map["max_messages_length"]
 
     if len(content) > max_len:
         split_index = max_len - 1
@@ -130,7 +130,7 @@ def get_notice_content(notice_dict, base_url, archive_p, notice_p):
             if len(data) > 50:
                 with open(archive_p, 'w') as fw:
                     fw.writelines(data[1:])
-        
+
         with open(notice_p, 'w') as fw:
             fw.write(formatted_notice)
 
@@ -169,7 +169,7 @@ def send_news_approve_message(bot, notice_p, channel_folder, dep_name, page_name
                 if not os.path.exists(os.path.dirname(approving_notice_filename)):
                     try:
                         os.makedirs(os.path.dirname(approving_notice_filename))
-                    except OSError as exc: 
+                    except OSError as exc:
                         if exc.errno != errno.EEXIST:
                             raise
 
@@ -245,7 +245,7 @@ def scrape_notices(bot, job):
                     try:
                         approve_group_chatid = page["approve_group_chatid"]
                     except KeyError:
-                        approve_group_chatid = None 
+                        approve_group_chatid = None
 
                     if approve_group_chatid:
                         send_news_approve_message(bot, notice_path, "data/avvisi/"+str(folder), folder, page_name, approve_group_chatid)

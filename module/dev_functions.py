@@ -1,7 +1,7 @@
 import yaml
 
 with open('config/settings.yaml', 'r') as yaml_config:
-    config_map = yaml.load(yaml_config)
+    config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
 
 def logging_message(bot, update):
 	try:

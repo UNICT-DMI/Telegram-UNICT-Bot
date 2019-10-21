@@ -3,7 +3,7 @@ import yaml
 from module.scraper_notices import spam_news_direct
 
 with open('config/settings.yaml', 'r') as yaml_config:
-    config_map = yaml.load(yaml_config)
+    config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
     notices_urls = config_map["notices_urls"]
 
 def callback_handle(bot, update):
@@ -41,4 +41,4 @@ def callback_handle(bot, update):
                             message_id=query.message.message_id,
                             parse_mode='HTML')
         except:
-            pass            
+            pass
