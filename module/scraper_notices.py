@@ -6,8 +6,9 @@ import copy
 import yaml
 import time
 import re
-
+import telegram
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import CallbackContext
 
 with open('config/settings.yaml', 'r') as yaml_config:
     config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
@@ -134,26 +135,26 @@ def get_notice_content(notice_dict, base_url, archive_p, notice_p):
         with open(notice_p, 'w') as fw:
             fw.write(formatted_notice)
 
-def spam_news(bot, notice_p, channels):
+def spam_news(context: CallbackContext, notice_p, channels):
     if os.path.isfile(notice_p):
         message = open(notice_p).read()
         if message != "":
             try:
                 for channel in channels:
-                    bot.sendMessage(chat_id=channel, text=message, parse_mode='HTML')
+                    context.bot.sendMessage(chat_id=channel, text=message, parse_mode='HTML')
             except Exception as error:
                 open("logs/errors.txt", "a+").write("{} {}\n".format(error, channel))
         os.remove(notice_p)
 
 # broadcasts a news passed as a direct message in parameters
-def spam_news_direct(bot, notice_message, channel):
+def spam_news_direct(context: CallbackContext, notice_message, channel):
     if notice_message != "":
         try:
-            bot.sendMessage(chat_id=channel, text=notice_message, parse_mode='HTML')
+            context.bot.sendMessage(chat_id=channel, text=notice_message, parse_mode='HTML')
         except Exception as error:
             open("logs/errors.txt", "a+").write("{} {}\n".format(error, channel))
 
-def send_news_approve_message(bot, notice_p, channel_folder, dep_name, page_name, group_chatid):
+def send_news_approve_message(context: CallbackContext, notice_p, channel_folder, dep_name, page_name, group_chatid):
     # maybe pending approval folder should be settable, to be reviewed
     pending_approval_folder = "in_approvazione"
 
@@ -186,13 +187,14 @@ def send_news_approve_message(bot, notice_p, channel_folder, dep_name, page_name
                 reply_markup = InlineKeyboardMarkup(keyboard_markup)
 
                 # finally, send the message to the approval group
-                bot.sendMessage(chat_id=group_chatid, text=notice_message, parse_mode='HTML', reply_markup=reply_markup)
+                context.bot.sendMessage(chat_id=group_chatid, text=notice_message, parse_mode='HTML', reply_markup=reply_markup)
             except Exception as error:
                 open("logs/errors.txt", "a+").write("send_news_approve_message: {} {}\n".format(error, channel_folder))
         os.remove(notice_p)
 
 
-def scrape_notices(bot, job):
+def scrape_notices(context):
+    job = context.job
     notices_urls_cp = copy.deepcopy(notices_urls)
 
     for i in notices_urls_cp:
@@ -248,6 +250,6 @@ def scrape_notices(bot, job):
                         approve_group_chatid = None
 
                     if approve_group_chatid:
-                        send_news_approve_message(bot, notice_path, "data/avvisi/"+str(folder), folder, page_name, approve_group_chatid)
+                        send_news_approve_message(context, notice_path, "data/avvisi/"+str(folder), folder, page_name, approve_group_chatid)
                     else:
-                        spam_news(bot, notice_path, page["channels"])
+                        spam_news(context, notice_path, page["channels"])
