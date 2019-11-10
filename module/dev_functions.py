@@ -1,9 +1,12 @@
 import yaml
+import telegram
+from telegram import Update
+from telegram.ext import CallbackContext
 
 with open('config/settings.yaml', 'r') as yaml_config:
-    config_map = yaml.load(yaml_config)
+    config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
 
-def logging_message(bot, update):
+def logging_message(update: Update, context: CallbackContext):
 	try:
 		message_id = update.message.message_id #ID MESSAGGI\O
 		user = update.message.from_user # Restituisce un oggetto Telegram.User
@@ -29,13 +32,13 @@ def logging_message(bot, update):
 		pass
 
 # Devs Commands
-def give_chat_id(bot, update):
+def give_chat_id(update:Update, context:CallbackContext):
     update.message.reply_text(str(update.message.chat_id))
 
-def send_log(bot, update):
+def send_log(update:Update, context:CallbackContext):
     if(config_map['dev_group_chatid'] != 0 and update.message.chat_id == config_map['dev_group_chatid']):
-        bot.sendDocument(chat_id=config_map['dev_group_chatid'], document=open('logs/logs.txt', 'rb'))
+        context.bot.sendDocument(chat_id=config_map['dev_group_chatid'], document=open('logs/logs.txt', 'rb'))
 
-def send_errors(bot, update):
+def send_errors(update: Update, context: CallbackContext):
     if(config_map['dev_group_chatid'] != 0 and update.message.chat_id == config_map['dev_group_chatid']):
-        bot.sendDocument(chat_id=config_map['dev_group_chatid'], document=open('logs/errors.txt', 'rb'))
+        context.bot.sendDocument(chat_id=config_map['dev_group_chatid'], document=open('logs/errors.txt', 'rb'))

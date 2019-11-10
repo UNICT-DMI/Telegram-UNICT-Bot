@@ -2,11 +2,15 @@ import yaml
 
 from module.scraper_notices import spam_news_direct
 
+import telegram
+from telegram import Update
+from telegram.ext import CallbackContext
+
 with open('config/settings.yaml', 'r') as yaml_config:
-    config_map = yaml.load(yaml_config)
+    config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
     notices_urls = config_map["notices_urls"]
 
-def callback_handle(bot, update):
+def callback_handle(update: Update, context: CallbackContext):
     query = update.callback_query
     query_data = query.data.split(":")
 
@@ -31,14 +35,14 @@ def callback_handle(bot, update):
             page = notices_urls[dep_name]["pages"][page_name]
 
             for channel in page["channels"]:
-                spam_news_direct(bot, notice_text, channel)
+                spam_news_direct(context.bot, notice_text, channel)
 
             result_message = "approvato ✔"
 
         try:
-            bot.edit_message_text(text="<b>L'avviso è stato {}</b>:\n\n{}".format(result_message, notice_text),
+            context.bot.edit_message_text(text="<b>L'avviso è stato {}</b>:\n\n{}".format(result_message, notice_text),
                             chat_id=query.message.chat_id,
                             message_id=query.message.message_id,
                             parse_mode='HTML')
         except:
-            pass            
+            pass
