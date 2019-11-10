@@ -8,7 +8,7 @@ import yaml
 
 # Token and config
 with open('config/settings.yaml', 'r') as yaml_config:
-    config_map = yaml.load(yaml_config)
+    config_map = yaml.load(yaml_config, Loader=yaml.BaseLoader)
 
 # Token of your telegram bot that you created from @BotFather, write it on token.conf
 TOKEN = config_map["token"]
