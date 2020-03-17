@@ -16,33 +16,38 @@ from module.callback_functions import callback_handle
 
 import logging
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-bot = telegram.Bot(TOKEN)
-
 def main():
-	updater = Updater(TOKEN, request_kwargs={'read_timeout': 20, 'connect_timeout': 20}, use_context=True)
-	dp = updater.dispatcher
-	dp.add_handler(MessageHandler(Filters.all, logging_message),1)
+    logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+    logger = logging.getLogger(__name__)
 
-	# start command
-	dp.add_handler(CommandHandler('start', start))
+    logging.info("Initialization...")
 
-	# callback handlers
-	dp.add_handler(CallbackQueryHandler(callback_handle))
+    bot = telegram.Bot(TOKEN)
 
-  	# devs commands
-	dp.add_handler(CommandHandler('chatid',give_chat_id))
-	dp.add_handler(CommandHandler('send_log', send_log))
-	dp.add_handler(CommandHandler('errors', send_errors))
+    updater = Updater(TOKEN, request_kwargs={'read_timeout': 20, 'connect_timeout': 20}, use_context=True)
 
-	#JobQueue
-	j = updater.job_queue
-	j.run_repeating(scrape_notices, interval=config_map["news_interval"], first=0) # job_news
+    dp = updater.dispatcher
+    dp.add_handler(MessageHandler(Filters.all, logging_message),1)
 
-	updater.start_polling()
-	updater.idle()
+    # start command
+    dp.add_handler(CommandHandler('start', start))
+
+    # callback handlers
+    dp.add_handler(CallbackQueryHandler(callback_handle))
+
+      # devs commands
+    dp.add_handler(CommandHandler('chatid',give_chat_id))
+    dp.add_handler(CommandHandler('send_log', send_log))
+    dp.add_handler(CommandHandler('errors', send_errors))
+
+    #JobQueue
+    j = updater.job_queue
+    j.run_repeating(scrape_notices, interval=config_map["news_interval"], first=0) # job_news
+
+    logging.info("Scraping jobs started")
+
+    updater.start_polling()
+    # updater.idle()
 
 if __name__ == '__main__':
     main()
