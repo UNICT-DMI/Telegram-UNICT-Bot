@@ -1,5 +1,7 @@
 import yaml
 import telegram
+import os
+
 from telegram import Update
 from telegram.ext import CallbackContext
 
@@ -35,10 +37,21 @@ def logging_message(update: Update, context: CallbackContext):
 def give_chat_id(update:Update, context:CallbackContext):
     update.message.reply_text(str(update.message.chat_id))
 
-def send_log(update:Update, context:CallbackContext):
+def send_logfile(update:Update, context:CallbackContext):
     if(config_map['dev_group_chatid'] != 0 and update.message.chat_id == config_map['dev_group_chatid']):
-        context.bot.sendDocument(chat_id=config_map['dev_group_chatid'], document=open('logs/logs.txt', 'rb'))
+        context.bot.sendDocument(chat_id=config_map['dev_group_chatid'], document=open('logfile.log', 'rb'))
 
-def send_errors(update: Update, context: CallbackContext):
+def clear_logfile(update:Update, context:CallbackContext):
     if(config_map['dev_group_chatid'] != 0 and update.message.chat_id == config_map['dev_group_chatid']):
-        context.bot.sendDocument(chat_id=config_map['dev_group_chatid'], document=open('logs/errors.txt', 'rb'))
+        os.remove("logfile.log")
+
+        context.bot.sendMessage(chat_id=config_map['dev_group_chatid'], text="Logfile deleted")
+
+# Old logging system
+# def send_log(update:Update, context:CallbackContext):
+#    if(config_map['dev_group_chatid'] != 0 and update.message.chat_id == config_map['dev_group_chatid']):
+#        context.bot.sendDocument(chat_id=config_map['dev_group_chatid'], document=open('logs/logs.txt', 'rb'))
+
+# def send_errors(update: Update, context: CallbackContext):
+#    if(config_map['dev_group_chatid'] != 0 and update.message.chat_id == config_map['dev_group_chatid']):
+#        context.bot.sendDocument(chat_id=config_map['dev_group_chatid'], document=open('logs/errors.txt', 'rb'))

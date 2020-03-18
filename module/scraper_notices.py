@@ -7,6 +7,9 @@ import yaml
 import time
 import re
 import telegram
+import logging
+import traceback
+
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CallbackContext
 
@@ -15,6 +18,8 @@ with open('config/settings.yaml', 'r') as yaml_config:
     notices_urls = config_map["notices_urls"]
 
 def get_links(label, url):
+    # logging.info("Call get_links({}, {})".format(label, url))
+
     try:
         time.sleep(1) # delay to avoid "Max retries exceeds" for too many requests
         req = requests.get(url)
@@ -30,10 +35,16 @@ def get_links(label, url):
             for link in result if "/docenti/" not in link.get('href')
         ]
     except Exception as e:
-        open("logs/errors.txt", "a+").write("{}\n".format(e))
+        # open("logs/errors.txt", "a+").write("{}\n".format(e))
+
+        logging.exception("Exception on call get_links({}, {})".format(label, url))
+        logging.exception(traceback.format_exc())
+
         return None
 
 def get_content(url):
+    # logging.info("Call get_content({})".format(url))
+
     try:
         time.sleep(1) # delay to avoid "Max retries exceeds" for too many requests
         req = requests.get(url)
@@ -76,85 +87,126 @@ def get_content(url):
 
         return title, content
     except Exception as e:
-        open("logs/errors.txt", "a+").write("{}\n".format(e))
+        # open("logs/errors.txt", "a+").write("{}\n".format(e))
+
+        logging.exception("Exception on call get_content({})".format(url))
+        logging.exception(traceback.format_exc())
+
         return None,None
 
 def pull_pending_notice(file_name):
-    if os.path.isfile(file_name):
-        data = []
+    logging.info("Call pull_pending_notice({})".format(file_name))
 
-        with open(file_name, 'r') as fr:
-            data = fr.read().splitlines(True)
+    try:
+        if os.path.isfile(file_name):
+            data = []
 
-        with open(file_name, 'w') as fw:
-            fw.writelines(data[1:])
+            with open(file_name, 'r') as fr:
+                data = fr.read().splitlines(True)
 
-        if len(data) > 0:
-            return ast.literal_eval(data[0])
-    return None
+            with open(file_name, 'w') as fw:
+                fw.writelines(data[1:])
+
+            if len(data) > 0:
+                return ast.literal_eval(data[0])
+        return None
+    except Exception as e:
+        logging.exception("Exception on call pull_pending_notice({})".format(file_name))
+        logging.exception(traceback.format_exc())
+
+        return None
 
 def format_content(content):
-    max_len = config_map["max_messages_length"]
+    # logging.info("Call format_content({})".format(content))
 
-    if len(content) > max_len:
-        split_index = max_len - 1
+    try:
+        max_len = config_map["max_messages_length"]
 
-        while content[split_index] != ' ':
-            split_index = split_index - 1
+        if len(content) > max_len:
+            split_index = max_len - 1
 
-        content = "{}{}".format(content[:split_index], config_map["max_length_footer"])
+            while content[split_index] != ' ':
+                split_index = split_index - 1
 
-    return content
+            content = "{}{}".format(content[:split_index], config_map["max_length_footer"])
+
+        return content
+    except Exception as e:
+        logging.exception("Exception on call format_content({})".format(content))
+        logging.exception(traceback.format_exc())
+
+        return None
 
 def get_notice_content(notice_dict, base_url, archive_p, notice_p):
-    label = list(notice_dict.keys())[0]
+    # logging.info("Call get_notice_content({}, {}, {}, {})".format(notice_dict, base_url, archive_p, notice_p))
 
-    post_url = notice_dict[label]
-    if not post_url.startswith("/"):
-        post_url = "/"+post_url
+    try:
+        label = list(notice_dict.keys())[0]
 
-    url = "%s%s" % (base_url, post_url)
+        post_url = notice_dict[label]
+        if not post_url.startswith("/"):
+            post_url = "/"+post_url
 
-    title, content = get_content(url)
+        url = "%s%s" % (base_url, post_url)
 
-    if title is not None:
-        content = format_content(content)
+        title, content = get_content(url)
 
-        formatted_notice = '<b>[%s]</b>\n%s\n<b>%s</b>\n%s' % (label, url, title, content)
+        if title is not None:
+            content = format_content(content)
 
-        with open(archive_p, 'a') as fw:
-            fw.write('%s\n' % notice_dict)
+            formatted_notice = '<b>[%s]</b>\n%s\n<b>%s</b>\n%s' % (label, url, title, content)
 
-        with open(archive_p, 'r') as fr:
-            data = fr.read().splitlines(True)
+            with open(archive_p, 'a') as fw:
+                fw.write('%s\n' % notice_dict)
 
-            if len(data) > 50:
-                with open(archive_p, 'w') as fw:
-                    fw.writelines(data[1:])
+            with open(archive_p, 'r') as fr:
+                data = fr.read().splitlines(True)
 
-        with open(notice_p, 'w') as fw:
-            fw.write(formatted_notice)
+                if len(data) > 50:
+                    with open(archive_p, 'w') as fw:
+                        fw.writelines(data[1:])
+
+            with open(notice_p, 'w') as fw:
+                fw.write(formatted_notice)
+    except Exception as e:
+        logging.exception("Exception on call get_notice_content({}, {}, {}, {})".format(notice_dict, base_url, archive_p, notice_p))
+        logging.exception(traceback.format_exc())
 
 def spam_news(context: CallbackContext, notice_p, channels):
-    if os.path.isfile(notice_p):
-        message = open(notice_p).read()
-        if message != "":
-            try:
-                for channel in channels:
-                    context.bot.sendMessage(chat_id=channel, text=message, parse_mode='HTML')
-            except Exception as error:
-                open("logs/errors.txt", "a+").write("{} {}\n".format(error, channel))
-        os.remove(notice_p)
+    logging.info("Call spam_news({}, {}, {})".format(context, notice_p, channels))
+
+    try:
+        if os.path.isfile(notice_p):
+            message = open(notice_p).read()
+            if message != "":
+                try:
+                    for channel in channels:
+                        context.bot.sendMessage(chat_id=channel, text=message, parse_mode='HTML')
+                except Exception as error:
+                    # open("logs/errors.txt", "a+").write("{} {}\n".format(error, channel))
+
+                    logging.exception("Exception while sending message in channel on call spam_news({}, {}, {})".format(context, notice_p, channels))
+                    logging.exception(traceback.format_exc())
+
+            os.remove(notice_p)
+    except Exception as e:
+        logging.exception("Exception on call spam_news({}, {}, {})".format(context, notice_p, channels))
+        logging.exception(traceback.format_exc())
 
 # broadcasts a news passed as a direct message in parameters
 def spam_news_direct(context: CallbackContext, notice_message, channel):
+    logging.exception("Call spam_news_direct({}, {}, {})".format(context, notice_p, channels))
+
     if notice_message != "":
         try:
             context.bot.sendMessage(chat_id=channel, text=notice_message, parse_mode='HTML')
-        except Exception as error:
-            open("logs/errors.txt", "a+").write("{} {}\n".format(error, channel))
+        except Exception as e:
+            logging.exception("Exception on call spam_news_direct({}, {}, {})".format(context, notice_p, channels))
+            logging.exception(traceback.format_exc())
 
 def send_news_approve_message(context: CallbackContext, notice_p, channel_folder, dep_name, page_name, group_chatid):
+    logging.info("Call send_news_approve_message({}, {}, {}, {}, {}, {})".format(context, notice_p, channel_folder, dep_name, page_name, group_chatid))
+
     # maybe pending approval folder should be settable, to be reviewed
     pending_approval_folder = "in_approvazione"
 
@@ -188,68 +240,77 @@ def send_news_approve_message(context: CallbackContext, notice_p, channel_folder
 
                 # finally, send the message to the approval group
                 context.bot.sendMessage(chat_id=group_chatid, text=notice_message, parse_mode='HTML', reply_markup=reply_markup)
-            except Exception as error:
-                open("logs/errors.txt", "a+").write("send_news_approve_message: {} {}\n".format(error, channel_folder))
+            except Exception as e:
+                logging.exception("Exception on call send_news_approve_message({}, {}, {}, {}, {}, {})".format(context, notice_p, channel_folder, dep_name, page_name, group_chatid))
+                logging.exception(traceback.format_exc())
+
         os.remove(notice_p)
 
-
 def scrape_notices(context):
-    job = context.job
-    notices_urls_cp = copy.deepcopy(notices_urls)
+    logging.info("Call scrape_notices({})".format(context))
 
-    for i in notices_urls_cp:
-        if i.find("_") > -1:
-            folder = i[0:i.find("_")]
-        else:
-            folder = i
+    try:
+        job = context.job
+        notices_urls_cp = copy.deepcopy(notices_urls)
 
-        if "pages" in notices_urls_cp[i]:
-            for page_name in notices_urls_cp[i]["pages"]:
-                page = notices_urls_cp[i]["pages"][page_name]
+        for i in notices_urls_cp:
+            if i.find("_") > -1:
+                folder = i[0:i.find("_")]
+            else:
+                folder = i
 
-                pending_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avvisi_in_sospeso.dat"
-                archive_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avvisi.dat"
-                notice_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avviso.dat"
+            if "pages" in notices_urls_cp[i]:
+                for page_name in notices_urls_cp[i]["pages"]:
+                    page = notices_urls_cp[i]["pages"][page_name]
 
-                for url in page["urls"]:
-                    base_url = url
-                    base_url = base_url[:base_url.find(".unict.it")] + ".unict.it"
+                    pending_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avvisi_in_sospeso.dat"
+                    archive_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avvisi.dat"
+                    notice_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avviso.dat"
 
-                    if not os.path.exists("data/avvisi/"+str(folder)+"/"):
-                        os.makedirs("data/avvisi/"+str(folder)+"/")
+                    for url in page["urls"]:
+                        base_url = url
+                        base_url = base_url[:base_url.find(".unict.it")] + ".unict.it"
 
-                    pending_notice = pull_pending_notice(pending_path)
+                        if not os.path.exists("data/avvisi/"+str(folder)+"/"):
+                            os.makedirs("data/avvisi/"+str(folder)+"/")
 
-                    if pending_notice:
-                        get_notice_content(pending_notice, base_url, archive_path, notice_path)
-                    else:
-                        notices = []
-                        link = get_links(page_name, url)
-                        if link:
-                            notices.extend(link)
+                        pending_notice = pull_pending_notice(pending_path)
 
-                            with open(pending_path, 'a+') as pending_file_handle:
-                                if os.path.isfile(archive_path):
-                                    with open(archive_path, 'r') as archive_file_handle:
-                                        archive_notices = archive_file_handle.read()
+                        if pending_notice:
+                            get_notice_content(pending_notice, base_url, archive_path, notice_path)
+                        else:
+                            notices = []
+                            link = get_links(page_name, url)
+                            if link:
+                                notices.extend(link)
 
+                                with open(pending_path, 'a+') as pending_file_handle:
+                                    if os.path.isfile(archive_path):
+                                        with open(archive_path, 'r') as archive_file_handle:
+                                            archive_notices = archive_file_handle.read()
+
+                                            for notice in notices:
+                                                if str(notice) not in archive_notices:
+                                                    pending_file_handle.write("%s\n" % notice)
+                                    else:
                                         for notice in notices:
-                                            if str(notice) not in archive_notices:
-                                                pending_file_handle.write("%s\n" % notice)
-                                else:
-                                    for notice in notices:
-                                        pending_file_handle.write("%s\n" % notice)
+                                            pending_file_handle.write("%s\n" % notice)
 
-                            pending_notice = pull_pending_notice(pending_path)
-                            if pending_notice:
-                                get_notice_content(pending_notice, base_url, archive_path, notice_path)
+                                pending_notice = pull_pending_notice(pending_path)
+                                if pending_notice:
+                                    get_notice_content(pending_notice, base_url, archive_path, notice_path)
 
-                    try:
-                        approve_group_chatid = page["approve_group_chatid"]
-                    except KeyError:
-                        approve_group_chatid = None
+                        try:
+                            approve_group_chatid = page["approve_group_chatid"]
+                        except KeyError:
+                            approve_group_chatid = None
 
-                    if approve_group_chatid:
-                        send_news_approve_message(context, notice_path, "data/avvisi/"+str(folder), folder, page_name, approve_group_chatid)
-                    else:
-                        spam_news(context, notice_path, page["channels"])
+                        if approve_group_chatid:
+                            send_news_approve_message(context, notice_path, "data/avvisi/"+str(folder), folder, page_name, approve_group_chatid)
+                        else:
+                            spam_news(context, notice_path, page["channels"])
+    except Exception as e:
+        logging.exception("Exception on call scrape_notices({})".format(context))
+        logging.exception(traceback.format_exc())
+
+

@@ -2,6 +2,8 @@
 
 # Telegram libraries
 import telegram
+import traceback
+
 from telegram import Update, Bot
 from telegram.ext import Updater, Filters, MessageHandler, CommandHandler, CallbackQueryHandler, CallbackContext
 
@@ -10,15 +12,33 @@ from functions import TOKEN, config_map
 
 # commands
 from functions import start
-from module.dev_functions import logging_message, give_chat_id, send_log, send_errors
+from module.dev_functions import logging_message, give_chat_id, send_logfile, clear_logfile
 from module.scraper_notices import scrape_notices
 from module.callback_functions import callback_handle
 
 import logging
 
+def setup_logging(logs_file):
+    formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+    logger = logging.getLogger()
+
+    file_handler = logging.FileHandler("{}.log".format(logs_file))
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+
+    stdout_handler = logging.StreamHandler()
+    stdout_handler.setFormatter(formatter)
+    logger.addHandler(stdout_handler)
+
+    logger.setLevel(logging.INFO)
+
+    # logging.basicConfig(
+    #         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    #         level=logging.INFO
+    # )
+
 def main():
-    logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
-    logger = logging.getLogger(__name__)
+    setup_logging("logfile")
 
     logging.info("Initialization...")
 
@@ -37,8 +57,11 @@ def main():
 
       # devs commands
     dp.add_handler(CommandHandler('chatid',give_chat_id))
-    dp.add_handler(CommandHandler('send_log', send_log))
-    dp.add_handler(CommandHandler('errors', send_errors))
+    dp.add_handler(CommandHandler('send_logfile', send_logfile))
+    dp.add_handler(CommandHandler('clear_logfile', clear_logfile))
+
+    # dp.add_handler(CommandHandler('send_log', send_log))
+    # dp.add_handler(CommandHandler('errors', send_errors))
 
     #JobQueue
     j = updater.job_queue
