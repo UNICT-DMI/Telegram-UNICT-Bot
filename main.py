@@ -12,7 +12,7 @@ from functions import TOKEN, config_map
 
 # commands
 from functions import start
-from module.dev_functions import logging_message, give_chat_id, send_logfile, clear_logfile
+from module.dev_functions import logging_message, give_chat_id, send_logfile, clear_logfile, post_and_clear_logs
 from module.scraper_notices import scrape_notices
 from module.callback_functions import callback_handle
 
@@ -32,11 +32,6 @@ def setup_logging(logs_file):
 
     logger.setLevel(logging.INFO)
 
-    # logging.basicConfig(
-    #         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    #         level=logging.INFO
-    # )
-
 def main():
     setup_logging("logfile")
 
@@ -44,7 +39,7 @@ def main():
 
     bot = telegram.Bot(TOKEN)
 
-    updater = Updater(TOKEN, request_kwargs={'read_timeout': 20, 'connect_timeout': 20}, use_context=True)
+    updater = Updater(TOKEN, use_context=True) # request_kwargs={'read_timeout': 20, 'connect_timeout': 20}, use_context=True)
 
     dp = updater.dispatcher
     dp.add_handler(MessageHandler(Filters.all, logging_message),1)
@@ -65,6 +60,8 @@ def main():
 
     #JobQueue
     j = updater.job_queue
+
+    j.run_repeating(post_and_clear_logs, interval=config_map["logfile_reset_interval_minutes"] * 30, first=0) # logfile reset
     j.run_repeating(scrape_notices, interval=config_map["news_interval"], first=0) # job_news
 
     logging.info("Scraping jobs started")

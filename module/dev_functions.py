@@ -1,9 +1,12 @@
 import yaml
 import telegram
 import os
+import logging
 
 from telegram import Update
 from telegram.ext import CallbackContext
+
+from datetime import datetime
 
 with open('config/settings.yaml', 'r') as yaml_config:
     config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
@@ -34,24 +37,52 @@ def logging_message(update: Update, context: CallbackContext):
 		pass
 
 # Devs Commands
+def generate_current_logfile_name():
+    "unict-bot_logfile_({})".format(datetime.now().strftime("%d/%m/%Y, %H:%M:%S"))
+
 def give_chat_id(update:Update, context:CallbackContext):
     update.message.reply_text(str(update.message.chat_id))
 
 def send_logfile(update:Update, context:CallbackContext):
-    if(config_map['dev_group_chatid'] != 0 and update.message.chat_id == config_map['dev_group_chatid']):
-        context.bot.sendDocument(chat_id=config_map['dev_group_chatid'], document=open('logfile.log', 'rb'))
+    logging.info("Sending logfile...")
+
+    if(config_map['log_group_chatid'] != 0 and update.message.chat_id == config_map['log_group_chatid']):
+        context.bot.sendDocument(
+            chat_id=config_map['log_group_chatid'], 
+            document=open('logfile.log', 'rb'),
+            filename=generate_current_logfile_name()
+        )
 
 def clear_logfile(update:Update, context:CallbackContext):
-    if(config_map['dev_group_chatid'] != 0 and update.message.chat_id == config_map['dev_group_chatid']):
+    logging.info("Clearing logfile...")
+
+    if(config_map['log_group_chatid'] != 0 and update.message.chat_id == config_map['log_group_chatid']):
         os.remove("logfile.log")
 
-        context.bot.sendMessage(chat_id=config_map['dev_group_chatid'], text="Logfile deleted")
+        context.bot.sendMessage(chat_id=config_map['log_group_chatid'], text="Logfile has been deleted")
 
-# Old logging system
-# def send_log(update:Update, context:CallbackContext):
-#    if(config_map['dev_group_chatid'] != 0 and update.message.chat_id == config_map['dev_group_chatid']):
-#        context.bot.sendDocument(chat_id=config_map['dev_group_chatid'], document=open('logs/logs.txt', 'rb'))
+def post_and_clear_logs(context):
+    logging.info("Automatic sending current logfile into the group...")
 
-# def send_errors(update: Update, context: CallbackContext):
-#    if(config_map['dev_group_chatid'] != 0 and update.message.chat_id == config_map['dev_group_chatid']):
-#        context.bot.sendDocument(chat_id=config_map['dev_group_chatid'], document=open('logs/errors.txt', 'rb'))
+    bot = context.bot
+
+    log_group_chat_id = config_map["log_group_chatid"]
+
+    try:
+        bot.sendDocument(
+            chat_id = config_map['log_group_chatid'],
+            document=open('logfile.log', 'rb'),
+            caption="Automatically generated logfile",
+            filename=generate_current_logfile_name()
+        )
+    except FileNotFoundError:
+        logging.info("No logfile found")
+
+    logging.info("Deleting current logfile...")
+
+    os.remove("logfile.log")
+
+    bot.sendMessage(
+        chat_id=config_map['log_group_chatid'],
+        text="Logfile has been automatically deleted"
+    )
