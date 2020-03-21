@@ -57,9 +57,9 @@ def clear_logfile(update:Update, context:CallbackContext):
     logging.info("Clearing logfile...")
 
     if(config_map['log_group_chatid'] != 0 and update.message.chat_id == config_map['log_group_chatid']):
-        os.remove("logfile.log")
+        open('logfile.log', 'w').close()
 
-        context.bot.sendMessage(chat_id=config_map['log_group_chatid'], text="Logfile has been deleted")
+        context.bot.sendMessage(chat_id=config_map['log_group_chatid'], text="Logfile has been cleared")
 
 def post_and_clear_logs(context):
     logging.info("Automatic sending current logfile into the group...")
@@ -72,17 +72,18 @@ def post_and_clear_logs(context):
         bot.sendDocument(
             chat_id = config_map['log_group_chatid'],
             document=open('logfile.log', 'rb'),
+            filename=generate_current_logfile_name(),
             caption="Automatically generated logfile",
-            filename=generate_current_logfile_name()
         )
     except FileNotFoundError:
         logging.info("No logfile found")
 
     logging.info("Deleting current logfile...")
 
-    os.remove("logfile.log")
+    # os.remove("logfile.log")
+    open('logfile.log', 'w').close()
 
     bot.sendMessage(
         chat_id=config_map['log_group_chatid'],
-        text="Logfile has been automatically deleted"
+        text="Logfile has been automatically cleared"
     )

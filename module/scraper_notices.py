@@ -249,6 +249,8 @@ def send_news_approve_message(context: CallbackContext, notice_p, channel_folder
 def scrape_notices(context):
     logging.info("Call scrape_notices({})".format(context))
 
+    logging.info("Starting scraping job")
+
     try:
         job = context.job
         notices_urls_cp = copy.deepcopy(notices_urls)
@@ -313,4 +315,4 @@ def scrape_notices(context):
         logging.exception("Exception on call scrape_notices({})".format(context))
         logging.exception(traceback.format_exc())
 
-
+    logging.info("Scraping job finished")
