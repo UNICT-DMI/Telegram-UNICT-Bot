@@ -179,6 +179,7 @@ def spam_news(context: CallbackContext, notice_p, channels):
         if os.path.isfile(notice_p):
             message = open(notice_p).read()
             if message != "":
+                logging.info("Found new notice, spamming: {}".format(message))
                 try:
                     for channel in channels:
                         context.bot.sendMessage(chat_id=channel, text=message, parse_mode='HTML')
@@ -299,6 +300,7 @@ def scrape_notices(context):
                                             pending_file_handle.write("%s\n" % notice)
 
                                 pending_notice = pull_pending_notice(pending_path)
+
                                 if pending_notice:
                                     get_notice_content(pending_notice, base_url, archive_path, notice_path)
 
