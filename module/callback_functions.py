@@ -1,14 +1,14 @@
 import yaml
 
-from module.scraper_notices import spam_news_direct
+from module.post import send_notice
 
 import telegram
 from telegram import Update
 from telegram.ext import CallbackContext
 
-with open('config/settings.yaml', 'r') as yaml_config:
-    config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
-    notices_urls = config_map["notices_urls"]
+# with open('config/settings.yaml', 'r') as yaml_config:
+#     config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
+#     notices_urls = config_map["notices_urls"]
 
 def callback_handle(update: Update, context: CallbackContext):
     query = update.callback_query
@@ -34,8 +34,8 @@ def callback_handle(update: Update, context: CallbackContext):
         if result == "approved":
             page = notices_urls[dep_name]["pages"][page_name]
 
-            for channel in page["channels"]:
-                spam_news_direct(context.bot, notice_text, channel)
+            # for channel in page["channels"]:
+            #     spam_news_direct(context.bot, notice_text, channel)
 
             result_message = "approvato ✔"
 

@@ -1,5 +1,5 @@
 # Telegram-UNICT-Bot
-Un bot di Telegram per l'Università di Catania
+Un bot di Telegram per l'Università  di Catania
 
 # Canali Telegram supportati
 
@@ -38,7 +38,7 @@ Dipartimento di Scienze Umanistiche (DISUM)
 - [@lettere_unict](https://t.me/lettere_unict)
 - [@filosofia_unict](https://t.me/filosofia_unict)
 
-Medicina e Chirurgia (chirmed) e Scuola Facolt� di Medicina
+Medicina e Chirurgia (chirmed) e Scuola Facoltà di Medicina
 - [@medicina_unict](https://t.me/medicina_unict)
 
 

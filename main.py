@@ -16,6 +16,8 @@ from module.dev_functions import logging_message, give_chat_id, send_logfile, cl
 from module.scraper_notices import scrape_notices
 from module.callback_functions import callback_handle
 
+from module.update import update_tick
+
 import logging
 
 def setup_logging(logs_file):
@@ -61,8 +63,8 @@ def main():
     #JobQueue
     j = updater.job_queue
 
-    j.run_repeating(post_and_clear_logs, interval=config_map["logfile_reset_interval_minutes"] * 60, first=0) # logfile reset
-    j.run_repeating(scrape_notices, interval=config_map["news_interval"], first=0) # job_news
+    j.run_repeating(post_and_clear_logs, interval=config_map["logfile_reset_interval_minutes"] * 60) # logfile reset
+    j.run_repeating(update_tick, interval=config_map["update_interval"], first=0) # job_news
 
     logging.info("Scraping jobs started")
 

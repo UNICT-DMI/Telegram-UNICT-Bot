@@ -13,12 +13,12 @@ import traceback
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CallbackContext
 
-with open('config/settings.yaml', 'r') as yaml_config:
-    config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
-    notices_urls = config_map["notices_urls"]
+# with open('config/settings.yaml', 'r') as yaml_config:
+#     config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
+#     notices_urls = config_map["notices_urls"]
 
 def get_links(label, url):
-    # logging.info("Call get_links({}, {})".format(label, url))
+    logging.info("Call get_links({}, {})".format(label, url))
 
     try:
         time.sleep(1) # delay to avoid "Max retries exceeds" for too many requests
@@ -31,8 +31,7 @@ def get_links(label, url):
             result = soup.select("strong.field-content a")
 
         return [
-            { label: link.get('href') }
-            for link in result if "/docenti/" not in link.get('href')
+            link.get('href') for link in result if "/docenti/" not in link.get('href')
         ]
     except Exception as e:
         # open("logs/errors.txt", "a+").write("{}\n".format(e))
@@ -43,10 +42,11 @@ def get_links(label, url):
         return None
 
 def get_content(url):
-    # logging.info("Call get_content({})".format(url))
+    logging.info("Call get_content({})".format(url))
 
     try:
         time.sleep(1) # delay to avoid "Max retries exceeds" for too many requests
+
         req = requests.get(url)
         soup = bs4.BeautifulSoup(req.content, "html.parser")
 
@@ -171,81 +171,6 @@ def get_notice_content(notice_dict, base_url, archive_p, notice_p):
     except Exception as e:
         logging.exception("Exception on call get_notice_content({}, {}, {}, {})".format(notice_dict, base_url, archive_p, notice_p))
         logging.exception(traceback.format_exc())
-
-def spam_news(context: CallbackContext, notice_p, channels):
-    logging.info("Call spam_news({}, {}, {})".format(context, notice_p, channels))
-
-    try:
-        if os.path.isfile(notice_p):
-            message = open(notice_p).read()
-            if message != "":
-                logging.info("Found new notice, spamming: {}".format(message))
-                try:
-                    for channel in channels:
-                        context.bot.sendMessage(chat_id=channel, text=message, parse_mode='HTML')
-                except Exception as error:
-                    # open("logs/errors.txt", "a+").write("{} {}\n".format(error, channel))
-
-                    logging.exception("Exception while sending message in channel on call spam_news({}, {}, {})".format(context, notice_p, channels))
-                    logging.exception(traceback.format_exc())
-
-            os.remove(notice_p)
-    except Exception as e:
-        logging.exception("Exception on call spam_news({}, {}, {})".format(context, notice_p, channels))
-        logging.exception(traceback.format_exc())
-
-# broadcasts a news passed as a direct message in parameters
-def spam_news_direct(context: CallbackContext, notice_message, channel):
-    logging.exception("Call spam_news_direct({}, {}, {})".format(context, notice_p, channels))
-
-    if notice_message != "":
-        try:
-            context.bot.sendMessage(chat_id=channel, text=notice_message, parse_mode='HTML')
-        except Exception as e:
-            logging.exception("Exception on call spam_news_direct({}, {}, {})".format(context, notice_p, channels))
-            logging.exception(traceback.format_exc())
-
-def send_news_approve_message(context: CallbackContext, notice_p, channel_folder, dep_name, page_name, group_chatid):
-    logging.info("Call send_news_approve_message({}, {}, {}, {}, {}, {})".format(context, notice_p, channel_folder, dep_name, page_name, group_chatid))
-
-    # maybe pending approval folder should be settable, to be reviewed
-    pending_approval_folder = "in_approvazione"
-
-    if os.path.isfile(notice_p):
-        notice_message = open(notice_p).read()
-
-        if notice_message != "":
-            try:
-                # notice disk id is used to identify an approval pending message. OS clock's used for this
-                notice_disk_id = time.clock()
-                approving_notice_filename = "{}/{}/{}_{}.dat".format(channel_folder, pending_approval_folder, page_name, notice_disk_id)
-
-                if not os.path.exists(os.path.dirname(approving_notice_filename)):
-                    try:
-                        os.makedirs(os.path.dirname(approving_notice_filename))
-                    except OSError as exc:
-                        if exc.errno != errno.EEXIST:
-                            raise
-
-                # write notice data into a file
-                with open(approving_notice_filename, 'w') as fw:
-                    fw.writelines(notice_message[0:])
-
-                # reply buttons layout
-                keyboard_markup = [
-                    [InlineKeyboardButton("Accetta ✔", callback_data="news:approved:{}:{}:{}:{}".format(dep_name, page_name, channel_folder, notice_disk_id)),
-                    InlineKeyboardButton("Rifiuta ❌", callback_data="news:rejected:{}:{}:{}:{}".format(dep_name, page_name, channel_folder, notice_disk_id))]
-                ]
-
-                reply_markup = InlineKeyboardMarkup(keyboard_markup)
-
-                # finally, send the message to the approval group
-                context.bot.sendMessage(chat_id=group_chatid, text=notice_message, parse_mode='HTML', reply_markup=reply_markup)
-            except Exception as e:
-                logging.exception("Exception on call send_news_approve_message({}, {}, {}, {}, {}, {})".format(context, notice_p, channel_folder, dep_name, page_name, group_chatid))
-                logging.exception(traceback.format_exc())
-
-        os.remove(notice_p)
 
 def scrape_notices(context):
     logging.info("Call scrape_notices({})".format(context))
