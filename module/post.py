@@ -10,32 +10,33 @@ from telegram.ext import CallbackContext
 def enqueue_notice(context, page_data, notices_data, full_url, link_content, approval_group_chatid=None):
     logging.info("Call enqueue_notice({}, {}, {}, {}, {}, {})".format(context, page_data, notices_data, full_url, link_content, approval_group_chatid))
 
-    channels = page_data["channels"]
+    try:
+        channels = page_data["channels"]
 
-    if approval_group_chatid:
-        # TODO: Implement this
-        # If the channel is filtered, send a request to the approval group
+        if approval_group_chatid:
+            # TODO: Implement this
+            # If the channel is filtered, send a request to the approval group
 
-        reply_markup = InlineKeyboardMarkup([
-            [
-                InlineKeyboardButton("Accetta ✔", callback_data = "news,approved,{},{}".format()),
-                InlineKeyboardButton("Rifiuta ❌", callback_data = "news,rejected,{},{}".format())
-            ]
-        ])
+            reply_markup = InlineKeyboardMarkup([
+                [
+                    InlineKeyboardButton("Accetta ✔", callback_data = "news,approved,{},{}".format()),
+                    InlineKeyboardButton("Rifiuta ❌", callback_data = "news,rejected,{},{}".format())
+                ]
+            ])
 
-        context.bot.sendMessage(
-            chat_id = approval_group_chatid,
-            text = notice_message,
-            parse_mode = 'HTML',
-            reply_markup = reply_markup
-        )
-    else:
-        # Otherwise send a direct message on each channel
-        
-        notice_message = format_notice_message(page_data["label"], full_url, link_content)
+            context.bot.sendMessage(
+                chat_id = approval_group_chatid,
+                text = notice_message,
+                parse_mode = 'HTML',
+                reply_markup = reply_markup
+            )
+        else:
+            # Otherwise send a direct message on each channel
+            
+            notice_message = format_notice_message(page_data["label"], full_url, link_content)
 
-        for channel in page_data["channels"]:
-            send_notice(context, channel, notice_message)
+            for channel in page_data["channels"]:
+                send_notice(context, channel, notice_message)
 
     except Exception as e:
         logging.exception("Exception on call enqueue_notice(...)".format(context))
@@ -72,22 +73,21 @@ def format_notice_message(label, url, link_content):
 def send_notice(context, chat_id, notice_message):
     logging.info("Call send_notice({}, {}, {})".format(context, chat_id, notice_message))
 
-    try:
-        sent = False
+    sent = False
 
-        while not sent:
-            try:
-                context.bot.sendMessage(
-                    chat_id = chat_id,
-                    text = notice_message,
-                    parse_mode = 'HTML'
-                )
+    while not sent:
+        try:
+            context.bot.sendMessage(
+                chat_id = chat_id,
+                text = notice_message,
+                parse_mode = 'HTML'
+            )
 
-                sent = True
-            except telegram.error.RetryAfter:
-                logging.info("Retry after error encountered, retrying in 30 seconds")
+            sent = True
+        except telegram.error.RetryAfter:
+            logging.info("Retry after error encountered, retrying in 30 seconds")
 
-                time.sleep(30)
-                continue
+            time.sleep(30)
+            continue
 
 
