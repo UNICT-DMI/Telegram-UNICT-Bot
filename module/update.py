@@ -57,25 +57,33 @@ def update_tick(context):
                     for link in links:
                         logging.info("--- Link '{}'".format(link))
 
-                        # If link has already been scraped (implying that's invalid page or already posted notice), skip it
-                        if link in notices_data["scraped_links"]:
+                        try:
+                            # If link has already been scraped (implying that's invalid page or already posted notice), skip it
+                            if link in notices_data["scraped_links"]:
+                                logging.info("Link is already present in the list")
+
+                                continue
+
+                            full_url = group["base_url"] + link 
+
+                            link_content = get_content(full_url)
+
+                            # Check if link's content is valid
+                            if all(link_content):
+                                logging.info("Link is valid and seems to contain a notice, spamming")
+
+                                # Enqueue the notice to be sent in the channel or in an approval group
+                                enqueue_notice(context, page, notices_data, full_url, link_content, approval_group_chatid)
+                            else:
+                                logging.info("Link doesn't contain a valid notice")
+
+                            # Appends current link to scraped ones
+                            notices_data["scraped_links"].append(link)
+                        except:
+                            logging.exception("Unhandled exception while analyzing the link")
+                            traceback.print_exc()
+
                             continue
-
-                        full_url = group["base_url"] + link 
-
-                        link_content = get_content(full_url)
-
-                        # Check if link's content is valid
-                        if all(link_content):
-                            logging.info("Link is valid and seems to contain a notice, spamming")
-
-                            # Enqueue the notice to be sent in the channel or in an approval group
-                            enqueue_notice(context, page, notices_data, full_url, link_content, approval_group_chatid)
-                        else:
-                            logging.info("Link doesn't contain a valid notice")
-
-                        # Appends current link to scraped ones
-                        notices_data["scraped_links"].append(link)
 
                 # Update notices data file
                 yaml.safe_dump(notices_data, open(data_file_path, "w"))

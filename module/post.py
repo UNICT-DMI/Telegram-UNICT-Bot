@@ -1,4 +1,5 @@
 import telegram
+import time
 import yaml
 import logging
 
@@ -36,6 +37,10 @@ def enqueue_notice(context, page_data, notices_data, full_url, link_content, app
         for channel in page_data["channels"]:
             send_notice(context, channel, notice_message)
 
+    except Exception as e:
+        logging.exception("Exception on call enqueue_notice(...)".format(context))
+        logging.exception(traceback.format_exc())
+
 # Message formatting
 def format_content(content):
     config_map = yaml.safe_load(open("config/settings.yaml", "r"))
@@ -67,10 +72,22 @@ def format_notice_message(label, url, link_content):
 def send_notice(context, chat_id, notice_message):
     logging.info("Call send_notice({}, {}, {})".format(context, chat_id, notice_message))
 
-    context.bot.sendMessage(
-        chat_id = chat_id,
-        text = notice_message,
-        parse_mode = 'HTML'
-    )
+    try:
+        sent = False
+
+        while not sent:
+            try:
+                context.bot.sendMessage(
+                    chat_id = chat_id,
+                    text = notice_message,
+                    parse_mode = 'HTML'
+                )
+
+                sent = True
+            except telegram.error.RetryAfter:
+                logging.info("Retry after error encountered, retrying in 30 seconds")
+
+                time.sleep(30)
+                continue
 
 
