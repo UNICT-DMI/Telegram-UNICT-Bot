@@ -65,8 +65,8 @@ def update_tick(context):
                             # If link has already been scraped (implying that's invalid page or already posted notice), skip it
                             if link in notices_data["scraped_links"]:
                                 logging.info("Link is already present in the list")
-
-                                continue
+                                # continue
+                                break
 
                             full_url = group["base_url"] + link 
 
