@@ -54,8 +54,12 @@ def update_tick(context):
 
                     links = get_links(page_key, page_url)
 
+                    if not links:
+                        logging.warning("No links retrieved")
+                        continue
+
                     for link in links:
-                        logging.info("--- Link '{}'".format(link))
+                        logging.info("---- Link '{}'".format(link))
 
                         try:
                             # If link has already been scraped (implying that's invalid page or already posted notice), skip it

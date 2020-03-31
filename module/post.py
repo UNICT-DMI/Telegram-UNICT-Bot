@@ -2,6 +2,7 @@ import telegram
 import time
 import yaml
 import logging
+import traceback
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CallbackContext
@@ -33,7 +34,7 @@ def enqueue_notice(context, page_data, notices_data, full_url, link_content, app
         else:
             # Otherwise send a direct message on each channel
             
-            notice_message = format_notice_message(page_data["label"], full_url, link_content)
+            notice_message = format_notice_message(page_data["label"], clear_url(full_url), link_content)
 
             for channel in page_data["channels"]:
                 send_notice(context, channel, notice_message)
@@ -58,6 +59,12 @@ def format_content(content):
         content = "{}{}".format(content[:split_index], config_map["max_length_footer"])
 
     return content
+
+def clear_url(url):
+    # Remove trailing slashes, added concatenating base URLs with local hrefs
+    url = url.replace("it//", "it/")
+
+    return url
 
 def format_notice_message(label, url, link_content):
     message = "<b>[{}]</b>\n{}\n<b>{}</b>\n{}".format(
@@ -84,6 +91,8 @@ def send_notice(context, chat_id, notice_message):
             )
 
             sent = True
+
+            logging.info("Notice sent to {}".format(chat_id))
         except telegram.error.RetryAfter:
             logging.info("Retry after error encountered, retrying in 30 seconds")
 

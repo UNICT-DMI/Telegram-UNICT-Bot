@@ -13,16 +13,31 @@ import traceback
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CallbackContext
 
-# with open('config/settings.yaml', 'r') as yaml_config:
-#     config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
-#     notices_urls = config_map["notices_urls"]
+with open('config/settings.yaml', 'r') as yaml_config:
+    config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
 
 def get_links(label, url):
     logging.info("Call get_links({}, {})".format(label, url))
 
     try:
-        time.sleep(1) # delay to avoid "Max retries exceeds" for too many requests
-        req = requests.get(url)
+        response_received = False
+        tries = 0
+        max_tries = config_map["max_connection_tries"]
+
+        while not response_received and tries < max_tries:
+            try:
+                req = requests.get(url)
+                response_received = True
+            except Exception as e:
+                tries += 1
+
+                logging.exception("Unhandled exception while connecting ({}), retrying in 5 seconds ({}/{})".format(e, tries, max_tries))
+
+                time.sleep(5)
+
+        if not response_received:
+            return None
+
         soup = bs4.BeautifulSoup(req.content, 'html.parser')
 
         result = soup.select("span.field-content a")
