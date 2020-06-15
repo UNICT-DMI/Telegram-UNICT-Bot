@@ -253,3 +253,4 @@ def scrape_notices(context):
                         send_news_approve_message(context, notice_path, "data/avvisi/"+str(folder), folder, page_name, approve_group_chatid)
                     else:
                         spam_news(context, notice_path, page["channels"])
+                        open("logs/news.txt", "a+").write("{} {}\n".format(url,channel))
