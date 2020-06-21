@@ -71,10 +71,10 @@ class DepartmentScraper():
 
         return filename
 
-    def run(self):
+    def run(self, destination_folder):
         self.__logger.info("Building a complete image for department '{}'...".format(self.__department_key))
 
-        department_root_folder = "images/{}".format(self.__escape_filename_chars(self.__department_key))
+        department_root_folder = "{}/{}".format(destination_folder, self.__escape_filename_chars(self.__department_key))
 
         try:
             os.mkdir(department_root_folder)

@@ -3,7 +3,6 @@ import yaml, logging, traceback, bs4, os, argparse
 from concurrent.futures import ThreadPoolExecutor
 
 from module.images_builder.department_scraper import DepartmentScraper
-from module.images_builder.threading import DepartmentScraperThread
 
 def load_notices_urls():
     config_map = yaml.safe_load(open('config/settings.yaml', 'r'))
@@ -12,6 +11,7 @@ def load_notices_urls():
 def main():
     parser = argparse.ArgumentParser(description='UNICT-Bot notices images builder')
     parser.add_argument('workers', type=int)
+    parser.add_argument('destination_folder')
     parser.add_argument('--logfile', nargs='+', help="Path to the file to print logs in")
     parser.add_argument('--scrape-only', nargs='+', help="Scrape only given departments")
     parser.add_argument('--exclude', nargs='+', help="Skip given departments while scraping")
@@ -21,10 +21,15 @@ def main():
     logging.basicConfig(
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         level=logging.INFO,
-        filename=args.logfile#"logs.txt"
+        filename=args.logfile
     )
 
     logger = logging.getLogger(__name__)
+
+    try:
+        os.mkdir(args.destination_folder)
+    except FileExistsError:
+        logger.warning("Destination folder exists, resulting images may be dirty and/or invalid.")
 
     notices_urls = load_notices_urls()
 
@@ -43,13 +48,10 @@ def main():
         logger.info("Creating scraper for departiment '{}'".format(department_key))
 
         scraper = DepartmentScraper(department_key, notices_urls[department_key])
-        # scraper_thread = DepartmentScraperThread(scraper)
-
-        # scrapers.append(scraper_thread)
         scrapers.append(scraper)
 
     for scraper in scrapers:
-        future = executor.submit(scraper.run)
+        future = executor.submit(scraper.run, args.destination_folder)
 
         futures.append(future)
 
