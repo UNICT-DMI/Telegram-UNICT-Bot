@@ -14,11 +14,29 @@ with open('config/settings.yaml', 'r') as yaml_config:
     config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
     notices_urls = config_map["notices_urls"]
 
-def get_links(label, url):
+# TODO: Should be used for getting every page's markup
+def request_page_content(url):
+    try:
+        req = requests.get(url)
+
+        return req.content
+    except:
+        open("logs/errors.txt", "a+").write("{}\n".format(e))
+        return None
+
+def get_links_from_url(label, url):
     try:
         time.sleep(1) # delay to avoid "Max retries exceeds" for too many requests
         req = requests.get(url)
-        soup = bs4.BeautifulSoup(req.content, 'html.parser')
+
+        return get_links(label, req.content)
+    except Exception as e:
+        open("logs/errors.txt", "a+").write("{}\n".format(e))
+        return None
+
+def get_links(label, content):
+    try:
+        soup = bs4.BeautifulSoup(content, 'html.parser')
 
         result = soup.select("span.field-content a")
 
@@ -33,11 +51,19 @@ def get_links(label, url):
         open("logs/errors.txt", "a+").write("{}\n".format(e))
         return None
 
-def get_content(url):
+def get_content_from_url(url):
     try:
         time.sleep(1) # delay to avoid "Max retries exceeds" for too many requests
         req = requests.get(url)
-        soup = bs4.BeautifulSoup(req.content, "html.parser")
+
+        return get_content(req.content)
+    except Exception as e:
+        open("logs/errors.txt", "a+").write("{}\n".format(e))
+        return None,None
+
+def get_content(content):
+    try:
+        soup = bs4.BeautifulSoup(content, "html.parser")
 
         table_content = ""
         table = soup.find('table')
@@ -115,7 +141,7 @@ def get_notice_content(notice_dict, base_url, archive_p, notice_p):
 
     url = "%s%s" % (base_url, post_url)
 
-    title, content = get_content(url)
+    title, content = get_content_from_url(url)
 
     if title is not None:
         content = format_content(content)
@@ -224,7 +250,7 @@ def scrape_notices(context):
                         get_notice_content(pending_notice, base_url, archive_path, notice_path)
                     else:
                         notices = []
-                        link = get_links(page_name, url)
+                        link = get_links_from_url(page_name, url)
                         if link:
                             notices.extend(link)
 
