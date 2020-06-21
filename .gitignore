@@ -6,4 +6,5 @@ config/settings.yaml
 .sonarlint
 module/__pycache__/*
 **/__pycache__/*
+images/*
 

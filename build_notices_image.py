@@ -11,6 +11,7 @@ def main():
     logging.basicConfig(
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         level=logging.INFO,
+        filename="logs.txt"
     )
 
     logger = logging.getLogger(__name__)

@@ -1,6 +1,6 @@
 import logging, bs4, traceback, os
 
-from module.scraper_notices import request_page_content, get_links_from_url
+from module.scraper_notices import request_page_content, get_links
 
 class DepartmentScraper():
     def __init__(self, department_key, department_data):
@@ -10,7 +10,8 @@ class DepartmentScraper():
         self.logger = logging.getLogger("'{}' department scraper".format(department_key))
 
     def scrape_links_from_page(self, file_writer, page_id, page_url):
-        links = get_links_from_url(page_id, page_url)
+        page_content = request_page_content(page_url)
+        links = get_links(page_id, page_content)
 
         # self.logger.info(links)
 
