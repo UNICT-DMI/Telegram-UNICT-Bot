@@ -7,6 +7,7 @@ import yaml
 import time
 import re
 import telegram
+import hashlib
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CallbackContext
 
@@ -25,10 +26,53 @@ def get_links(label, url):
         if (len(result) == 0):
             result = soup.select("strong.field-content a")
 
+        base_url = url
+        base_url = base_url[:base_url.find(".unict.it")] + ".unict.it"
+
         return [
-            { label: link.get('href') }
+            { label: link.get('href'), "content": get_content_checksum(base_url + link.get('href')) }
             for link in result if "/docenti/" not in link.get('href')
         ]
+    except Exception as e:
+        open("logs/errors.txt", "a+").write("{}\n".format(e))
+        return None
+
+def get_content_checksum(url):
+    try:
+        time.sleep(1) # delay to avoid "Max retries exceeds" for too many requests
+        req = requests.get(url)
+        soup = bs4.BeautifulSoup(req.content, "html.parser")
+
+        table_content = ""
+        table = soup.find('table')
+
+        if table is not None:
+            table_body = table.find('tbody')
+
+            rows = table_body.find_all('tr')
+            for row in rows:
+                cols = row.find_all('td')
+                cols = [ele.text.strip() for ele in cols]
+                for c in cols:
+                    table_content += c + "\t"
+                table_content +="\n"
+
+            table.decompose() # remove table from content
+
+        title = soup.find("h1", attrs={"class": "page-title"})
+        content = soup.find("div", attrs={"class": "field-item even"})
+
+        if title is not None and content is not None:
+            title = title.get_text()
+            content = content.get_text()
+            content.strip() # trimming
+            content += "\n"
+            content += table_content
+            md5 = hashlib.md5()
+            md5.update(content.encode('utf-8'))
+            return md5.hexdigest()
+        return None
+
     except Exception as e:
         open("logs/errors.txt", "a+").write("{}\n".format(e))
         return None
@@ -62,7 +106,6 @@ def get_content(url):
         if title is not None and content is not None:
             title = title.get_text()
             content = content.get_text()
-
             content.strip() # trimming
             content += "\n"
             content += table_content
@@ -107,7 +150,7 @@ def format_content(content):
     return content
 
 def get_notice_content(notice_dict, base_url, archive_p, notice_p):
-    label = list(notice_dict.keys())[0]
+    label = list(notice_dict.keys())[0] # page-name
 
     post_url = notice_dict[label]
     if not post_url.startswith("/"):
@@ -253,4 +296,4 @@ def scrape_notices(context):
                         send_news_approve_message(context, notice_path, "data/avvisi/"+str(folder), folder, page_name, approve_group_chatid)
                     else:
                         spam_news(context, notice_path, page["channels"])
-                        open("logs/news.txt", "a+").write("{} {}\n".format(url,channel))
+                        open("logs/news.txt", "a+").write("{} {}\n".format(url, page["channels"]))
