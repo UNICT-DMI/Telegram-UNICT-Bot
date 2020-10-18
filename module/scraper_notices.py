@@ -8,6 +8,8 @@ import time
 import re
 import telegram
 import hashlib
+import time
+import errno
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CallbackContext
 
@@ -30,14 +32,17 @@ def get_links(label, url):
         base_url = base_url[:base_url.find(".unict.it")] + ".unict.it"
 
         return [
-            { label: link.get('href'), "content": get_content_checksum(base_url + link.get('href')) }
+            { 
+                label: link.get('href'),
+                "content": get_content_checksum(base_url + link.get('href')) 
+            }
             for link in result if "/docenti/" not in link.get('href')
         ]
     except Exception as e:
         open("logs/errors.txt", "a+").write("{}\n".format(e))
         return None
 
-def get_content_checksum(url):
+def get_content_checksum(url: str) -> str:
     try:
         time.sleep(1) # delay to avoid "Max retries exceeds" for too many requests
         req = requests.get(url)
@@ -53,8 +58,7 @@ def get_content_checksum(url):
             for row in rows:
                 cols = row.find_all('td')
                 cols = [ele.text.strip() for ele in cols]
-                for c in cols:
-                    table_content += c + "\t"
+                table_content = "\t".join(cols)
                 table_content +="\n"
 
             table.decompose() # remove table from content
@@ -72,12 +76,11 @@ def get_content_checksum(url):
             md5.update(content.encode('utf-8'))
             return md5.hexdigest()
         return None
-
     except Exception as e:
         open("logs/errors.txt", "a+").write("{}\n".format(e))
         return None
 
-def get_content(url):
+def get_content(url: str) -> [str, str]:
     try:
         time.sleep(1) # delay to avoid "Max retries exceeds" for too many requests
         req = requests.get(url)
@@ -93,8 +96,7 @@ def get_content(url):
             for row in rows:
                 cols = row.find_all('td')
                 cols = [ele.text.strip() for ele in cols]
-                for c in cols:
-                    table_content += c + "\t"
+                table_content = "\t".join(cols)
                 table_content +="\n"
 
             table.decompose() # remove table from content
@@ -207,7 +209,7 @@ def send_news_approve_message(context: CallbackContext, notice_p, channel_folder
         if notice_message != "":
             try:
                 # notice disk id is used to identify an approval pending message. OS clock's used for this
-                notice_disk_id = time.clock()
+                notice_disk_id = time.clock_gettime()
                 approving_notice_filename = "{}/{}/{}_{}.dat".format(channel_folder, pending_approval_folder, page_name, notice_disk_id)
 
                 if not os.path.exists(os.path.dirname(approving_notice_filename)):
@@ -237,7 +239,6 @@ def send_news_approve_message(context: CallbackContext, notice_p, channel_folder
 
 
 def scrape_notices(context):
-    job = context.job
     notices_urls_cp = copy.deepcopy(notices_urls)
 
     for i in notices_urls_cp:
