@@ -7,17 +7,37 @@ import yaml
 import time
 import re
 import telegram
+import logging
+import traceback
+
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CallbackContext
 
 with open('config/settings.yaml', 'r') as yaml_config:
     config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
-    notices_urls = config_map["notices_urls"]
 
 def get_links(label, url):
+    logging.info("Call get_links({}, {})".format(label, url))
+
     try:
-        time.sleep(1) # delay to avoid "Max retries exceeds" for too many requests
-        req = requests.get(url)
+        response_received = False
+        tries = 0
+        max_tries = config_map["max_connection_tries"]
+
+        while not response_received and tries < max_tries:
+            try:
+                req = requests.get(url)
+                response_received = True
+            except Exception as e:
+                tries += 1
+
+                logging.exception("Unhandled exception while connecting ({}), retrying in 5 seconds ({}/{})".format(e, tries, max_tries))
+
+                time.sleep(5)
+
+        if not response_received:
+            return None
+
         soup = bs4.BeautifulSoup(req.content, 'html.parser')
 
         result = soup.select("span.field-content a")
@@ -26,16 +46,22 @@ def get_links(label, url):
             result = soup.select("strong.field-content a")
 
         return [
-            { label: link.get('href') }
-            for link in result if "/docenti/" not in link.get('href')
+            link.get('href') for link in result if "/docenti/" not in link.get('href')
         ]
     except Exception as e:
-        open("logs/errors.txt", "a+").write("{}\n".format(e))
+        # open("logs/errors.txt", "a+").write("{}\n".format(e))
+
+        logging.exception("Exception on call get_links({}, {})".format(label, url))
+        logging.exception(traceback.format_exc())
+
         return None
 
 def get_content(url):
+    logging.info("Call get_content({})".format(url))
+
     try:
         time.sleep(1) # delay to avoid "Max retries exceeds" for too many requests
+
         req = requests.get(url)
         soup = bs4.BeautifulSoup(req.content, "html.parser")
 
@@ -76,181 +102,159 @@ def get_content(url):
 
         return title, content
     except Exception as e:
-        open("logs/errors.txt", "a+").write("{}\n".format(e))
+        # open("logs/errors.txt", "a+").write("{}\n".format(e))
+
+        logging.exception("Exception on call get_content({})".format(url))
+        logging.exception(traceback.format_exc())
+
         return None,None
 
 def pull_pending_notice(file_name):
-    if os.path.isfile(file_name):
-        data = []
+    logging.info("Call pull_pending_notice({})".format(file_name))
 
-        with open(file_name, 'r') as fr:
-            data = fr.read().splitlines(True)
+    try:
+        if os.path.isfile(file_name):
+            data = []
 
-        with open(file_name, 'w') as fw:
-            fw.writelines(data[1:])
+            with open(file_name, 'r') as fr:
+                data = fr.read().splitlines(True)
 
-        if len(data) > 0:
-            return ast.literal_eval(data[0])
-    return None
+            with open(file_name, 'w') as fw:
+                fw.writelines(data[1:])
+
+            if len(data) > 0:
+                return ast.literal_eval(data[0])
+        return None
+    except Exception as e:
+        logging.exception("Exception on call pull_pending_notice({})".format(file_name))
+        logging.exception(traceback.format_exc())
+
+        return None
 
 def format_content(content):
-    max_len = config_map["max_messages_length"]
+    # logging.info("Call format_content({})".format(content))
 
-    if len(content) > max_len:
-        split_index = max_len - 1
+    try:
+        max_len = config_map["max_messages_length"]
 
-        while content[split_index] != ' ':
-            split_index = split_index - 1
+        if len(content) > max_len:
+            split_index = max_len - 1
 
-        content = "{}{}".format(content[:split_index], config_map["max_length_footer"])
+            while content[split_index] != ' ':
+                split_index = split_index - 1
 
-    return content
+            content = "{}{}".format(content[:split_index], config_map["max_length_footer"])
+
+        return content
+    except Exception as e:
+        logging.exception("Exception on call format_content({})".format(content))
+        logging.exception(traceback.format_exc())
+
+        return None
 
 def get_notice_content(notice_dict, base_url, archive_p, notice_p):
-    label = list(notice_dict.keys())[0]
+    # logging.info("Call get_notice_content({}, {}, {}, {})".format(notice_dict, base_url, archive_p, notice_p))
 
-    post_url = notice_dict[label]
-    if not post_url.startswith("/"):
-        post_url = "/"+post_url
+    try:
+        label = list(notice_dict.keys())[0]
 
-    url = "%s%s" % (base_url, post_url)
+        post_url = notice_dict[label]
+        if not post_url.startswith("/"):
+            post_url = "/"+post_url
 
-    title, content = get_content(url)
+        url = "%s%s" % (base_url, post_url)
 
-    if title is not None:
-        content = format_content(content)
+        title, content = get_content(url)
 
-        formatted_notice = '<b>[%s]</b>\n%s\n<b>%s</b>\n%s' % (label, url, title, content)
+        if title is not None:
+            content = format_content(content)
 
-        with open(archive_p, 'a') as fw:
-            fw.write('%s\n' % notice_dict)
+            formatted_notice = '<b>[%s]</b>\n%s\n<b>%s</b>\n%s' % (label, url, title, content)
 
-        with open(archive_p, 'r') as fr:
-            data = fr.read().splitlines(True)
+            with open(archive_p, 'a') as fw:
+                fw.write('%s\n' % notice_dict)
 
-            if len(data) > 50:
-                with open(archive_p, 'w') as fw:
-                    fw.writelines(data[1:])
+            with open(archive_p, 'r') as fr:
+                data = fr.read().splitlines(True)
 
-        with open(notice_p, 'w') as fw:
-            fw.write(formatted_notice)
+                if len(data) > 50:
+                    with open(archive_p, 'w') as fw:
+                        fw.writelines(data[1:])
 
-def spam_news(context: CallbackContext, notice_p, channels):
-    if os.path.isfile(notice_p):
-        message = open(notice_p).read()
-        if message != "":
-            try:
-                for channel in channels:
-                    context.bot.sendMessage(chat_id=channel, text=message, parse_mode='HTML')
-            except Exception as error:
-                open("logs/errors.txt", "a+").write("{} {}\n".format(error, channel))
-        os.remove(notice_p)
-
-# broadcasts a news passed as a direct message in parameters
-def spam_news_direct(context: CallbackContext, notice_message, channel):
-    if notice_message != "":
-        try:
-            context.bot.sendMessage(chat_id=channel, text=notice_message, parse_mode='HTML')
-        except Exception as error:
-            open("logs/errors.txt", "a+").write("{} {}\n".format(error, channel))
-
-def send_news_approve_message(context: CallbackContext, notice_p, channel_folder, dep_name, page_name, group_chatid):
-    # maybe pending approval folder should be settable, to be reviewed
-    pending_approval_folder = "in_approvazione"
-
-    if os.path.isfile(notice_p):
-        notice_message = open(notice_p).read()
-
-        if notice_message != "":
-            try:
-                # notice disk id is used to identify an approval pending message. OS clock's used for this
-                notice_disk_id = time.clock()
-                approving_notice_filename = "{}/{}/{}_{}.dat".format(channel_folder, pending_approval_folder, page_name, notice_disk_id)
-
-                if not os.path.exists(os.path.dirname(approving_notice_filename)):
-                    try:
-                        os.makedirs(os.path.dirname(approving_notice_filename))
-                    except OSError as exc:
-                        if exc.errno != errno.EEXIST:
-                            raise
-
-                # write notice data into a file
-                with open(approving_notice_filename, 'w') as fw:
-                    fw.writelines(notice_message[0:])
-
-                # reply buttons layout
-                keyboard_markup = [
-                    [InlineKeyboardButton("Accetta ✔", callback_data="news:approved:{}:{}:{}:{}".format(dep_name, page_name, channel_folder, notice_disk_id)),
-                    InlineKeyboardButton("Rifiuta ❌", callback_data="news:rejected:{}:{}:{}:{}".format(dep_name, page_name, channel_folder, notice_disk_id))]
-                ]
-
-                reply_markup = InlineKeyboardMarkup(keyboard_markup)
-
-                # finally, send the message to the approval group
-                context.bot.sendMessage(chat_id=group_chatid, text=notice_message, parse_mode='HTML', reply_markup=reply_markup)
-            except Exception as error:
-                open("logs/errors.txt", "a+").write("send_news_approve_message: {} {}\n".format(error, channel_folder))
-        os.remove(notice_p)
-
+            with open(notice_p, 'w') as fw:
+                fw.write(formatted_notice)
+    except Exception as e:
+        logging.exception("Exception on call get_notice_content({}, {}, {}, {})".format(notice_dict, base_url, archive_p, notice_p))
+        logging.exception(traceback.format_exc())
 
 def scrape_notices(context):
-    job = context.job
-    notices_urls_cp = copy.deepcopy(notices_urls)
+    logging.info("Call scrape_notices({})".format(context))
 
-    for i in notices_urls_cp:
-        if i.find("_") > -1:
-            folder = i[0:i.find("_")]
-        else:
-            folder = i
+    logging.info("Starting scraping job")
 
-        if "pages" in notices_urls_cp[i]:
-            for page_name in notices_urls_cp[i]["pages"]:
-                page = notices_urls_cp[i]["pages"][page_name]
+    try:
+        job = context.job
+        notices_urls_cp = copy.deepcopy(notices_urls)
 
-                pending_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avvisi_in_sospeso.dat"
-                archive_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avvisi.dat"
-                notice_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avviso.dat"
+        for i in notices_urls_cp:
+            if i.find("_") > -1:
+                folder = i[0:i.find("_")]
+            else:
+                folder = i
 
-                for url in page["urls"]:
-                    base_url = url
-                    base_url = base_url[:base_url.find(".unict.it")] + ".unict.it"
+            if "pages" in notices_urls_cp[i]:
+                for page_name in notices_urls_cp[i]["pages"]:
+                    page = notices_urls_cp[i]["pages"][page_name]
 
-                    if not os.path.exists("data/avvisi/"+str(folder)+"/"):
-                        os.makedirs("data/avvisi/"+str(folder)+"/")
+                    pending_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avvisi_in_sospeso.dat"
+                    archive_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avvisi.dat"
+                    notice_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avviso.dat"
 
-                    pending_notice = pull_pending_notice(pending_path)
+                    for url in page["urls"]:
+                        base_url = url
+                        base_url = base_url[:base_url.find(".unict.it")] + ".unict.it"
 
-                    if pending_notice:
-                        get_notice_content(pending_notice, base_url, archive_path, notice_path)
-                    else:
-                        notices = []
-                        link = get_links(page_name, url)
-                        if link:
-                            notices.extend(link)
+                        if not os.path.exists("data/avvisi/"+str(folder)+"/"):
+                            os.makedirs("data/avvisi/"+str(folder)+"/")
 
-                            with open(pending_path, 'a+') as pending_file_handle:
-                                if os.path.isfile(archive_path):
-                                    with open(archive_path, 'r') as archive_file_handle:
-                                        archive_notices = archive_file_handle.read()
+                        pending_notice = pull_pending_notice(pending_path)
 
+                        if pending_notice:
+                            get_notice_content(pending_notice, base_url, archive_path, notice_path)
+                        else:
+                            notices = []
+                            link = get_links(page_name, url)
+                            if link:
+                                notices.extend(link)
+
+                                with open(pending_path, 'a+') as pending_file_handle:
+                                    if os.path.isfile(archive_path):
+                                        with open(archive_path, 'r') as archive_file_handle:
+                                            archive_notices = archive_file_handle.read()
+
+                                            for notice in notices:
+                                                if str(notice) not in archive_notices:
+                                                    pending_file_handle.write("%s\n" % notice)
+                                    else:
                                         for notice in notices:
-                                            if str(notice) not in archive_notices:
-                                                pending_file_handle.write("%s\n" % notice)
-                                else:
-                                    for notice in notices:
-                                        pending_file_handle.write("%s\n" % notice)
+                                            pending_file_handle.write("%s\n" % notice)
 
-                            pending_notice = pull_pending_notice(pending_path)
-                            if pending_notice:
-                                get_notice_content(pending_notice, base_url, archive_path, notice_path)
+                                pending_notice = pull_pending_notice(pending_path)
 
-                    try:
-                        approve_group_chatid = page["approve_group_chatid"]
-                    except KeyError:
-                        approve_group_chatid = None
+                                if pending_notice:
+                                    get_notice_content(pending_notice, base_url, archive_path, notice_path)
 
-                    if approve_group_chatid:
-                        send_news_approve_message(context, notice_path, "data/avvisi/"+str(folder), folder, page_name, approve_group_chatid)
-                    else:
-                        spam_news(context, notice_path, page["channels"])
-                        open("logs/news.txt", "a+").write("{} {}\n".format(url,page["channels"]))
+                        try:
+                            approve_group_chatid = page["approve_group_chatid"]
+                        except KeyError:
+                            approve_group_chatid = None
+
+                        if approve_group_chatid:
+                            send_news_approve_message(context, notice_path, "data/avvisi/"+str(folder), folder, page_name, approve_group_chatid)
+                        else:
+                            spam_news(context, notice_path, page["channels"])
+    except Exception as e:
+        logging.exception("Exception on call scrape_notices({})".format(context))
+        logging.exception(traceback.format_exc())
+
+    logging.info("Scraping job finished")
