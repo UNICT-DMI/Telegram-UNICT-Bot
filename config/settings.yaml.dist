@@ -6,6 +6,7 @@ update_interval: 600
 news_interval: 60
 max_messages_length: 250
 max_length_footer: " ... \n\n<b>Clicca il link in cima al post per continuare a leggere</b>"
+max_connection_tries: 3
 
 notices_urls: {
     "DEPARTMENT-NAME": {
