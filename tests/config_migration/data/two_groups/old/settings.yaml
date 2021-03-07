@@ -1,0 +1,89 @@
+token: "XXX-XXX"
+
+dev_group_chatid: -1
+log_group_chatid: -1
+update_interval: 600
+logfile_reset_interval_minutes: 360 
+max_messages_length: 500
+max_length_footer: " ... \n\n<b>Clicca il link in cima al post per continuare a leggere</b>"
+max_connection_tries: 3
+
+notices_groups: 
+    "DMI": 
+        base_url: "http://web.dmi.unict.it/"
+        approval_group_chatid: null
+        pages: 
+            notizie: 
+                label: "Notizie"
+                urls: 
+                   - "notizie/"
+                channels: 
+                   - "@dminews"
+            
+            eventi: 
+                label: "Eventi"
+                urls: 
+                    - "tuttiglieventi/"
+                    - "eventi/"
+                channels: ["@dminews"]
+            
+            international: 
+                label: "International"
+                urls: ["it/news_international"]
+                channels: ["@dminews"]
+            
+            informatica_L31: 
+                label: "Informatica L-31"
+                urls: 
+                    - "corsi/l-31/avvisi/"
+                    - "corsi/l-31/avvisi-docente"
+                    - "corsi/l-31/avvisi-tirocini"
+                channels: ["@dminews"]
+            
+            informatica_LM18: 
+                label: "Informatica LM-18"
+                urls: 
+                    - "corsi/lm-18/avvisi/"
+                    - "corsi/lm-18/avvisi-docente"
+                    - "corsi/lm-18/avvisi-tirocini"
+                channels: ["@dminews"]
+            
+            matematica_L35: 
+                label: "Matematica L-35"
+                urls:
+                    - "corsi/l-35/avvisi/"
+                    - "corsi/l-35/avvisi-docente"
+                    - "corsi/l-35/avvisi-tirocini"
+                channels: ["@dminews"]
+            
+            matematica_LM40: 
+                label: "Matematica LM-40"
+                urls:
+                    - "corsi/lm-40/avvisi/"
+                    - "corsi/lm-40/avvisi-docente"
+                    - "corsi/lm-40/avvisi-tirocini"
+                channels: ["@dminews"]
+
+    "DFA": 
+        base_url: "http://www.dfa.unict.it/"
+        approval_group_chatid: null,
+        pages: 
+            notizie: 
+                label: "Notizie"
+                urls: ["notizie/"]
+                channels: ["-370115104"]
+            
+            eventi: 
+                label: "Event"      
+                urls: ["eventi/"]
+                channels: ["-370115104"]
+            
+            fisica_L30: 
+                label: "Fisica L-30"
+                urls: ["corsi/L-30/avvisi/"]
+                channels: ["-370115104"]
+            
+            fisica_LM17: 
+                label: "Fisica LM-17"
+                urls: \["corsi/LM-17/avvisi/"]
+                channels: ["-370115104"]

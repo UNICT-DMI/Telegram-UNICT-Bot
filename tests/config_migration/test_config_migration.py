@@ -1,11 +1,19 @@
-import yaml
+import yaml, pytest
 
 from module.config import load_configurations
 
-# def test_new_configuration_loading():
-#     with open('tests/config_migration/data/old/settings.yaml', 'r') as yaml_config:
-#         old_config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
+DATA_FOLDER = 'tests/config_migration/data'
 
-#     new_config_map = load_configurations('tests/config_migration/data/new/')
+@pytest.mark.parametrize("test_case_id", [
+    "minimal",
+    "two_groups"
+])
+def test_new_configuration_loading(test_case_id):
+    test_case_data_folder = f'{DATA_FOLDER}/{test_case_id}'
 
-#     assert old_config_map == new_config_map
+    with open(f'{test_case_data_folder}/old/settings.yaml', 'r') as yaml_config:
+        old_config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
+
+    new_config_map = load_configurations(f'{test_case_data_folder}/new/')
+
+    assert old_config_map == new_config_map
