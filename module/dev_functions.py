@@ -8,8 +8,9 @@ from telegram.ext import CallbackContext
 
 from datetime import datetime
 
-with open('config/settings.yaml', 'r') as yaml_config:
-    config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
+from module.config import load_configurations
+
+config_map = load_configurations()
 
 def logging_message(update: Update, context: CallbackContext):
 	try:

@@ -13,8 +13,9 @@ import traceback
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CallbackContext
 
-with open('config/settings.yaml', 'r') as yaml_config:
-    config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
+from module.config import load_configurations
+
+config_map = load_configurations()
 
 def get_links(label, url):
     logging.info("Call get_links({}, {})".format(label, url))

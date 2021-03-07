@@ -1,0 +1,1028 @@
+token: "XXX-XXX"
+
+dev_group_chatid: -1
+log_group_chatid: -1
+update_interval: 600
+logfile_reset_interval_minutes: 360 
+max_messages_length: 500
+max_length_footer: " ... \n\n<b>Clicca il link in cima al post per continuare a leggere</b>"
+max_connection_tries: 3
+
+notices_groups: 
+    "DMI": 
+        base_url: "http://web.dmi.unict.it/"
+        approval_group_chatid: null
+        pages: 
+            notizie: 
+                label: "Notizie"
+                urls: 
+                   - "notizie/"
+                channels: 
+                   - "@dminews"
+            
+            eventi: 
+                label: "Eventi"
+                urls: 
+                    - "tuttiglieventi/"
+                    - "eventi/"
+                channels: ["@dminews"]
+            
+            international: 
+                label: "International"
+                urls: ["it/news_international"]
+                channels: ["@dminews"]
+            
+            informatica_L31: 
+                label: "Informatica L-31"
+                urls: 
+                    - "corsi/l-31/avvisi/"
+                    - "corsi/l-31/avvisi-docente"
+                    - "corsi/l-31/avvisi-tirocini"
+                channels: ["@dminews"]
+            
+            informatica_LM18: 
+                label: "Informatica LM-18"
+                urls: 
+                    - "corsi/lm-18/avvisi/"
+                    - "corsi/lm-18/avvisi-docente"
+                    - "corsi/lm-18/avvisi-tirocini"
+                channels: ["@dminews"]
+            
+            matematica_L35: 
+                label: "Matematica L-35"
+                urls:
+                    - "corsi/l-35/avvisi/"
+                    - "corsi/l-35/avvisi-docente"
+                    - "corsi/l-35/avvisi-tirocini"
+                channels: ["@dminews"]
+            
+            matematica_LM40: 
+                label: "Matematica LM-40"
+                urls:
+                    - "corsi/lm-40/avvisi/"
+                    - "corsi/lm-40/avvisi-docente"
+                    - "corsi/lm-40/avvisi-tirocini"
+                channels: ["@dminews"]
+
+    "DFA": 
+        base_url: "http://www.dfa.unict.it/"
+        approval_group_chatid: null,
+        pages: 
+            notizie: 
+                label: "Notizie"
+                urls: ["notizie/"]
+                channels: ["-370115104"]
+            
+            eventi: 
+                label: "Event"      
+                urls: ["eventi/"]
+                channels: ["-370115104"]
+            
+            fisica_L30: 
+                label: "Fisica L-30"
+                urls: ["corsi/L-30/avvisi/"]
+                channels: ["-370115104"]
+            
+            fisica_LM17: 
+                label: "Fisica LM-17"
+                urls: \["corsi/LM-17/avvisi/"]
+                channels: ["-370115104"]
+
+    "DIEEI" : 
+        base_url: "http://www.dieei.unict.it/"
+        approval_group_chatid: null,
+        pages: 
+            ingegneria_informatica_L8: 
+                label: "Ingegneria Informatica L-8"
+                urls: 
+                    - "corsi/l-8-inf/avvisi"
+                    - "corsi/l-8-inf/avvisi-docente"
+                channels: 
+                    - "@inginfonews"
+                    - "@DIEEINews"
+            
+            ingegneria_elettronica_L8: 
+                label: "Ingegneria Elettronica L-8"
+                urls:
+                    - "corsi/l-8-ele/avvisi"
+                    - "corsi/l-8-ele/avvisi-docente"
+                channels: 
+                    - "@ingelenews"
+                    - "@DIEEINews"
+            
+            ingegneria_industriale_L9: 
+                label: "Ingegneria Industriale L-9"
+                urls:
+                    - "corsi/l-9/avvisi"
+                    - "corsi/l-9/avvisi-docente"
+                channels: 
+                    - "@ingindnews"
+                    - "@DIEEINews"
+            
+            automation_engineering_and_control_of_complex_systems_lm25: 
+                label: "AUTOMATION ENGINEERING AND CONTROL OF COMPLEX SYSTEMS LM-25"
+                urls:
+                    - "corsi/lm-25/avvisi"
+                    - "corsi/lm-25/avvisi-docente"
+                channels: ["@DIEEINews"]
+            
+            electrical_engineering_lm28: 
+                label: "ELECTRICAL ENGINEERING LM-28"
+                urls:
+                    - "corsi/lm-28/avvisi"
+                    - "corsi/lm-28/avvisi-docente"
+                channels: ["@DIEEINews"]
+            
+            ingegneria_delle_telecomunicazioni_lm27: 
+                label: "INGEGNERIA DELLE TELECOMUNICAZIONI LM-27"
+                urls: 
+                    - "corsi/lm-27/avvisi"
+                    - "corsi/lm-27/avvisi-docente"
+                channels: ["@DIEEINews"]
+            
+            ingegneria_informatica_lm32: 
+                label: "INGEGNERIA INFORMATICA LM-32"
+                urls: 
+                    - "corsi/lm-32/avvisi"
+                    - "corsi/lm-32/avvisi-docente"
+                channels: ["@DIEEINews"]
+            
+            ingegneria_elettronica_lm29: 
+                label : "INGEGNERIA ELETTRONICA LM-29"
+                urls: 
+                    - "corsi/lm-29/avvisi"
+                    - "corsi/lm-29/avvisi-docente"
+                channels: ["@DIEEINews"]
+            
+            notizie: 
+                label: "Notizie"
+                urls: ["notizie/"]
+                channels:
+                    - "@inginfonews"
+                    - "@ingelenews"
+                    - "@ingindnews"
+                    - "@DIEEINews"
+            
+            eventi: 
+                label: "Eventi"
+                urls: ["eventi/"]
+                channels: 
+                    - "@inginfonews"
+                    - "@ingelenews"
+                    - "@ingindnews"
+                    - "@DIEEINews"
+
+    DEI: 
+        base_url: "http://www.dei.unict.it/"
+        approval_group_chatid: null,
+        pages: 
+            notizie: 
+                label: "Notizie"
+                urls: ["Comunicazioni/notizie-in-evidenza"]
+                channels: ["@deinews"]
+            
+            eventi: 
+                label: "Eventi"
+                urls: ["Comunicazioni/elenco-eventi_dei"]
+                channels: ["@deinews"]
+            
+            economia_L33: 
+                label: "Economia L-33"
+                urls: 
+                    - "corsi/l-33/avvisi"
+                    - "corsi/l-33/avvisi-docente"
+                channels: ["@deinews"]
+            
+            economia_aziendale_L18: 
+                label: "Economia Aziendale L-18"
+                urls: 
+                    - "corsi/l-18/avvisi"
+                    - "corsi/l-18/avvisi-docente"
+                channels: ["@deinews"]
+            
+            data_science_for_management_LM91: 
+                label: "Data Science for Management LM-91"
+                urls: 
+                    - "corsi/lm-91/avvisi"
+                    - "corsi/lm-91/avvisi-docente"
+                channels: ["@deinews"]
+            
+            direzione_aziendale_LM77: 
+                label: "Direzione Aziendale LM-77"
+                urls: 
+                    - "corsi/lm-77-dir/avvisi"
+                    - "corsi/lm-77-dir/avvisi-docente"
+                channels: ["@deinews"]
+            
+            economia_e_management_del_territorio_e_del_turismo_lm56: 
+                label: "Economia e Management del Territorio e del Turismo LM-56"
+                urls:
+                    - "corsi/lm-56/avvisi"
+                    - "corsi/lm-56/avvisi-docente"
+                channels: ["@deinews"]
+            
+            finanza_aziendale_lm77: 
+                label: "Finanza Aziendale LM-77"
+                urls: 
+                    - "corsi/lm-77-fin/avvisi"
+                    - "corsi/lm-77-fin/avvisi-docente"
+                channels: ["@deinews"]
+            
+        
+    
+
+    "DSC": 
+        base_url: "http://www.dsc.unict.it/"
+        approval_group_chatid: null,
+        pages: 
+            notizie: 
+                label: "Notizie"
+                urls: ["notizie"]
+                channels: ["@infoDSC"]
+            
+            eventi: 
+                label: "Eventi"
+                urls: ["eventi"]
+                channels: ["@infoDSC"]
+            
+            chimica_l27: 
+                label: "Chimica L-27"
+                urls: 
+                    - "corsi/l-27/avvisi"
+                    - "corsi/l-27/avvisi-docente"
+                channels: ["@infoDSC"]
+            
+            chimica_industriale_l17: 
+                label: "Chimica Industriale L-17"
+                urls:
+                    - "corsi/l-27-ind/avvisi"
+                    - "corsi/l-27-ind/avvisi-docente"
+                channels: ["@infoDSC"]
+            
+            scienze_chimiche_lm54: 
+                label: "Scienze Chimiche LM-54"
+                urls: \[
+                    - "corsi/lm-54-sc/avvisi"
+                    - "corsi/lm-54-sc/avvisi-docente"
+                channels: ["@infoDSC"]
+            
+            chimica_biomolecolare_lm54: 
+                label: "Chimica Biomolecare LM-54"
+                urls: \[
+                    - "corsi/lm-54-bio/avvisi"
+                    - "corsi/lm-54-bio/avvisi-docente"
+                channels: ["@infoDSC"]
+            
+            chimica_dei_materiali_lm54: 
+                label: "Chimica dei Materiali LM-54"
+                urls: 
+                    - "corsi/lm-54-mat/avvisi"
+                    - "corsi/lm-54-mat/avvisi-docente"
+                channels: ["@infoDSC"]
+            
+            chimica_organica_e_bioorganica_lm54: 
+                label: "Chimica organica e bioorganica LM-54"
+                urls: 
+                    - "corsi/lm-54-org/avvisi"
+                    - "corsi/lm-54-org/avvisi-docente"
+                channels: ["@infoDSC"]
+
+    "LEX": 
+        base_url: "http://www.lex.unict.it/"
+        approval_group_chatid: null,
+        pages: 
+            notizie: 
+                label: "Notizie"
+                urls: ["it/in-evidenza"]
+                channels: ["@lexunictnews"]
+            
+            eventi: 
+                label: "Eventi"
+                urls: ["it/eventi"]
+                channels: ["@lexunictnews"]
+            
+            giurisprudenza_LMG01: 
+                label: "Giurisprudenza LMG-01"
+                urls: ["it/tutte-le-comunicazioni"]
+                channels: ["@lexunictnews"]
+  
+    "BIOMETEC": 
+      base_url: "http://www.biometec.unict.it/"
+      approval_group_chatid: null,
+      pages: 
+          notizie: 
+              label: "Notizie"
+              urls: ["notizie"]
+              channels: ["@biometecnews"]
+          
+          eventi: 
+              label: "Eventi"
+              urls: ["eventi"]
+              channels: ["@biometecnews"]
+          
+          biotecnologie_l2: 
+              label: "Biotecnologie L-2"
+              urls: 
+                  - "corsi/l-2/avvisi"
+                  - "corsi/l-2/avvisi-docente"
+              channels: ["@biometecnews"]
+          
+          scienze_motorie_l22: 
+              label: "Scienze Motorie L-22"
+              urls: 
+                  - "corsi/l-22/avvisi"
+                  - "corsi/l-22/avvisi-docente"
+              channels: ["@biometecnews"]
+          
+          biotecnologie_mediche_lm9: 
+              label: "Biotecnologie mediche LM-9"
+              urls: 
+                  - "corsi/lm-9/avvisi"
+                  - "corsi/lm-9/avvisi-docente"
+              channels: ["@biometecnews"]
+          
+          ortottica_ed_assistenza_oftalmologica_lsnt2ort: 
+              label: "Ortottica ed assistenza oftalmologica LSNT2-ORT"
+              urls: 
+                  - "corsi/lsnt2-ortottica/avvisi"
+                  - "corsi/lsnt2-ortottica/avvisi-docente"
+              channels: ["@biometecnews"]
+          
+          lnst2terapia: 
+              label: "LNST2-Terapia"
+              urls: 
+                  - "corsi/lsnt2-terapia/avvisi"
+                  - "corsi/lsnt2-terapia/avvisi-docente"
+              channels: ["@terapia_unict", "@biometecnews"]
+          
+          fisioterapia_lsnt2ft: 
+              label: "Fisioterapia LSNT2-FT"
+              urls: 
+                  - "corsi/lsnt2-ft/avvisi"
+                  - "corsi/lsnt2-ft/avvisi-docente"
+              channels: 
+                - "@fisioterapia_unict"
+                - "@biometecnews"
+          
+          scienze_e_tecniche_delle_attivita_motorie_preventive_e_adattate_lm67: 
+              label: "Scienze e tecniche delle attivita motorie preventive e adattate LM-67"
+              urls: 
+                  - "corsi/lm-67/avvisi"
+                  - "corsi/lm-67/avvisi-docente"
+              channels: ["@biometecnews"]
+
+    "BIOGEO": 
+        base_url: "http://www.dipbiogeo.unict.it/"
+        approval_group_chatid: null,
+        pages: 
+            notizie: 
+                label: "Notizie"
+                urls: ["notizie"]
+                channels: 
+                    - "@bio_unict"
+                    - "@geo_unict"
+                    - "@scienze_ambientali"
+                    - "@biogeonews"
+            
+            eventi: 
+                label: "Eventi"
+                urls: ["eventi"]
+                channels: 
+                    - "@bio_unict"
+                    - "@geo_unict"
+                    - "@scienze_ambientali"
+                    - "@biogeonews"
+            
+            scienze_biologiche_l13: 
+                label: "Scienze Biologiche L-13"
+                urls: 
+                    - "corsi/l-13/avvisi"
+                    - "corsi/l-13/avvisi-docente"
+                channels: 
+                    - "@bio_unict" 
+                    - "@biogeonews"
+            
+            scienze_geologiche_l34: 
+                label: "Scienze Geologiche L-34"
+                urls: 
+                    - "corsi/l-34/avvisi"
+                    - "corsi/l-34/avvisi-docente"
+                channels: 
+                    - "@geo_unict"
+                    - "@biogeonews"
+            
+            scienze_ambientali_e_naturali_l32: 
+                label: "Scienze Ambientali e Naturali L-32"
+                urls: 
+                    - "corsi/l-32/avvisi"
+                    - "corsi/l-32/avvisi-docente"
+                channels: 
+                    - "@scienze_ambientali"
+                    - "@biogeonews"
+            
+            biologia_ambientale_lm6: 
+                label: "Biologia Ambientale LM-6"
+                urls: 
+                    - "corsi/lm-6-ambientale/avvisi"
+                    - "corsi/lm-6-ambientale/avvisi-docente"
+                channels: 
+                    - "@scienze_ambientali"
+                    - "@biogeonews"
+            
+            biologia_sanitaria_lm6:  
+                label: "Biologia Sanitaria LM-6"
+                urls:
+                    - "corsi/lm-6-sanitaria/avvisi"
+                    - "corsi/lm-6-sanitaria/avvisi-docente"
+                channels: 
+                    - "@bio_unict"
+                    - "@biogeonews"
+            
+            scienze_geofisiche_lm79: 
+                label: "Scienze geofisiche LM-79"
+                urls: 
+                    - "corsi/lm-79/avvisi"
+                    - "corsi/lm-79/avvisi-docente"
+                channels: 
+                    - "@geo_unict"
+                    - "@biogeonews"
+            
+            scienze_geologiche_lm74: 
+                label: "Scienze Geologiche LM-74"
+                urls: 
+                    - "corsi/lm-74/avvisi"
+                    - "corsi/lm-74/avvisi-docente"
+                channels: 
+                    - "@geo_unict"
+                    - "@biogeonews"
+
+    "DSPS": 
+       base_url: "http://www.dsps.unict.it/"
+       approval_group_chat_id: null,
+       pages: 
+            notizie: 
+                label: "Notizie"
+                urls: ["Dipartimento/Tutti%20gli%20avvisi%20del%20Dipartimento"]
+                channels: 
+                    - "@Servizio_Sociale_Sociologia_news"
+                    - "@dspsnews"
+           
+            sociologia_e_servizio_sociale_l39l40: 
+                label: "Sociologia e servizio sociale L-39 / L-40"
+                urls: ["corsi/l-39-l-40/avvisi"]
+                channels: 
+                    - "@Servizio_Sociale_Sociologia_news"
+                    - "@dspsnews"
+           
+            scienze_dell'amministrazione_e_dell'organizzazione_l16: 
+                label: "Scienze dell'amministrazione e dell'organizzazione L-16"
+                urls: ["corsi/l-16/avvisi"]
+                channels: 
+                    - "@Servizio_Sociale_Sociologia_news"
+                    - "@dspsnews"
+           
+            storia_politica_e_relazioni_internazionali_l36: 
+                label: "Storia, politica e relazioni internazionali L-36"
+                urls: ["corsi/l-36/avvisi"]
+                channels: 
+                    - "@Servizio_Sociale_Sociologia_news"
+                    - "@dspsnews"
+           
+            internazionalizzazione_delle_relazioni_commerciali_lm52: 
+                label: "Internazionalizzazione delle relazioni commerciali LM-52"
+                urls: ["corsi/lm-52/avvisi"]
+                channels: 
+                    - "@Servizio_Sociale_Sociologia_news"
+                    - "@dspsnews"
+           
+            management_della_pubblica_amministrazione_lm63: 
+                label: "Management della pubblica amministrazione LM-63"
+                urls: ["corsi/lm-63/avvisi"]
+                channels: 
+                    - "@Servizio_Sociale_Sociologia_news"
+                    - "@dspsnews"
+           
+            global_politics_and_euro-mediterranean_relations_/_politica_globale_e_relazioni_euro-mediterranee_lm62: 
+                label: "Global Politics and Euro-Mediterranean Relations / Politica globale e relazioni euro-mediterranee LM-62"
+                urls: ["courses/lm-62/avvisi"]
+                channels: 
+                    - "@Servizio_Sociale_Sociologia_news"
+                    - "@dspsnews"
+           
+            politiche_e_servizi_sociali_lm87: 
+                label: "Politiche e servizi sociali LM-87"
+                urls: ["corsi/lm-87/avvisi"]
+                channels: 
+                    - "@Servizio_Sociale_Sociologia_news"
+                    - "@dspsnews"
+           
+            sociologia_delle_reti_dellinformazione_e_dellinnovazione_lm88: 
+                label: "Sociologia delle reti, dell'informazione e dell'innovazione LM-88"
+                urls: ["corsi/lm-88/avvisi"]
+                channels: 
+                    - "@Servizio_Sociale_Sociologia_news"
+                    - "@dspsnews"
+           
+            storia_e_cultura_dei_paesi_mediterranei_lm84: 
+                label: "Storia e cultura dei paesi mediterranei LM-84"
+                urls: ["corsi/lm-84/avvisi"]
+                channels: 
+                    - "@Servizio_Sociale_Sociologia_news"
+                    - "@dspsnews"
+
+    "DISUM": 
+        base_url: "http://www.disum.unict.it/"
+        approval_group_chatid: null,
+        pages: 
+            notizie: 
+                label: "Notizie"
+                urls: ["tuttelenotizie"]
+                channels: 
+                    - "@Lettere_unict"
+                    - "@Filosofia_unict"
+                
+                eventi: 
+                    label: "Eventi"
+                    urls: ["tuttiglieventi"]
+                    channels: 
+                        - "@Lettere_unict"
+                        - "@Filosofia_unict"
+                        - "@disumnews"
+                
+                lettere_l10: 
+                label: "Lettere L-10"
+                urls: 
+                    - "corsi/l-10/avvisi"
+                    - "corsi/l-10/avvisi-docente"
+                channels: 
+                    - "@Lettere_unict"
+                    - "@disumnews"
+            
+            filosofia_l5: 
+                label: "Filosofia L-5"
+                urls: 
+                    - "corsi/l-5/avvisi"
+                    - "corsi/l-5/avvisi-docente"
+                channels: 
+                    - "@Filosofia_unict"
+                    - "@disumnews"
+            
+            beni_culturali_l-1: 
+                label: "Beni Culturali L-1"
+                urls: 
+                    - "corsi/l-1/avvisi"
+                    - "corsi/l-1/avvisi-docente"
+                channels: ["@disumnews"]
+            
+            lingue_e_culture_europee_euroamericane_ed_orientali_l11: 
+                label: "Lingue e culture europee euroamericane ed orientali L-11"
+                urls: 
+                    - "corsi/l-11/avvisi"
+                    - "corsi/l-11/avvisi-docente"
+                channels: ["@disumnews"]
+            
+            scienze_e_lingue_per_la_comunicazione_l20: 
+                label: "Scienze e lingue per la comunicazione L-20"
+                urls: 
+                    - "corsi/l-20/avvisi"
+                    - "corsi/l-20/avvisi-docente"
+                channels: ["@disumnews"]
+            
+            archeologia_lm2: 
+                label: "Archeologia LM-2"
+                urls: 
+                    - "corsi/lm-2/avvisi"
+                    - "corsi/lm-2/avvisi-docente"
+                channels: ["@disumnews"]
+            
+            comunicazione_della_cultura_e_dello_spettacolo_lm65: 
+                label: "Comunicazione della cultura e dello spettacolo LM-65"
+                urls: 
+                    - "corsi/lm-65/avvisi"
+                    - "corsi/lm-65/avvisi-docente"
+                channels: ["@disumnews"]
+            
+            filologia_classica_lm15: 
+                label: "Filologia classica LM-15"
+                urls: 
+                    - "corsi/lm-15/avvisi"
+                    - "corsi/lm-15/avvisi-docente"
+                channels: ["@disumnews"]
+            
+            filologia_moderna_lm14: 
+                label: "Filologia moderna LM-14"
+                urls: 
+                    - "corsi/lm-14/avvisi"
+                    - "corsi/lm-14/avvisi-docente"
+                channels: ["@disumnews"]
+            
+            archeologia_lm2: 
+                label: "Archeologia LM-2"
+                urls: 
+                    - "corsi/lm-2/avvisi"
+                    - "corsi/lm-2/avvisi-docente"
+                channels: ["@disumnews"]
+            
+            lingue_e_letterature_comparate_lm37: 
+                label: "Lingue e letterature comparate LM-37"
+                urls: 
+                    - "corsi/lm-37/avvisi"
+                    - "corsi/lm-37/avvisi-docente"
+                channels: ["@disumnews"]
+            
+            lingue_per_la_cooperazione_internazionale_lm38: 
+                label: "Lingue per la cooperazione internazionale LM-38"
+                urls: 
+                    - "corsi/lm-38/avvisi"
+                    - "corsi/lm-38/avvisi-docente"
+                channels: ["@disumnews"]
+            
+            scienze_del_testo_per_le_professioni_digitali_lm43: 
+                label: "Scienze del testo per le professioni digitali LM-43"
+                urls: 
+                    - "corsi/lm-43/avvisi"
+                    - "corsi/lm-43/avvisi-docente"
+                channels: ["@disumnews"]
+            
+            scienze_filosofiche_lm78: 
+                label: "Scienze filosofiche LM-78"
+                urls: 
+                    - "corsi/lm-78/avvisi"
+                    - "corsi/lm-78/avvisi-docente"
+                channels: ["@disumnews"]
+            
+            storia_dell_arte_e_beni_culturali lm89: 
+                label: "Storia dell'arte e beni culturali LM-89"
+                urls: 
+                    - "corsi/lm-89/avvisi"
+                    - "corsi/lm-89/avvisi-docente"
+                channels: ["@disumnews"]
+            
+        
+    
+
+    "CHIRMED_medicina": 
+            base_url: "http://www.medicina.unict.it/"
+            approval_group_chatid: null,
+            pages: 
+                notizie: 
+                    label: "Notizie"
+                    urls: ["notizie"]
+                    channels: ["@medicina_unict"]
+
+    "CHIRMED": 
+        base_url: "http://www.chirmed.unict.it/"
+        approval_group_chatid: null,
+        pages: 
+            notizie: 
+                label: "Notizie"
+                urls: ["it/notizie"]
+                channels: ["@medicina_unict"]
+            
+            eventi: 
+                label: "Eventi"
+                urls: ["it/eventi"]
+                channels: ["@medicina_unict"]
+            
+            medicina_e_chirurgia_lm41: 
+                label: "Medicina e Chirurgia LM-41"
+                urls: 
+                - "corsi/lm-41/avvisi"
+                - "corsi/lm-41/avvisi-docente"
+                channels: ["@medicina_unict"]
+            
+            odontoiatria_e_protesi_dentaria_lm46: 
+                label: "Odontoiatria e protesi dentaria LM-46"
+                urls: 
+                    - "corsi/lm-46/avvisi"
+                    - "corsi/lm-46/avvisi-docente"
+                channels: ["@medicina_unict"]
+            
+            ostetricia_lsnt1: 
+                label: "Ostetricia LSNT-1"
+                urls: 
+                    - "corsi/lsnt1/avvisi"
+                    - "corsi/lsnt1/avvisi-docente"
+                channels: ["@medicina_unict"]
+            
+            tecniche_di_fisiopatologia_cardiocircolatoria_e_perfusione_cardiovascolare lsnt3: 
+                label: "Tecniche di fisiopatologia cardiocircolatoria e perfusione cardiovascolare LSNT-3"
+                urls: 
+                    - "corsi/lsnt3/avvisi"
+                    - "corsi/lsnt3/avvisi-docente"
+                channels: ["@medicina_unict"]
+
+    "DISFOR": 
+        base_url: "http://www.disfor.unict.it/"
+        approval_group_chatid: null,
+        pages: 
+            notizie: 
+                label: "Notizie"
+                urls: ["news"]
+                channels: ["@disfornews"]
+            
+            eventi: 
+                label: "Eventi"
+                urls: ["eventi"]
+                channels: ["@disfornews"]
+            
+            scienze_del_turismo_l15st: 
+                label: "Scienze del turismo L-15-ST"
+                urls: 
+                    - "corsi/l-15-st/avvisi"
+                    - "corsi/l-15-st/avvisi-docente"
+                channels: ["@disfornews"]
+            
+            scienze_dell_educazione_e_della_formazione_l19: 
+                label: "Scienze dell'educazione e della formazione L-19"
+                urls: 
+                    - "corsi/l-19/avvisi"
+                    - "corsi/l-19/avvisi-docente"
+                channels: ["@disfornews"]
+            
+            scienze_e_tecniche_psicologiche l24: 
+                label: "Scienze e tecniche psicologiche L-24"
+                urls: 
+                    - "corsi/l-24/avvisi"
+                    - "corsi/l-24/avvisi-docente"
+                channels: ["@disfornews"]
+            
+            psicologia_lm51: 
+                label: "Psicologia LM-51"
+                urls: 
+                    - "corsi/lm-51/avvisi"
+                    - "corsi/lm-51/avvisi-docente"
+                channels: ["@disfornews"]
+            
+            scienze_pedagogiche_e_progettazione_educativa_lm85: 
+                label: "Scienze Pedagogiche e Progettazione Educativa LM-85"
+                urls: 
+                    - "corsi/lm-85/avvisi"
+                    - "corsi/lm-85/avvisi-docente"
+                channels: ["@disfornews"]
+        
+            formazione_di_operatori_turistici l15: 
+                label: "Formazione di operatori turistici L-16"
+                urls: 
+                    - "corsi/l-15/avvisi"
+                    - "corsi/l-15/avvisi-docente"
+                channels: ["@disfornews"]
+
+    "MEDCLI": 
+        base_url: "http://www.medclin.unict.it/"
+        approval_group_chatid: null,
+        pages: 
+            notizie: 
+                label: "Notizie"
+                urls: ["it/notizie"]
+                channels: ["@medclinnews"]
+            
+            eventi: 
+                label: "Eventi"
+                urls: ["it/eventi"]
+                channels: ["@medclinnews"]
+            
+            dietistica_lsnt3: 
+                label: "Dietistica LSNT-3"
+                urls: 
+                    - "corsi/lsnt3-dietistica/avvisi"
+                    - "corsi/lsnt3-dietistica/avvisi-docente"
+                channels: ["@medclinnews"]
+            
+            tecnica_della_riabilitazione_psichiatrica_lsnt2: 
+                label: "Tecnica della riabilitazione psichiatrica LSNT-2"
+                urls: 
+                    - "corsi/lsnt2/avvisi"
+                    - "corsi/lsnt2/avvisi-docente"
+                channels: ["@medclinnews"]
+            
+            tecniche_di_radiologia_medica_per_immagini_e_radioterapia_lsnt3: 
+                label: "Tecniche di radiologia medica, per immagini e radioterapia LSNT-3"
+                urls: 
+                    - "corsi/lsnt3-radiologia/avvisi"
+                    - "corsi/lsnt3-radiologia/avvisi-docente"
+                channels: ["@medclinnews"]
+            
+            scienze_infermieristiche_e_ostetriche_lmsnt1: 
+                label: "Scienze infermieristiche e ostetriche LMSNT-1"
+                urls: 
+                    - "corsi/lmsnt1/avvisi"
+                    - "corsi/lmsnt1/avvisi-docente"
+                channels: ["@medclinnews"]
+
+    "DGFI": 
+        base_url: "http://www.gfingrassia.unict.it/"
+        approval_group_chatid: null,
+        pages: 
+            notizie: 
+                label: "Notizie"
+                urls: ["notizie"]
+                channels: ["@dgfinews"]
+            
+            eventi: 
+                label: "Eventi"
+                urls: ["eventi"]
+                channels: ["@dgfinews"]
+            
+            infermieristica_lsnt1: 
+                label: "Infermieristica LSNT-1"
+                urls: 
+                    - "corsi/lsnt1/avvisi"
+                    - "corsi/lsnt1/avvisi-docente"
+                channels: ["@dgfinews"]
+            
+            logopedia_lsnt2: 
+                label: "Logopedia LSNT-2"
+                urls: 
+                    - "corsi/lsnt2/avvisi"
+                    - "corsi/lsnt2/avvisi-docente"
+                channels: ["@dgfinews"]
+            
+            tecniche_audioprotesiche_lsnt3: 
+                label: "Tecniche audioprotesiche LSNT-3"
+                urls: 
+                    - "corsi/lsnt3-audio/avvisi"
+                    - "corsi/lsnt3-audio/avvisi-docente"
+                channels: ["@dgfinews"]
+            
+            tecniche_di_laboratorio_biomedico_lsnt3: 
+                label: "Tecniche di laboratorio biomedico LSNT-3"
+                urls: 
+                    - "corsi/lsnt3-labbio/avvisi"
+                    - "corsi/lsnt3-labbio/avvisi-docente"
+                channels: ["@dgfinews"]
+            
+            scienze_riabilitative_delle_professioni_sanitarie_lmsnt2: 
+                label: "Scienze riabilitative delle professioni sanitarie LMSNT-2"
+                urls: 
+                    - "corsi/lmsnt2/avvisi"
+                    - "corsi/lmsnt2/avvisi-docente"
+                channels: ["@dgfinews"]
+
+    "DSF": 
+        base_url: "http://www.dsf.unict.it/"
+        approval_group_chatid: null,
+        pages: 
+            notizie: 
+                label: "Notizie"
+                urls: ["news"]
+                channels: ["@dsfnews"]
+            
+            eventi: 
+                label: "Eventi"
+                urls: ["eventi"]
+                channels: ["@dsfnews"]
+            
+            scienze farmaceutiche applicate l-29: 
+                label: "Scienze farmaceutiche applicate L-29"
+                urls: 
+                    - "corsi/l-29_sfa/avvisi"
+                    - "corsi/l-29_sfa/avvisi-docente"
+                channels: ["@dsfnews"]
+            
+            chimica e tecnologia farmaceutiche l-13: 
+                label: "Chimica e tecnologia farmaceutiche L-13"
+                urls: 
+                    - "corsi/lm-13_ctf/avvisi"
+                    - "corsi/lm-13_ctf/avvisi-docente"
+                channels: ["@dsfnews"]
+            
+            farmacia lm-13: 
+                label: "Farmacia LM-13"
+                urls: 
+                    - "corsi/lm-13/avvisi"
+                    - "corsi/lm-13/avvisi-docente"
+                channels: ["@dsfnews"]
+
+    "DI3A": 
+        base_url: "https://www.di3a.unict.it/"
+        approval_group_chatid: null,
+        pages: 
+            notizie: 
+                label: "Notizie"
+                urls: ["it/notizie"]
+                channels: ["@di3anews"]
+            
+            eventi: 
+                label: "Eventi"
+                urls: ["it/eventi"]
+                channels: ["@di3anews"]
+            
+            scienze_e_tecnologie_agrarie_l25: 
+                label: "Scienze e tecnologie agrarie L-25"
+                urls: 
+                    - "corsi/l-25/avvisi"
+                    - "corsi/l-25/avvisi-docente"
+                channels: ["@di3anews"]
+            
+            scienze_e_tecnologie_alimentari_l26: 
+                label: "Scienze e tecnologie alimentari L-26"
+                urls: 
+                    - "corsi/l-26/avvisi"
+                    - "corsi/l-26/avvisi-docente"
+                channels: ["@di3anews"]
+            
+            scienze_e_tecnologie_per_la_ristorazione_e_distribuzione_degli_alimenti_mediterranei_l26: 
+                label: "Scienze e tecnologie per la ristorazione e distribuzione degli alimenti mediterranei L-26"
+                urls: 
+                    - "corsi/l26-ristorazione/avvisi"
+                    - "corsi/l26-ristorazione/avvisi-docente"
+                channels: ["@di3anews"]
+            
+            scienze_e_tecnologie_per_la_ristorazione_e_distribuzione_degli_alimenti_mediterranei_l26: 
+                label: "Scienze e tecnologie per la ristorazione e distribuzione degli alimenti mediterranei L-26"
+                urls: 
+                    - "corsi/l26-ristorazione/avvisi"
+                    - "corsi/l26-ristorazione/avvisi-docente"
+                channels: ["@di3anews"]
+            
+            pianificazione_e_tutela_del_territorio_e_del_paesaggio_l21: 
+                label: "Pianificazione e tutela del territorio e del paesaggio L-21"
+                urls: 
+                    - "corsi/l-21/avvisi"
+                    - "corsi/l-21/avvisi-docente"
+                channels: ["@di3anews"]
+            
+            scienze_e_tecnologie_agrarie_lm69: 
+                label: "Scienze e tecnologie agrarie LM-69"
+                urls: 
+                    - "corsi/lm-69/avvisi"
+                    - "corsi/lm-69/avvisi-docente"
+                channels: ["@di3anews"]
+            
+            scienze_e_tecnologie_alimentari_lm70: 
+                label: "Scienze e tecnologie alimentari LM-70"
+                urls: 
+                    - "corsi/lm-70/avvisi"
+                    - "corsi/lm-70/avvisi-docente"
+                channels: ["@di3anews"]
+            
+            biotecnologie_agrarie_lm7: 
+                label: "Biotecnologie agrarie LM-7"
+                urls: 
+                    - "corsi/lm-7/avvisi"
+                    - "corsi/lm-7/avvisi-docente"
+                channels: ["@di3anews"]
+            
+            salvaguardia_del_territorio_dell_ambiente_e_del_paesaggio_lm75: 
+                label: "Salvaguardia del territorio, dell'ambiente e del paesaggio LM-75"
+                urls: 
+                    - "corsi/lm-75/avvisi"
+                    - "corsi/lm-75/avvisi-docente"
+                channels: ["@di3anews"]
+
+    "SDS Lingue": 
+        base_url: "http://www.sdslingue.unict.it/"
+        approval_group_chatid: null,
+        pages: 
+            notizie: 
+                label: "Notizie"
+                urls: ["notizie"]
+                channels: ["@sdslinguenews"]
+            
+            eventi: 
+                label: "Eventi"
+                urls: ["eventi"]
+                channels: ["@sdslinguenews"]
+            
+            mediazione_linguistica_e_interculturale_l12: 
+                label: "Mediazione linguistica e interculturale L-12"
+                urls: 
+                - "corsi/l-12/avvisi"
+                - "corsi/l-12/avvisi-docente"
+                channels: ["@sdslinguenews"]
+            
+            scienze_linguistiche_per_l_intercultura_e_la_formazione_lm39: 
+                label: "Scienze linguistiche per l'intercultura e la formazione LM-39"
+                urls: 
+                    - "corsi/lm-39/avvisi"
+                    - "corsi/lm-39/avvisi-docente"
+                channels: ["@sdslinguenews"]
+            
+            lingue_e_culture_europee_ed_extraeuropee_lm37: 
+                label: "Lingue e culture europee ed extraeuropee LM-37"
+                urls: 
+                    - "corsi/lm-37/avvisi"
+                    - "corsi/lm-37/avvisi-docente"
+                channels: ["@sdslinguenews"]
+    
+    "SDS Architettura": 
+        base_url: "http://www.architettura.unict.it/"
+        approval_group_chatid: null,
+        pages: 
+            notizie: 
+                label: "Notizie"
+                urls: ["it/notizie"]
+                channels: ["@sdsarchitetturanews"]
+            
+            eventi: 
+                label: "Eventi"
+                urls: ["it/eventi"]
+                channels: ["@sdsarchitetturanews"]
+            
+            architettura_lm4: 
+                label: "Architettura LM-4"
+                urls: 
+                - "corsi/lm-4/avvisi"
+                - "corsi/lm-4/avvisi-docente"
+                channels: ["@sdsarchitetturanews"]
