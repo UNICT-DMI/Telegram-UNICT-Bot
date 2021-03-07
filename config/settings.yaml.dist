@@ -1,23 +1,27 @@
-token: ""
-dev_group_chatid: 
-news_interval: 60
+token: "TOKEN_API_BOT"
+dev_group_chatid: CHAT_ID
+log_group_chatid: CHAT_ID
+logfile_reset_interval_minutes: 360
+update_interval: 600
 max_messages_length: 250
 max_length_footer: " ... \n\n<b>Clicca il link in cima al post per continuare a leggere</b>"
+max_connection_tries: 3
 
-notices_urls: {
-    "DEPARTMENT-NAME": {
-        "pages": {
-            "PAGE-NAME": { # page name has 22 charaters as limit
-                "approve_group_chatid": 00000, # NOT MANDATORY 
-                "urls": [
-                    "PAGE-URL_1",
-                    "PAGE-URL_2",
-                ],
-                "channels": [
-                    "@CHANNEL-1",
-                    "@CHANNEL-2",
-                ]
-            },
-        }
-    },
-}
+notices_groups:
+    "DMI": 
+        base_url: "http://web.dmi.unict.it/"
+        approval_group_chatid: null
+        pages: 
+            notizie: 
+                label: "Notizie"
+                urls: 
+                   - "notizie/"
+                channels: 
+                   - "@dminews"
+            
+            eventi: 
+                label: "Eventi"
+                urls: 
+                    - "tuttiglieventi/"
+                    - "eventi/"
+                channels: ["@dminews"]
