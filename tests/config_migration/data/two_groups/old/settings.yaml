@@ -66,7 +66,7 @@ notices_groups:
 
     "DFA": 
         base_url: "http://www.dfa.unict.it/"
-        approval_group_chatid: null,
+        approval_group_chatid: null
         pages: 
             notizie: 
                 label: "Notizie"
