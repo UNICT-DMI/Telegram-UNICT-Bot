@@ -1,0 +1,33 @@
+base_url: "http://www.dsf.unict.it/"
+approval_group_chatid: null
+pages: 
+    notizie: 
+        label: "Notizie"
+        urls: ["news"]
+        channels: ["@dsfnews"]
+    
+    eventi: 
+        label: "Eventi"
+        urls: ["eventi"]
+        channels: ["@dsfnews"]
+    
+    scienze farmaceutiche applicate l-29: 
+        label: "Scienze farmaceutiche applicate L-29"
+        urls: 
+            - "corsi/l-29_sfa/avvisi"
+            - "corsi/l-29_sfa/avvisi-docente"
+        channels: ["@dsfnews"]
+    
+    chimica e tecnologia farmaceutiche l-13: 
+        label: "Chimica e tecnologia farmaceutiche L-13"
+        urls: 
+            - "corsi/lm-13_ctf/avvisi"
+            - "corsi/lm-13_ctf/avvisi-docente"
+        channels: ["@dsfnews"]
+    
+    farmacia lm-13: 
+        label: "Farmacia LM-13"
+        urls: 
+            - "corsi/lm-13/avvisi"
+            - "corsi/lm-13/avvisi-docente"
+        channels: ["@dsfnews"]

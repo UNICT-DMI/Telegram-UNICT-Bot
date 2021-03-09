@@ -1,0 +1,33 @@
+base_url: "http://www.sdslingue.unict.it/"
+approval_group_chatid: null
+pages: 
+  notizie: 
+      label: "Notizie"
+      urls: ["notizie"]
+      channels: ["@sdslinguenews"]
+  
+  eventi: 
+      label: "Eventi"
+      urls: ["eventi"]
+      channels: ["@sdslinguenews"]
+  
+  mediazione_linguistica_e_interculturale_l12: 
+      label: "Mediazione linguistica e interculturale L-12"
+      urls: 
+      - "corsi/l-12/avvisi"
+      - "corsi/l-12/avvisi-docente"
+      channels: ["@sdslinguenews"]
+  
+  scienze_linguistiche_per_l_intercultura_e_la_formazione_lm39: 
+      label: "Scienze linguistiche per l'intercultura e la formazione LM-39"
+      urls: 
+          - "corsi/lm-39/avvisi"
+          - "corsi/lm-39/avvisi-docente"
+      channels: ["@sdslinguenews"]
+  
+  lingue_e_culture_europee_ed_extraeuropee_lm37: 
+      label: "Lingue e culture europee ed extraeuropee LM-37"
+      urls: 
+          - "corsi/lm-37/avvisi"
+          - "corsi/lm-37/avvisi-docente"
+      channels: ["@sdslinguenews"]

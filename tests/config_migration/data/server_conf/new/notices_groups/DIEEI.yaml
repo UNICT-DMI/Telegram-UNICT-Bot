@@ -1,0 +1,82 @@
+base_url: "http://www.dieei.unict.it/"
+approval_group_chatid: null
+pages: 
+    ingegneria_informatica_L8: 
+        label: "Ingegneria Informatica L-8"
+        urls: 
+            - "corsi/l-8-inf/avvisi"
+            - "corsi/l-8-inf/avvisi-docente"
+        channels: 
+            - "@inginfonews"
+            - "@DIEEINews"
+    
+    ingegneria_elettronica_L8: 
+        label: "Ingegneria Elettronica L-8"
+        urls:
+            - "corsi/l-8-ele/avvisi"
+            - "corsi/l-8-ele/avvisi-docente"
+        channels: 
+            - "@ingelenews"
+            - "@DIEEINews"
+    
+    ingegneria_industriale_L9: 
+        label: "Ingegneria Industriale L-9"
+        urls:
+            - "corsi/l-9/avvisi"
+            - "corsi/l-9/avvisi-docente"
+        channels: 
+            - "@ingindnews"
+            - "@DIEEINews"
+    
+    automation_engineering_and_control_of_complex_systems_lm25: 
+        label: "AUTOMATION ENGINEERING AND CONTROL OF COMPLEX SYSTEMS LM-25"
+        urls:
+            - "corsi/lm-25/avvisi"
+            - "corsi/lm-25/avvisi-docente"
+        channels: ["@DIEEINews"]
+    
+    electrical_engineering_lm28: 
+        label: "ELECTRICAL ENGINEERING LM-28"
+        urls:
+            - "corsi/lm-28/avvisi"
+            - "corsi/lm-28/avvisi-docente"
+        channels: ["@DIEEINews"]
+    
+    ingegneria_delle_telecomunicazioni_lm27: 
+        label: "INGEGNERIA DELLE TELECOMUNICAZIONI LM-27"
+        urls: 
+            - "corsi/lm-27/avvisi"
+            - "corsi/lm-27/avvisi-docente"
+        channels: ["@DIEEINews"]
+    
+    ingegneria_informatica_lm32: 
+        label: "INGEGNERIA INFORMATICA LM-32"
+        urls: 
+            - "corsi/lm-32/avvisi"
+            - "corsi/lm-32/avvisi-docente"
+        channels: ["@DIEEINews"]
+    
+    ingegneria_elettronica_lm29: 
+        label : "INGEGNERIA ELETTRONICA LM-29"
+        urls: 
+            - "corsi/lm-29/avvisi"
+            - "corsi/lm-29/avvisi-docente"
+        channels: ["@DIEEINews"]
+    
+    notizie: 
+        label: "Notizie"
+        urls: ["notizie/"]
+        channels:
+            - "@inginfonews"
+            - "@ingelenews"
+            - "@ingindnews"
+            - "@DIEEINews"
+    
+    eventi: 
+        label: "Eventi"
+        urls: ["eventi/"]
+        channels: 
+            - "@inginfonews"
+            - "@ingelenews"
+            - "@ingindnews"
+            - "@DIEEINews"

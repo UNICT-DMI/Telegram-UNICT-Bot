@@ -1,0 +1,47 @@
+base_url: "http://www.gfingrassia.unict.it/"
+approval_group_chatid: null
+pages: 
+    notizie: 
+        label: "Notizie"
+        urls: ["notizie"]
+        channels: ["@dgfinews"]
+    
+    eventi: 
+        label: "Eventi"
+        urls: ["eventi"]
+        channels: ["@dgfinews"]
+    
+    infermieristica_lsnt1: 
+        label: "Infermieristica LSNT-1"
+        urls: 
+            - "corsi/lsnt1/avvisi"
+            - "corsi/lsnt1/avvisi-docente"
+        channels: ["@dgfinews"]
+    
+    logopedia_lsnt2: 
+        label: "Logopedia LSNT-2"
+        urls: 
+            - "corsi/lsnt2/avvisi"
+            - "corsi/lsnt2/avvisi-docente"
+        channels: ["@dgfinews"]
+    
+    tecniche_audioprotesiche_lsnt3: 
+        label: "Tecniche audioprotesiche LSNT-3"
+        urls: 
+            - "corsi/lsnt3-audio/avvisi"
+            - "corsi/lsnt3-audio/avvisi-docente"
+        channels: ["@dgfinews"]
+    
+    tecniche_di_laboratorio_biomedico_lsnt3: 
+        label: "Tecniche di laboratorio biomedico LSNT-3"
+        urls: 
+            - "corsi/lsnt3-labbio/avvisi"
+            - "corsi/lsnt3-labbio/avvisi-docente"
+        channels: ["@dgfinews"]
+    
+    scienze_riabilitative_delle_professioni_sanitarie_lmsnt2: 
+        label: "Scienze riabilitative delle professioni sanitarie LMSNT-2"
+        urls: 
+            - "corsi/lmsnt2/avvisi"
+            - "corsi/lmsnt2/avvisi-docente"
+        channels: ["@dgfinews"]

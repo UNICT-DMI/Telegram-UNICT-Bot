@@ -1,0 +1,54 @@
+base_url: "http://www.dsc.unict.it/"
+approval_group_chatid: null
+pages: 
+    notizie: 
+        label: "Notizie"
+        urls: ["notizie"]
+        channels: ["@infoDSC"]
+    
+    eventi: 
+        label: "Eventi"
+        urls: ["eventi"]
+        channels: ["@infoDSC"]
+    
+    chimica_l27: 
+        label: "Chimica L-27"
+        urls: 
+            - "corsi/l-27/avvisi"
+            - "corsi/l-27/avvisi-docente"
+        channels: ["@infoDSC"]
+    
+    chimica_industriale_l17: 
+        label: "Chimica Industriale L-17"
+        urls:
+            - "corsi/l-27-ind/avvisi"
+            - "corsi/l-27-ind/avvisi-docente"
+        channels: ["@infoDSC"]
+    
+    scienze_chimiche_lm54: 
+        label: "Scienze Chimiche LM-54"
+        urls: \[
+            - "corsi/lm-54-sc/avvisi"
+            - "corsi/lm-54-sc/avvisi-docente"
+        channels: ["@infoDSC"]
+    
+    chimica_biomolecolare_lm54: 
+        label: "Chimica Biomolecare LM-54"
+        urls: \[
+            - "corsi/lm-54-bio/avvisi"
+            - "corsi/lm-54-bio/avvisi-docente"
+        channels: ["@infoDSC"]
+    
+    chimica_dei_materiali_lm54: 
+        label: "Chimica dei Materiali LM-54"
+        urls: 
+            - "corsi/lm-54-mat/avvisi"
+            - "corsi/lm-54-mat/avvisi-docente"
+        channels: ["@infoDSC"]
+    
+    chimica_organica_e_bioorganica_lm54: 
+        label: "Chimica organica e bioorganica LM-54"
+        urls: 
+            - "corsi/lm-54-org/avvisi"
+            - "corsi/lm-54-org/avvisi-docente"
+        channels: ["@infoDSC"]

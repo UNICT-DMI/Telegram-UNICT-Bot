@@ -1,0 +1,75 @@
+base_url: "https://www.di3a.unict.it/"
+approval_group_chatid: null
+pages: 
+    notizie: 
+        label: "Notizie"
+        urls: ["it/notizie"]
+        channels: ["@di3anews"]
+    
+    eventi: 
+        label: "Eventi"
+        urls: ["it/eventi"]
+        channels: ["@di3anews"]
+    
+    scienze_e_tecnologie_agrarie_l25: 
+        label: "Scienze e tecnologie agrarie L-25"
+        urls: 
+            - "corsi/l-25/avvisi"
+            - "corsi/l-25/avvisi-docente"
+        channels: ["@di3anews"]
+    
+    scienze_e_tecnologie_alimentari_l26: 
+        label: "Scienze e tecnologie alimentari L-26"
+        urls: 
+            - "corsi/l-26/avvisi"
+            - "corsi/l-26/avvisi-docente"
+        channels: ["@di3anews"]
+    
+    scienze_e_tecnologie_per_la_ristorazione_e_distribuzione_degli_alimenti_mediterranei_l26: 
+        label: "Scienze e tecnologie per la ristorazione e distribuzione degli alimenti mediterranei L-26"
+        urls: 
+            - "corsi/l26-ristorazione/avvisi"
+            - "corsi/l26-ristorazione/avvisi-docente"
+        channels: ["@di3anews"]
+    
+    scienze_e_tecnologie_per_la_ristorazione_e_distribuzione_degli_alimenti_mediterranei_l26: 
+        label: "Scienze e tecnologie per la ristorazione e distribuzione degli alimenti mediterranei L-26"
+        urls: 
+            - "corsi/l26-ristorazione/avvisi"
+            - "corsi/l26-ristorazione/avvisi-docente"
+        channels: ["@di3anews"]
+    
+    pianificazione_e_tutela_del_territorio_e_del_paesaggio_l21: 
+        label: "Pianificazione e tutela del territorio e del paesaggio L-21"
+        urls: 
+            - "corsi/l-21/avvisi"
+            - "corsi/l-21/avvisi-docente"
+        channels: ["@di3anews"]
+    
+    scienze_e_tecnologie_agrarie_lm69: 
+        label: "Scienze e tecnologie agrarie LM-69"
+        urls: 
+            - "corsi/lm-69/avvisi"
+            - "corsi/lm-69/avvisi-docente"
+        channels: ["@di3anews"]
+    
+    scienze_e_tecnologie_alimentari_lm70: 
+        label: "Scienze e tecnologie alimentari LM-70"
+        urls: 
+            - "corsi/lm-70/avvisi"
+            - "corsi/lm-70/avvisi-docente"
+        channels: ["@di3anews"]
+    
+    biotecnologie_agrarie_lm7: 
+        label: "Biotecnologie agrarie LM-7"
+        urls: 
+            - "corsi/lm-7/avvisi"
+            - "corsi/lm-7/avvisi-docente"
+        channels: ["@di3anews"]
+    
+    salvaguardia_del_territorio_dell_ambiente_e_del_paesaggio_lm75: 
+        label: "Salvaguardia del territorio, dell'ambiente e del paesaggio LM-75"
+        urls: 
+            - "corsi/lm-75/avvisi"
+            - "corsi/lm-75/avvisi-docente"
+        channels: ["@di3anews"]

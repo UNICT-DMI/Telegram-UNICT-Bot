@@ -1,0 +1,40 @@
+base_url: "http://www.chirmed.unict.it/"
+approval_group_chatid: null
+pages: 
+    notizie: 
+        label: "Notizie"
+        urls: ["it/notizie"]
+        channels: ["@medicina_unict"]
+    
+    eventi: 
+        label: "Eventi"
+        urls: ["it/eventi"]
+        channels: ["@medicina_unict"]
+    
+    medicina_e_chirurgia_lm41: 
+        label: "Medicina e Chirurgia LM-41"
+        urls: 
+        - "corsi/lm-41/avvisi"
+        - "corsi/lm-41/avvisi-docente"
+        channels: ["@medicina_unict"]
+    
+    odontoiatria_e_protesi_dentaria_lm46: 
+        label: "Odontoiatria e protesi dentaria LM-46"
+        urls: 
+            - "corsi/lm-46/avvisi"
+            - "corsi/lm-46/avvisi-docente"
+        channels: ["@medicina_unict"]
+    
+    ostetricia_lsnt1: 
+        label: "Ostetricia LSNT-1"
+        urls: 
+            - "corsi/lsnt1/avvisi"
+            - "corsi/lsnt1/avvisi-docente"
+        channels: ["@medicina_unict"]
+    
+    tecniche_di_fisiopatologia_cardiocircolatoria_e_perfusione_cardiovascolare lsnt3: 
+        label: "Tecniche di fisiopatologia cardiocircolatoria e perfusione cardiovascolare LSNT-3"
+        urls: 
+            - "corsi/lsnt3/avvisi"
+            - "corsi/lsnt3/avvisi-docente"
+        channels: ["@medicina_unict"]

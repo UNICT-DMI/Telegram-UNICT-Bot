@@ -1,0 +1,126 @@
+base_url: "http://www.disum.unict.it/"
+approval_group_chatid: null
+pages: 
+    notizie: 
+        label: "Notizie"
+        urls: ["tuttelenotizie"]
+        channels: 
+            - "@Lettere_unict"
+            - "@Filosofia_unict"
+        
+        eventi: 
+            label: "Eventi"
+            urls: ["tuttiglieventi"]
+            channels: 
+                - "@Lettere_unict"
+                - "@Filosofia_unict"
+                - "@disumnews"
+        
+        lettere_l10: 
+        label: "Lettere L-10"
+        urls: 
+            - "corsi/l-10/avvisi"
+            - "corsi/l-10/avvisi-docente"
+        channels: 
+            - "@Lettere_unict"
+            - "@disumnews"
+    
+    filosofia_l5: 
+        label: "Filosofia L-5"
+        urls: 
+            - "corsi/l-5/avvisi"
+            - "corsi/l-5/avvisi-docente"
+        channels: 
+            - "@Filosofia_unict"
+            - "@disumnews"
+    
+    beni_culturali_l-1: 
+        label: "Beni Culturali L-1"
+        urls: 
+            - "corsi/l-1/avvisi"
+            - "corsi/l-1/avvisi-docente"
+        channels: ["@disumnews"]
+    
+    lingue_e_culture_europee_euroamericane_ed_orientali_l11: 
+        label: "Lingue e culture europee euroamericane ed orientali L-11"
+        urls: 
+            - "corsi/l-11/avvisi"
+            - "corsi/l-11/avvisi-docente"
+        channels: ["@disumnews"]
+    
+    scienze_e_lingue_per_la_comunicazione_l20: 
+        label: "Scienze e lingue per la comunicazione L-20"
+        urls: 
+            - "corsi/l-20/avvisi"
+            - "corsi/l-20/avvisi-docente"
+        channels: ["@disumnews"]
+    
+    archeologia_lm2: 
+        label: "Archeologia LM-2"
+        urls: 
+            - "corsi/lm-2/avvisi"
+            - "corsi/lm-2/avvisi-docente"
+        channels: ["@disumnews"]
+    
+    comunicazione_della_cultura_e_dello_spettacolo_lm65: 
+        label: "Comunicazione della cultura e dello spettacolo LM-65"
+        urls: 
+            - "corsi/lm-65/avvisi"
+            - "corsi/lm-65/avvisi-docente"
+        channels: ["@disumnews"]
+    
+    filologia_classica_lm15: 
+        label: "Filologia classica LM-15"
+        urls: 
+            - "corsi/lm-15/avvisi"
+            - "corsi/lm-15/avvisi-docente"
+        channels: ["@disumnews"]
+    
+    filologia_moderna_lm14: 
+        label: "Filologia moderna LM-14"
+        urls: 
+            - "corsi/lm-14/avvisi"
+            - "corsi/lm-14/avvisi-docente"
+        channels: ["@disumnews"]
+    
+    archeologia_lm2: 
+        label: "Archeologia LM-2"
+        urls: 
+            - "corsi/lm-2/avvisi"
+            - "corsi/lm-2/avvisi-docente"
+        channels: ["@disumnews"]
+    
+    lingue_e_letterature_comparate_lm37: 
+        label: "Lingue e letterature comparate LM-37"
+        urls: 
+            - "corsi/lm-37/avvisi"
+            - "corsi/lm-37/avvisi-docente"
+        channels: ["@disumnews"]
+    
+    lingue_per_la_cooperazione_internazionale_lm38: 
+        label: "Lingue per la cooperazione internazionale LM-38"
+        urls: 
+            - "corsi/lm-38/avvisi"
+            - "corsi/lm-38/avvisi-docente"
+        channels: ["@disumnews"]
+    
+    scienze_del_testo_per_le_professioni_digitali_lm43: 
+        label: "Scienze del testo per le professioni digitali LM-43"
+        urls: 
+            - "corsi/lm-43/avvisi"
+            - "corsi/lm-43/avvisi-docente"
+        channels: ["@disumnews"]
+    
+    scienze_filosofiche_lm78: 
+        label: "Scienze filosofiche LM-78"
+        urls: 
+            - "corsi/lm-78/avvisi"
+            - "corsi/lm-78/avvisi-docente"
+        channels: ["@disumnews"]
+    
+    storia_dell_arte_e_beni_culturali lm89: 
+        label: "Storia dell'arte e beni culturali LM-89"
+        urls: 
+            - "corsi/lm-89/avvisi"
+            - "corsi/lm-89/avvisi-docente"
+        channels: ["@disumnews"]

@@ -1,0 +1,19 @@
+base_url: "http://www.architettura.unict.it/"
+approval_group_chatid: null
+pages: 
+    notizie: 
+        label: "Notizie"
+        urls: ["it/notizie"]
+        channels: ["@sdsarchitetturanews"]
+    
+    eventi: 
+        label: "Eventi"
+        urls: ["it/eventi"]
+        channels: ["@sdsarchitetturanews"]
+    
+    architettura_lm4: 
+        label: "Architettura LM-4"
+        urls: 
+        - "corsi/lm-4/avvisi"
+        - "corsi/lm-4/avvisi-docente"
+        channels: ["@sdsarchitetturanews"]

@@ -1,0 +1,54 @@
+base_url: "http://www.disfor.unict.it/"
+approval_group_chatid: null
+pages: 
+    notizie: 
+        label: "Notizie"
+        urls: ["news"]
+        channels: ["@disfornews"]
+    
+    eventi: 
+        label: "Eventi"
+        urls: ["eventi"]
+        channels: ["@disfornews"]
+    
+    scienze_del_turismo_l15st: 
+        label: "Scienze del turismo L-15-ST"
+        urls: 
+            - "corsi/l-15-st/avvisi"
+            - "corsi/l-15-st/avvisi-docente"
+        channels: ["@disfornews"]
+    
+    scienze_dell_educazione_e_della_formazione_l19: 
+        label: "Scienze dell'educazione e della formazione L-19"
+        urls: 
+            - "corsi/l-19/avvisi"
+            - "corsi/l-19/avvisi-docente"
+        channels: ["@disfornews"]
+    
+    scienze_e_tecniche_psicologiche l24: 
+        label: "Scienze e tecniche psicologiche L-24"
+        urls: 
+            - "corsi/l-24/avvisi"
+            - "corsi/l-24/avvisi-docente"
+        channels: ["@disfornews"]
+    
+    psicologia_lm51: 
+        label: "Psicologia LM-51"
+        urls: 
+            - "corsi/lm-51/avvisi"
+            - "corsi/lm-51/avvisi-docente"
+        channels: ["@disfornews"]
+    
+    scienze_pedagogiche_e_progettazione_educativa_lm85: 
+        label: "Scienze Pedagogiche e Progettazione Educativa LM-85"
+        urls: 
+            - "corsi/lm-85/avvisi"
+            - "corsi/lm-85/avvisi-docente"
+        channels: ["@disfornews"]
+
+    formazione_di_operatori_turistici l15: 
+        label: "Formazione di operatori turistici L-16"
+        urls: 
+            - "corsi/l-15/avvisi"
+            - "corsi/l-15/avvisi-docente"
+        channels: ["@disfornews"]

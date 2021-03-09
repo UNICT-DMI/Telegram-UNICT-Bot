@@ -6,7 +6,9 @@ DATA_FOLDER = 'tests/config_migration/data'
 
 @pytest.mark.parametrize("test_case_id", [
     "minimal",
-    "two_groups"
+    "two_groups",
+    "disum",
+    "server_conf"
 ])
 def test_new_configuration_loading(test_case_id):
     test_case_data_folder = f'{DATA_FOLDER}/{test_case_id}'
