@@ -27,14 +27,14 @@ pages:
     
     scienze_chimiche_lm54: 
         label: "Scienze Chimiche LM-54"
-        urls: \[
+        urls: 
             - "corsi/lm-54-sc/avvisi"
             - "corsi/lm-54-sc/avvisi-docente"
         channels: ["@infoDSC"]
     
     chimica_biomolecolare_lm54: 
         label: "Chimica Biomolecare LM-54"
-        urls: \[
+        urls:
             - "corsi/lm-54-bio/avvisi"
             - "corsi/lm-54-bio/avvisi-docente"
         channels: ["@infoDSC"]

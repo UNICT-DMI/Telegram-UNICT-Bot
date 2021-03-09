@@ -18,5 +18,5 @@ pages:
     
     fisica_LM17: 
         label: "Fisica LM-17"
-        urls: \["corsi/LM-17/avvisi/"]
+        urls: ["corsi/LM-17/avvisi/"]
         channels: ["-370115104"]

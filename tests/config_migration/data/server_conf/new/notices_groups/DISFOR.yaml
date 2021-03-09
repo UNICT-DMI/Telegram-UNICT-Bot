@@ -47,7 +47,7 @@ pages:
         channels: ["@disfornews"]
 
     formazione_di_operatori_turistici l15: 
-        label: "Formazione di operatori turistici L-16"
+        label: "Formazione di operatori turistici L-15"
         urls: 
             - "corsi/l-15/avvisi"
             - "corsi/l-15/avvisi-docente"

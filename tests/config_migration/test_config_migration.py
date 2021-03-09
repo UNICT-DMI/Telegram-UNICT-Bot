@@ -18,4 +18,4 @@ def test_new_configuration_loading(test_case_id):
 
     new_config_map = load_configurations(f'{test_case_data_folder}/new/')
 
-    assert old_config_map == new_config_map
+    assert new_config_map == old_config_map 

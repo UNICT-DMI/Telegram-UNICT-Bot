@@ -12,7 +12,7 @@ pages:
     
     eventi: 
         label: "Eventi"
-        urls: ["eventi"]
+        urls: ["eventi\""]
         channels: 
             - "@bio_unict"
             - "@geo_unict"

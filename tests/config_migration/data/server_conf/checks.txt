@@ -1,0 +1,1 @@
+1. La pagina "eventi" di BIOGEO potrebbe avere il path buggato, ci sono due virgolette alla fine che non dovrebbero esserci
