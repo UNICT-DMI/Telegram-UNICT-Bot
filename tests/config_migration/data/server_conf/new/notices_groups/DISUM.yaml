@@ -8,15 +8,15 @@ pages:
             - "@Lettere_unict"
             - "@Filosofia_unict"
         
-        eventi: 
-            label: "Eventi"
-            urls: ["tuttiglieventi"]
-            channels: 
-                - "@Lettere_unict"
-                - "@Filosofia_unict"
-                - "@disumnews"
+    eventi: 
+        label: "Eventi"
+        urls: ["tuttiglieventi"]
+        channels: 
+            - "@Lettere_unict"
+            - "@Filosofia_unict"
+            - "@disumnews"
         
-        lettere_l10: 
+    lettere_l10: 
         label: "Lettere L-10"
         urls: 
             - "corsi/l-10/avvisi"
