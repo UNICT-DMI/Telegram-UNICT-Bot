@@ -1,0 +1,54 @@
+base_url: "http://www.dei.unict.it/"
+approval_group_chatid: null
+pages: 
+  notizie: 
+      label: "Notizie"
+      urls: ["Comunicazioni/notizie-in-evidenza"]
+      channels: ["@deinews"]
+  
+  eventi: 
+      label: "Eventi"
+      urls: ["Comunicazioni/elenco-eventi_dei"]
+      channels: ["@deinews"]
+  
+  economia_L33: 
+      label: "Economia L-33"
+      urls: 
+          - "corsi/l-33/avvisi"
+          - "corsi/l-33/avvisi-docente"
+      channels: ["@deinews"]
+  
+  economia_aziendale_L18: 
+      label: "Economia Aziendale L-18"
+      urls: 
+          - "corsi/l-18/avvisi"
+          - "corsi/l-18/avvisi-docente"
+      channels: ["@deinews"]
+  
+  data_science_for_management_LM91: 
+      label: "Data Science for Management LM-91"
+      urls: 
+          - "corsi/lm-91/avvisi"
+          - "corsi/lm-91/avvisi-docente"
+      channels: ["@deinews"]
+  
+  direzione_aziendale_LM77: 
+      label: "Direzione Aziendale LM-77"
+      urls: 
+          - "corsi/lm-77-dir/avvisi"
+          - "corsi/lm-77-dir/avvisi-docente"
+      channels: ["@deinews"]
+  
+  economia_e_management_del_territorio_e_del_turismo_lm56: 
+      label: "Economia e Management del Territorio e del Turismo LM-56"
+      urls:
+          - "corsi/lm-56/avvisi"
+          - "corsi/lm-56/avvisi-docente"
+      channels: ["@deinews"]
+  
+  finanza_aziendale_lm77: 
+      label: "Finanza Aziendale LM-77"
+      urls: 
+          - "corsi/lm-77-fin/avvisi"
+          - "corsi/lm-77-fin/avvisi-docente"
+      channels: ["@deinews"]

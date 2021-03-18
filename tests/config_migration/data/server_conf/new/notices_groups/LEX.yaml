@@ -1,0 +1,17 @@
+base_url: "http://www.lex.unict.it/"
+approval_group_chatid: null
+pages: 
+    notizie: 
+        label: "Notizie"
+        urls: ["it/in-evidenza"]
+        channels: ["@lexunictnews"]
+    
+    eventi: 
+        label: "Eventi"
+        urls: ["it/eventi"]
+        channels: ["@lexunictnews"]
+    
+    giurisprudenza_LMG01: 
+        label: "Giurisprudenza LMG-01"
+        urls: ["it/tutte-le-comunicazioni"]
+        channels: ["@lexunictnews"]

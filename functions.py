@@ -5,11 +5,10 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 from telegram.error import (TelegramError, Unauthorized, BadRequest, TimedOut, ChatMigrated, NetworkError)
 
-import yaml
+from module.config import load_configurations
 
 # Token and config
-with open('config/settings.yaml', 'r') as yaml_config:
-    config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
+config_map = load_configurations()
 
 # Token of your telegram bot that you created from @BotFather, write it on token.conf
 TOKEN = config_map["token"]

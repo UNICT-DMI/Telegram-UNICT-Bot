@@ -1,0 +1,7 @@
+base_url: "http://www.medicina.unict.it/"
+approval_group_chatid: null
+pages: 
+    notizie: 
+        label: "Notizie"
+        urls: ["notizie"]
+        channels: ["@medicina_unict"]

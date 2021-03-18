@@ -1,0 +1,3 @@
+notices_groups/*.yaml
+!notices_groups/DMI.yaml.dist
+settings.yaml

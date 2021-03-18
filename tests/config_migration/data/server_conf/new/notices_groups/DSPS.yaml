@@ -1,0 +1,72 @@
+base_url: "http://www.dsps.unict.it/"
+approval_group_chat_id: null
+pages: 
+    notizie: 
+        label: "Notizie"
+        urls: ["Dipartimento/Tutti%20gli%20avvisi%20del%20Dipartimento"]
+        channels: 
+            - "@Servizio_Sociale_Sociologia_news"
+            - "@dspsnews"
+    
+    sociologia_e_servizio_sociale_l39l40: 
+        label: "Sociologia e servizio sociale L-39 / L-40"
+        urls: ["corsi/l-39-l-40/avvisi"]
+        channels: 
+            - "@Servizio_Sociale_Sociologia_news"
+            - "@dspsnews"
+    
+    scienze_dell'amministrazione_e_dell'organizzazione_l16: 
+        label: "Scienze dell'amministrazione e dell'organizzazione L-16"
+        urls: ["corsi/l-16/avvisi"]
+        channels: 
+            - "@Servizio_Sociale_Sociologia_news"
+            - "@dspsnews"
+    
+    storia_politica_e_relazioni_internazionali_l36: 
+        label: "Storia, politica e relazioni internazionali L-36"
+        urls: ["corsi/l-36/avvisi"]
+        channels: 
+            - "@Servizio_Sociale_Sociologia_news"
+            - "@dspsnews"
+    
+    internazionalizzazione_delle_relazioni_commerciali_lm52: 
+        label: "Internazionalizzazione delle relazioni commerciali LM-52"
+        urls: ["corsi/lm-52/avvisi"]
+        channels: 
+            - "@Servizio_Sociale_Sociologia_news"
+            - "@dspsnews"
+    
+    management_della_pubblica_amministrazione_lm63: 
+        label: "Management della pubblica amministrazione LM-63"
+        urls: ["corsi/lm-63/avvisi"]
+        channels: 
+            - "@Servizio_Sociale_Sociologia_news"
+            - "@dspsnews"
+    
+    global_politics_and_euro-mediterranean_relations_/_politica_globale_e_relazioni_euro-mediterranee_lm62: 
+        label: "Global Politics and Euro-Mediterranean Relations / Politica globale e relazioni euro-mediterranee LM-62"
+        urls: ["courses/lm-62/avvisi"]
+        channels: 
+            - "@Servizio_Sociale_Sociologia_news"
+            - "@dspsnews"
+    
+    politiche_e_servizi_sociali_lm87: 
+        label: "Politiche e servizi sociali LM-87"
+        urls: ["corsi/lm-87/avvisi"]
+        channels: 
+            - "@Servizio_Sociale_Sociologia_news"
+            - "@dspsnews"
+    
+    sociologia_delle_reti_dellinformazione_e_dellinnovazione_lm88: 
+        label: "Sociologia delle reti, dell'informazione e dell'innovazione LM-88"
+        urls: ["corsi/lm-88/avvisi"]
+        channels: 
+            - "@Servizio_Sociale_Sociologia_news"
+            - "@dspsnews"
+    
+    storia_e_cultura_dei_paesi_mediterranei_lm84: 
+        label: "Storia e cultura dei paesi mediterranei LM-84"
+        urls: ["corsi/lm-84/avvisi"]
+        channels: 
+            - "@Servizio_Sociale_Sociologia_news"
+            - "@dspsnews"

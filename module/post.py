@@ -1,3 +1,4 @@
+from module.config import load_configurations
 import telegram
 import time
 import yaml
@@ -45,7 +46,7 @@ def enqueue_notice(context, page_data, notices_data, full_url, link_content, app
 
 # Message formatting
 def format_content(content):
-    config_map = yaml.safe_load(open("config/settings.yaml", "r"))
+    config_map = load_configurations()
 
     max_len = config_map["max_messages_length"]
 

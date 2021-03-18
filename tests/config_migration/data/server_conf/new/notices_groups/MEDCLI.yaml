@@ -1,0 +1,40 @@
+base_url: "http://www.medclin.unict.it/"
+approval_group_chatid: null
+pages: 
+    notizie: 
+        label: "Notizie"
+        urls: ["it/notizie"]
+        channels: ["@medclinnews"]
+    
+    eventi: 
+        label: "Eventi"
+        urls: ["it/eventi"]
+        channels: ["@medclinnews"]
+    
+    dietistica_lsnt3: 
+        label: "Dietistica LSNT-3"
+        urls: 
+            - "corsi/lsnt3-dietistica/avvisi"
+            - "corsi/lsnt3-dietistica/avvisi-docente"
+        channels: ["@medclinnews"]
+    
+    tecnica_della_riabilitazione_psichiatrica_lsnt2: 
+        label: "Tecnica della riabilitazione psichiatrica LSNT-2"
+        urls: 
+            - "corsi/lsnt2/avvisi"
+            - "corsi/lsnt2/avvisi-docente"
+        channels: ["@medclinnews"]
+    
+    tecniche_di_radiologia_medica_per_immagini_e_radioterapia_lsnt3: 
+        label: "Tecniche di radiologia medica, per immagini e radioterapia LSNT-3"
+        urls: 
+            - "corsi/lsnt3-radiologia/avvisi"
+            - "corsi/lsnt3-radiologia/avvisi-docente"
+        channels: ["@medclinnews"]
+    
+    scienze_infermieristiche_e_ostetriche_lmsnt1: 
+        label: "Scienze infermieristiche e ostetriche LMSNT-1"
+        urls: 
+            - "corsi/lmsnt1/avvisi"
+            - "corsi/lmsnt1/avvisi-docente"
+        channels: ["@medclinnews"]

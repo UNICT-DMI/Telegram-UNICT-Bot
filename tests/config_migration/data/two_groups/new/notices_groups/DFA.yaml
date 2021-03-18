@@ -1,0 +1,22 @@
+base_url: "http://www.dfa.unict.it/"
+approval_group_chatid: null
+pages: 
+    notizie: 
+        label: "Notizie"
+        urls: ["notizie/"]
+        channels: ["-370115104"]
+    
+    eventi: 
+        label: "Event"      
+        urls: ["eventi/"]
+        channels: ["-370115104"]
+    
+    fisica_L30: 
+        label: "Fisica L-30"
+        urls: ["corsi/L-30/avvisi/"]
+        channels: ["-370115104"]
+    
+    fisica_LM17: 
+        label: "Fisica LM-17"
+        urls: \["corsi/LM-17/avvisi/"]
+        channels: ["-370115104"]

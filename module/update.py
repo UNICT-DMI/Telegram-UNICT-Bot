@@ -5,6 +5,7 @@ import os
 
 from module.post import enqueue_notice
 from module.scraper_notices import *
+from module.config import load_configurations
 
 def update_tick(context):
     logging.info ("Call update_tick ({})".format(context))
@@ -13,7 +14,8 @@ def update_tick(context):
 
     try:
         # Load URLs from configuration
-        config_map = yaml.safe_load(open("config/settings.yaml", "r"))
+        config_map = load_configurations()
+
         groups = config_map["notices_groups"]
 
         for group_key in groups:

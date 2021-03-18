@@ -1,0 +1,63 @@
+base_url: "http://www.biometec.unict.it/"
+approval_group_chatid: null
+pages: 
+    notizie: 
+        label: "Notizie"
+        urls: ["notizie"]
+        channels: ["@biometecnews"]
+    
+    eventi: 
+        label: "Eventi"
+        urls: ["eventi"]
+        channels: ["@biometecnews"]
+    
+    biotecnologie_l2: 
+        label: "Biotecnologie L-2"
+        urls: 
+            - "corsi/l-2/avvisi"
+            - "corsi/l-2/avvisi-docente"
+        channels: ["@biometecnews"]
+    
+    scienze_motorie_l22: 
+        label: "Scienze Motorie L-22"
+        urls: 
+            - "corsi/l-22/avvisi"
+            - "corsi/l-22/avvisi-docente"
+        channels: ["@biometecnews"]
+    
+    biotecnologie_mediche_lm9: 
+        label: "Biotecnologie mediche LM-9"
+        urls: 
+            - "corsi/lm-9/avvisi"
+            - "corsi/lm-9/avvisi-docente"
+        channels: ["@biometecnews"]
+    
+    ortottica_ed_assistenza_oftalmologica_lsnt2ort: 
+        label: "Ortottica ed assistenza oftalmologica LSNT2-ORT"
+        urls: 
+            - "corsi/lsnt2-ortottica/avvisi"
+            - "corsi/lsnt2-ortottica/avvisi-docente"
+        channels: ["@biometecnews"]
+    
+    lnst2terapia: 
+        label: "LNST2-Terapia"
+        urls: 
+            - "corsi/lsnt2-terapia/avvisi"
+            - "corsi/lsnt2-terapia/avvisi-docente"
+        channels: ["@terapia_unict", "@biometecnews"]
+    
+    fisioterapia_lsnt2ft: 
+        label: "Fisioterapia LSNT2-FT"
+        urls: 
+            - "corsi/lsnt2-ft/avvisi"
+            - "corsi/lsnt2-ft/avvisi-docente"
+        channels: 
+          - "@fisioterapia_unict"
+          - "@biometecnews"
+    
+    scienze_e_tecniche_delle_attivita_motorie_preventive_e_adattate_lm67: 
+        label: "Scienze e tecniche delle attivita motorie preventive e adattate LM-67"
+        urls: 
+            - "corsi/lm-67/avvisi"
+            - "corsi/lm-67/avvisi-docente"
+        channels: ["@biometecnews"]

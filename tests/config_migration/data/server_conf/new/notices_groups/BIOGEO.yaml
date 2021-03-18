@@ -1,0 +1,83 @@
+base_url: "http://www.dipbiogeo.unict.it/"
+approval_group_chatid: null
+pages: 
+    notizie: 
+        label: "Notizie"
+        urls: ["notizie"]
+        channels: 
+            - "@bio_unict"
+            - "@geo_unict"
+            - "@scienze_ambientali"
+            - "@biogeonews"
+    
+    eventi: 
+        label: "Eventi"
+        urls: ["eventi\""]
+        channels: 
+            - "@bio_unict"
+            - "@geo_unict"
+            - "@scienze_ambientali"
+            - "@biogeonews"
+    
+    scienze_biologiche_l13: 
+        label: "Scienze Biologiche L-13"
+        urls: 
+            - "corsi/l-13/avvisi"
+            - "corsi/l-13/avvisi-docente"
+        channels: 
+            - "@bio_unict" 
+            - "@biogeonews"
+    
+    scienze_geologiche_l34: 
+        label: "Scienze Geologiche L-34"
+        urls: 
+            - "corsi/l-34/avvisi"
+            - "corsi/l-34/avvisi-docente"
+        channels: 
+            - "@geo_unict"
+            - "@biogeonews"
+    
+    scienze_ambientali_e_naturali_l32: 
+        label: "Scienze Ambientali e Naturali L-32"
+        urls: 
+            - "corsi/l-32/avvisi"
+            - "corsi/l-32/avvisi-docente"
+        channels: 
+            - "@scienze_ambientali"
+            - "@biogeonews"
+    
+    biologia_ambientale_lm6: 
+        label: "Biologia Ambientale LM-6"
+        urls: 
+            - "corsi/lm-6-ambientale/avvisi"
+            - "corsi/lm-6-ambientale/avvisi-docente"
+        channels: 
+            - "@scienze_ambientali"
+            - "@biogeonews"
+    
+    biologia_sanitaria_lm6:  
+        label: "Biologia Sanitaria LM-6"
+        urls:
+            - "corsi/lm-6-sanitaria/avvisi"
+            - "corsi/lm-6-sanitaria/avvisi-docente"
+        channels: 
+            - "@bio_unict"
+            - "@biogeonews"
+    
+    scienze_geofisiche_lm79: 
+        label: "Scienze geofisiche LM-79"
+        urls: 
+            - "corsi/lm-79/avvisi"
+            - "corsi/lm-79/avvisi-docente"
+        channels: 
+            - "@geo_unict"
+            - "@biogeonews"
+    
+    scienze_geologiche_lm74: 
+        label: "Scienze Geologiche LM-74"
+        urls: 
+            - "corsi/lm-74/avvisi"
+            - "corsi/lm-74/avvisi-docente"
+        channels: 
+            - "@geo_unict"
+            - "@biogeonews"

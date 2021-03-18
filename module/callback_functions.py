@@ -6,10 +6,6 @@ import telegram
 from telegram import Update
 from telegram.ext import CallbackContext
 
-# with open('config/settings.yaml', 'r') as yaml_config:
-#     config_map = yaml.load(yaml_config, Loader=yaml.SafeLoader)
-#     notices_urls = config_map["notices_urls"]
-
 def callback_handle(update: Update, context: CallbackContext):
     query = update.callback_query
     query_data = query.data.split(":")

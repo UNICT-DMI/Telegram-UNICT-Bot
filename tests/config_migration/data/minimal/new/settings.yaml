@@ -1,0 +1,9 @@
+token: "XXX-XXX"
+
+dev_group_chatid: -1
+log_group_chatid: -1
+update_interval: 600
+logfile_reset_interval_minutes: 360 
+max_messages_length: 500
+max_length_footer: " ... \n\n<b>Clicca il link in cima al post per continuare a leggere</b>"
+max_connection_tries: 3
