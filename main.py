@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
+import logging
 
-# Telegram libraries
-import telegram
-import traceback
-
-from telegram import Update, Bot
-from telegram.ext import Updater, Filters, MessageHandler, CommandHandler, CallbackQueryHandler, CallbackContext
+from telegram.ext import Updater, Filters, MessageHandler, CommandHandler, CallbackQueryHandler
 
 # Config libraries
 from functions import TOKEN, config_map
@@ -13,12 +9,9 @@ from functions import TOKEN, config_map
 # commands
 from functions import start
 from module.dev_functions import logging_message, give_chat_id, send_logfile, clear_logfile, post_and_clear_logs
-from module.scraper_notices import scrape_notices
 from module.callback_functions import callback_handle
-
 from module.update import update_tick
 
-import logging
 
 def setup_logging(logs_file):
     formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
@@ -36,12 +29,9 @@ def setup_logging(logs_file):
 
 def main():
     setup_logging("logfile")
-
     logging.info("Initialization...")
 
-    bot = telegram.Bot(TOKEN)
-
-    updater = Updater(TOKEN, use_context=True) # request_kwargs={'read_timeout': 20, 'connect_timeout': 20}, use_context=True)
+    updater = Updater(TOKEN)
 
     dp = updater.dispatcher
     dp.add_handler(MessageHandler(Filters.all, logging_message),1)
@@ -61,15 +51,15 @@ def main():
     # dp.add_handler(CommandHandler('errors', send_errors))
 
     #JobQueue
-    j = updater.job_queue
+    j = updater.dispatcher.job_queue
 
-    j.run_repeating(post_and_clear_logs, interval=config_map["logfile_reset_interval_minutes"] * 60) # logfile reset
-    j.run_repeating(update_tick, interval=config_map["update_interval"], first=0) # job_news
+    j.run_repeating(post_and_clear_logs, interval=config_map["logfile_reset_interval_minutes"] * 60, first=5) # logfile reset
+    j.run_repeating(update_tick, interval=config_map["update_interval"], first=5) # job_news
 
     logging.info("Scraping jobs started")
 
     updater.start_polling()
-    # updater.idle()
+    updater.idle()
 
 if __name__ == '__main__':
     main()
