@@ -1,4 +1,6 @@
 # Telegram-UNICT-Bot
+[![CodeFactor](https://www.codefactor.io/repository/github/unict-dmi/telegram-unict-bot/badge)](https://www.codefactor.io/repository/github/unict-dmi/telegram-unict-bot)
+
 Un bot di Telegram per l'Università  di Catania
 
 # Canali Telegram supportati
