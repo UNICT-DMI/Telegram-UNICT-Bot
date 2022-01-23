@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
 # Telegram
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram import Update
 from telegram.ext import CallbackContext
-from telegram.error import (TelegramError, Unauthorized, BadRequest, TimedOut, ChatMigrated, NetworkError)
 
 from module.config import load_configurations
 
@@ -14,7 +13,7 @@ config_map = load_configurations()
 TOKEN = config_map["token"]
 
 # This function split the message into 2 or more messages in case of message length > 3000
-def send_message(context:CallbackContext, chaitd, messaggio):
+def send_message(context:CallbackContext, chaitd: int, messaggio: str):
     msg = ""
     righe = messaggio.split('\n')
     for riga in righe:

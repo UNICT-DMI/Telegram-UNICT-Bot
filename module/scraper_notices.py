@@ -1,24 +1,19 @@
-import requests
-import bs4
 import ast
-import os
 import copy
-import yaml
-import time
-import re
-import telegram
 import logging
+import os
+import time
 import traceback
-
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import CallbackContext
+import bs4
+import requests
 
 from module.config import load_configurations
 
 config_map = load_configurations()
 
+
 def get_links(label, url):
-    logging.info("Call get_links({}, {})".format(label, url))
+    logging.info("Call get_links(%s, %s)", label, url)
 
     try:
         response_received = False
@@ -31,9 +26,8 @@ def get_links(label, url):
                 response_received = True
             except Exception as e:
                 tries += 1
-
-                logging.exception("Unhandled exception while connecting ({}), retrying in 5 seconds ({}/{})".format(e, tries, max_tries))
-
+                logging.exception("Unhandled exception while connecting (%s), retrying in 5 seconds (%s/%s)", e, tries,
+                                  max_tries)
                 time.sleep(5)
 
         if not response_received:
@@ -46,22 +40,21 @@ def get_links(label, url):
         if (len(result) == 0):
             result = soup.select("strong.field-content a")
 
-        return [
-            link.get('href') for link in result if "/docenti/" not in link.get('href')
-        ]
+        return [link.get('href') for link in result if "/docenti/" not in link.get('href')]
     except Exception as e:
         # open("logs/errors.txt", "a+").write("{}\n".format(e))
 
-        logging.exception("Exception on call get_links({}, {})".format(label, url))
+        logging.exception("Exception on call get_links(%s, %s)", label, url)
         logging.exception(traceback.format_exc())
 
         return None
 
+
 def get_content(url):
-    logging.info("Call get_content({})".format(url))
+    logging.info("Call get_content(%s)", url)
 
     try:
-        time.sleep(1) # delay to avoid "Max retries exceeds" for too many requests
+        time.sleep(1)  # delay to avoid "Max retries exceeds" for too many requests
 
         req = requests.get(url)
         soup = bs4.BeautifulSoup(req.content, "html.parser")
@@ -78,9 +71,9 @@ def get_content(url):
                 cols = [ele.text.strip() for ele in cols]
                 for c in cols:
                     table_content += c + "\t"
-                table_content +="\n"
+                table_content += "\n"
 
-            table.decompose() # remove table from content
+            table.decompose()  # remove table from content
 
         title = soup.find("h1", attrs={"class": "page-title"})
         content = soup.find("div", attrs={"class": "field-item even"})
@@ -90,28 +83,27 @@ def get_content(url):
             title = title.get_text()
             content = content.get_text()
 
-            content.strip() # trimming
+            content.strip()  # trimming
             content += "\n"
             content += table_content
 
             if prof is not None:
-                title = "[" +prof.get_text().replace("Vai alla scheda del prof. ", "") + "]\n" + title
+                title = "[" + prof.get_text().replace("Vai alla scheda del prof. ", "") + "]\n" + title
         else:
-            return None,None
+            return None, None
 
-        title = "\n"+title
+        title = "\n" + title
 
         return title, content
-    except Exception as e:
-        # open("logs/errors.txt", "a+").write("{}\n".format(e))
-
-        logging.exception("Exception on call get_content({})".format(url))
+    except Exception:
+        logging.exception("Exception on call get_content(%s)", url)
         logging.exception(traceback.format_exc())
 
-        return None,None
+        return None, None
+
 
 def pull_pending_notice(file_name):
-    logging.info("Call pull_pending_notice({})".format(file_name))
+    logging.info("Call pull_pending_notice(%s)", file_name)
 
     try:
         if os.path.isfile(file_name):
@@ -126,11 +118,12 @@ def pull_pending_notice(file_name):
             if len(data) > 0:
                 return ast.literal_eval(data[0])
         return None
-    except Exception as e:
-        logging.exception("Exception on call pull_pending_notice({})".format(file_name))
+    except Exception:
+        logging.exception("Exception on call pull_pending_notice(%s)", file_name)
         logging.exception(traceback.format_exc())
 
         return None
+
 
 def format_content(content):
     # logging.info("Call format_content({})".format(content))
@@ -147,11 +140,12 @@ def format_content(content):
             content = "{}{}".format(content[:split_index], config_map["max_length_footer"])
 
         return content
-    except Exception as e:
-        logging.exception("Exception on call format_content({})".format(content))
+    except Exception:
+        logging.exception("Exception on call format_content(%s)", content)
         logging.exception(traceback.format_exc())
 
         return None
+
 
 def get_notice_content(notice_dict, base_url, archive_p, notice_p):
     # logging.info("Call get_notice_content({}, {}, {}, {})".format(notice_dict, base_url, archive_p, notice_p))
@@ -161,7 +155,7 @@ def get_notice_content(notice_dict, base_url, archive_p, notice_p):
 
         post_url = notice_dict[label]
         if not post_url.startswith("/"):
-            post_url = "/"+post_url
+            post_url = "/" + post_url
 
         url = "%s%s" % (base_url, post_url)
 
@@ -184,78 +178,6 @@ def get_notice_content(notice_dict, base_url, archive_p, notice_p):
 
             with open(notice_p, 'w') as fw:
                 fw.write(formatted_notice)
-    except Exception as e:
-        logging.exception("Exception on call get_notice_content({}, {}, {}, {})".format(notice_dict, base_url, archive_p, notice_p))
+    except Exception:
+        logging.exception("Exception on call get_notice_content(%s, %s, %s, %s)", notice_dict, base_url, archive_p, notice_p)
         logging.exception(traceback.format_exc())
-
-def scrape_notices(context):
-    logging.info("Call scrape_notices({})".format(context))
-
-    logging.info("Starting scraping job")
-
-    try:
-        job = context.job
-        notices_urls_cp = copy.deepcopy(notices_urls)
-
-        for i in notices_urls_cp:
-            if i.find("_") > -1:
-                folder = i[0:i.find("_")]
-            else:
-                folder = i
-
-            if "pages" in notices_urls_cp[i]:
-                for page_name in notices_urls_cp[i]["pages"]:
-                    page = notices_urls_cp[i]["pages"][page_name]
-
-                    pending_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avvisi_in_sospeso.dat"
-                    archive_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avvisi.dat"
-                    notice_path = "data/avvisi/"+str(folder)+"/"+page_name+"_avviso.dat"
-
-                    for url in page["urls"]:
-                        base_url = url
-                        base_url = base_url[:base_url.find(".unict.it")] + ".unict.it"
-
-                        if not os.path.exists("data/avvisi/"+str(folder)+"/"):
-                            os.makedirs("data/avvisi/"+str(folder)+"/")
-
-                        pending_notice = pull_pending_notice(pending_path)
-
-                        if pending_notice:
-                            get_notice_content(pending_notice, base_url, archive_path, notice_path)
-                        else:
-                            notices = []
-                            link = get_links(page_name, url)
-                            if link:
-                                notices.extend(link)
-
-                                with open(pending_path, 'a+') as pending_file_handle:
-                                    if os.path.isfile(archive_path):
-                                        with open(archive_path, 'r') as archive_file_handle:
-                                            archive_notices = archive_file_handle.read()
-
-                                            for notice in notices:
-                                                if str(notice) not in archive_notices:
-                                                    pending_file_handle.write("%s\n" % notice)
-                                    else:
-                                        for notice in notices:
-                                            pending_file_handle.write("%s\n" % notice)
-
-                                pending_notice = pull_pending_notice(pending_path)
-
-                                if pending_notice:
-                                    get_notice_content(pending_notice, base_url, archive_path, notice_path)
-
-                        try:
-                            approve_group_chatid = page["approve_group_chatid"]
-                        except KeyError:
-                            approve_group_chatid = None
-
-                        if approve_group_chatid:
-                            send_news_approve_message(context, notice_path, "data/avvisi/"+str(folder), folder, page_name, approve_group_chatid)
-                        else:
-                            spam_news(context, notice_path, page["channels"])
-    except Exception as e:
-        logging.exception("Exception on call scrape_notices({})".format(context))
-        logging.exception(traceback.format_exc())
-
-    logging.info("Scraping job finished")

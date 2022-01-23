@@ -1,10 +1,6 @@
-import yaml
-
-from module.post import send_notice
-
-import telegram
 from telegram import Update
 from telegram.ext import CallbackContext
+
 
 def callback_handle(update: Update, context: CallbackContext):
     query = update.callback_query
@@ -28,7 +24,7 @@ def callback_handle(update: Update, context: CallbackContext):
 
         # if the news has been approved, change result message and broadcast it to the news channel
         if result == "approved":
-            page = notices_urls[dep_name]["pages"][page_name]
+            # page = notices_urls[dep_name]["pages"][page_name] # notices_urls is not found
 
             # for channel in page["channels"]:
             #     spam_news_direct(context.bot, notice_text, channel)
@@ -37,8 +33,8 @@ def callback_handle(update: Update, context: CallbackContext):
 
         try:
             context.bot.edit_message_text(text="<b>L'avviso è stato {}</b>:\n\n{}".format(result_message, notice_text),
-                            chat_id=query.message.chat_id,
-                            message_id=query.message.message_id,
-                            parse_mode='HTML')
-        except:
+                                          chat_id=query.message.chat_id,
+                                          message_id=query.message.message_id,
+                                          parse_mode='HTML')
+        except Exception:
             pass

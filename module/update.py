@@ -1,14 +1,14 @@
 import logging
+import os
 import traceback
 import yaml
-import os
 
 from module.post import enqueue_notice
-from module.scraper_notices import *
+from module.scraper_notices import get_links, get_content
 from module.config import load_configurations
 
 def update_tick(context):
-    logging.info ("Call update_tick ({})".format(context))
+    logging.info ("Call update_tick (%s)", (context))
 
     logging.info("Starting update tick")
 
@@ -19,7 +19,7 @@ def update_tick(context):
         groups = config_map["notices_groups"]
 
         for group_key in groups:
-            logging.info("- Group '{}'".format(group_key))
+            logging.info("- Group '%s'", group_key)
 
             # Load group's data
             group = groups[group_key]
@@ -31,7 +31,7 @@ def update_tick(context):
             group_folder = group_key.replace(" ", "_")
 
             for page_key in group["pages"]:
-                logging.info("-- Page '{}'".format(page_key))
+                logging.info("-- Page '%s'", page_key)
 
                 # Load page's data
                 page = group["pages"][page_key]
@@ -50,7 +50,7 @@ def update_tick(context):
                 notices_data = yaml.safe_load(open(data_file_path, "r"))
 
                 for url in page["urls"]:
-                    logging.info("--- URL '{}'".format(url))
+                    logging.info("--- URL '%s'", url)
 
                     page_url = group["base_url"] + url
 
@@ -61,7 +61,7 @@ def update_tick(context):
                         continue
 
                     for link in links:
-                        logging.info("---- Link '{}'".format(link))
+                        logging.info("---- Link '%s'", link)
 
                         try:
                             # If link has already been scraped (implying that's invalid page or already posted notice), skip it
@@ -70,7 +70,7 @@ def update_tick(context):
                                 # continue
                                 break
 
-                            full_url = group["base_url"] + link 
+                            full_url = group["base_url"] + link
 
                             link_content = get_content(full_url)
 
@@ -85,7 +85,7 @@ def update_tick(context):
 
                             # Appends current link to scraped ones
                             notices_data["scraped_links"].append(link)
-                        except:
+                        except Exception:
                             logging.exception("Unhandled exception while analyzing the link")
                             traceback.print_exc()
 
@@ -94,9 +94,8 @@ def update_tick(context):
                 # Update notices data file
                 yaml.safe_dump(notices_data, open(data_file_path, "w"))
 
-    except Exception as e:
-        logging.exception("Exception on call update_tick({})".format(context))
+    except Exception:
+        logging.exception("Exception on call update_tick(%s)", context)
         logging.exception(traceback.format_exc())
 
     logging.info("Update tick finished")
-
