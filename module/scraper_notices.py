@@ -1,5 +1,4 @@
 import ast
-import copy
 import logging
 import os
 import time
@@ -37,7 +36,7 @@ def get_links(label, url):
 
         result = soup.select("span.field-content a")
 
-        if (len(result) == 0):
+        if len(result) == 0:
             result = soup.select("strong.field-content a")
 
         return [link.get('href') for link in result if "/docenti/" not in link.get('href')]
@@ -179,5 +178,6 @@ def get_notice_content(notice_dict, base_url, archive_p, notice_p):
             with open(notice_p, 'w') as fw:
                 fw.write(formatted_notice)
     except Exception:
-        logging.exception("Exception on call get_notice_content(%s, %s, %s, %s)", notice_dict, base_url, archive_p, notice_p)
+        logging.exception("Exception on call get_notice_content(%s, %s, %s, %s)", notice_dict, base_url, archive_p,
+                          notice_p)
         logging.exception(traceback.format_exc())

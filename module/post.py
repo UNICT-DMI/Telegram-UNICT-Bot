@@ -1,16 +1,17 @@
 from module.config import load_configurations
 import telegram
 import time
-import yaml
 import logging
 import traceback
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import CallbackContext
+
 
 # Notice enqueueing
 def enqueue_notice(context, page_data, notices_data, full_url, link_content, approval_group_chatid=None):
-    logging.info("Call enqueue_notice({}, {}, {}, {}, {}, {})".format(context, page_data, notices_data, full_url, link_content, approval_group_chatid))
+    logging.info(
+        "Call enqueue_notice({}, {}, {}, {}, {}, {})".format(context, page_data, notices_data, full_url, link_content,
+                                                             approval_group_chatid))
 
     try:
         channels = page_data["channels"]
@@ -21,20 +22,20 @@ def enqueue_notice(context, page_data, notices_data, full_url, link_content, app
 
             reply_markup = InlineKeyboardMarkup([
                 [
-                    InlineKeyboardButton("Accetta ✔", callback_data = "news,approved,{},{}".format()),
-                    InlineKeyboardButton("Rifiuta ❌", callback_data = "news,rejected,{},{}".format())
+                    InlineKeyboardButton("Accetta ✔", callback_data="news,approved,{},{}".format()),
+                    InlineKeyboardButton("Rifiuta ❌", callback_data="news,rejected,{},{}".format())
                 ]
             ])
 
             context.bot.sendMessage(
-                chat_id = approval_group_chatid,
-                text = notice_message,
-                parse_mode = 'HTML',
-                reply_markup = reply_markup
+                chat_id=approval_group_chatid,
+                text=notice_message,
+                parse_mode='HTML',
+                reply_markup=reply_markup
             )
         else:
-            # Otherwise send a direct message on each channel
-            
+            # Otherwise, send a direct message on each channel
+
             notice_message = format_notice_message(page_data["label"], clear_url(full_url), link_content)
 
             for channel in page_data["channels"]:
@@ -43,6 +44,7 @@ def enqueue_notice(context, page_data, notices_data, full_url, link_content, app
     except Exception as e:
         logging.exception("Exception on call enqueue_notice(...)".format(context))
         logging.exception(traceback.format_exc())
+
 
 # Message formatting
 def format_content(content):
@@ -61,11 +63,13 @@ def format_content(content):
 
     return content
 
+
 def clear_url(url):
     # Remove trailing slashes, added concatenating base URLs with local hrefs
     url = url.replace("it//", "it/")
 
     return url
+
 
 def format_notice_message(label, url, link_content):
     message = "<b>[{}]</b>\n{}\n<b>{}</b>\n{}".format(
@@ -77,6 +81,7 @@ def format_notice_message(label, url, link_content):
 
     return message
 
+
 # Message send helpers
 def send_notice(context, chat_id, notice_message):
     logging.info("Call send_notice({}, {}, {})".format(context, chat_id, notice_message))
@@ -86,9 +91,9 @@ def send_notice(context, chat_id, notice_message):
     while not sent:
         try:
             context.bot.sendMessage(
-                chat_id = chat_id,
-                text = notice_message,
-                parse_mode = 'HTML'
+                chat_id=chat_id,
+                text=notice_message,
+                parse_mode='HTML'
             )
 
             sent = True
@@ -99,5 +104,3 @@ def send_notice(context, chat_id, notice_message):
 
             time.sleep(30)
             continue
-
-

@@ -7,8 +7,9 @@ from module.post import enqueue_notice
 from module.scraper_notices import get_links, get_content
 from module.config import load_configurations
 
+
 def update_tick(context):
-    logging.info ("Call update_tick (%s)", (context))
+    logging.info("Call update_tick (%s)", context)
 
     logging.info("Starting update tick")
 
@@ -64,7 +65,8 @@ def update_tick(context):
                         logging.info("---- Link '%s'", link)
 
                         try:
-                            # If link has already been scraped (implying that's invalid page or already posted notice), skip it
+                            # If link has already been scraped (implying that's invalid page or already posted
+                            # notice), skip it
                             if link in notices_data["scraped_links"]:
                                 logging.info("Link is already present in the list")
                                 # continue
@@ -79,7 +81,8 @@ def update_tick(context):
                                 logging.info("Link is valid and seems to contain a notice, spamming")
 
                                 # Enqueue the notice to be sent in the channel or in an approval group
-                                enqueue_notice(context, page, notices_data, full_url, link_content, approval_group_chatid)
+                                enqueue_notice(context, page, notices_data, full_url, link_content,
+                                               approval_group_chatid)
                             else:
                                 logging.info("Link doesn't contain a valid notice")
 
