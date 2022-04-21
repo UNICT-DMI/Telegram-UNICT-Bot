@@ -47,10 +47,11 @@ def enqueue_notice(context, page_data, notices_data, full_url, link_content, app
 
 
 # Message formatting
-def format_content(content):
+def format_content(content, url: str):
     config_map = load_configurations()
 
     max_len = config_map["max_messages_length"]
+    split_index = -1
 
     # If message content is too long, cut it and add a footer
     if len(content) > max_len:
@@ -58,8 +59,8 @@ def format_content(content):
 
         while content[split_index] != ' ':
             split_index = split_index - 1
-
-        content = "{}{}".format(content[:split_index], config_map["max_length_footer"])
+    footer: str = str(config_map["max_length_footer"]).replace("%PLACE_HOLDER%", url)
+    content = "{}{}".format(content if split_index == -1 else content[:split_index], footer)
 
     return content
 
@@ -72,11 +73,10 @@ def clear_url(url):
 
 
 def format_notice_message(label, url, link_content):
-    message = "<b>[{}]</b>\n{}\n<b>{}</b>\n{}".format(
+    message = "<b>[{}]</b>\n<b>{}</b>\n{}".format(
         label,
-        url,
         link_content[0],
-        format_content(link_content[1]),
+        format_content(link_content[1], url),
     )
 
     return message
