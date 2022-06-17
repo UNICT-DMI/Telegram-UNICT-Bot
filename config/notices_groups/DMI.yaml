@@ -6,4 +6,4 @@ pages:
     urls:
       - "notizie/"
     channels:
-      - "@testxasd"
+      - "@channelName" # use channel public name or chatid
