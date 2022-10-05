@@ -1,6 +1,8 @@
-import yaml, os
+import os
+import yaml
 
-def load_configurations(path='config/'):
+
+def load_configurations(path: str = 'config/'):
     config_map = yaml.load(open(f'{path}/settings.yaml', 'r'), Loader=yaml.SafeLoader)
 
     config_map["notices_groups"] = dict()

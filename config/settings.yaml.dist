@@ -4,5 +4,5 @@ log_group_chatid: CHAT_ID
 logfile_reset_interval_minutes: 360
 update_interval: 600
 max_messages_length: 250
-max_length_footer: " ... \n\n<b>Clicca il link in cima al post per continuare a leggere</b>"
+max_length_footer: " ... \n\n<b><a href='%PLACE_HOLDER%'>Clicca qui per leggerlo nel sito</a></b>"
 max_connection_tries: 3
