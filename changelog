@@ -1,0 +1,6 @@
+1. Renamed the config file to config/settings.yaml (config/config.yml previously) [BREAKING]
+2. Removed unused functions
+3. Add many (too many) closes after opened files
+4. Split the functions in separate files
+4. Add type hints
+5. Add docstrings

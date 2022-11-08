@@ -3,19 +3,18 @@ import os
 import traceback
 import yaml
 
+from telegram.ext import CallbackContext
 from module.post import enqueue_notice
 from module.scraper_notices import get_links, get_content
-from module.config import load_configurations
+from module.data import config_map
 
-def update_tick(context):
-    logging.info ("Call update_tick (%s)", (context))
+# TODO: Check che update process
+def update_tick(context: CallbackContext):
+    logging.info("Call update_tick (%s)", context)
 
     logging.info("Starting update tick")
 
     try:
-        # Load URLs from configuration
-        config_map = load_configurations()
-
         groups = config_map["notices_groups"]
 
         for group_key in groups:
@@ -45,7 +44,9 @@ def update_tick(context):
                 # Initialize folder and data file (if it doesn't exist)
                 if not os.path.exists(data_file_path):
                     os.makedirs(base_page_path)
-                    yaml.safe_dump(yaml.safe_load(open("dist/notices_data.yaml", "r")), open(data_file_path, "w"))
+                    yaml.safe_dump(
+                        yaml.safe_load(open("dist/notices_data.yaml", "r")), open(data_file_path, "w")
+                    )
 
                 notices_data = yaml.safe_load(open(data_file_path, "r"))
 
@@ -79,7 +80,14 @@ def update_tick(context):
                                 logging.info("Link is valid and seems to contain a notice, spamming")
 
                                 # Enqueue the notice to be sent in the channel or in an approval group
-                                enqueue_notice(context, page, notices_data, full_url, link_content, approval_group_chatid)
+                                enqueue_notice(
+                                    context,
+                                    page,
+                                    notices_data,
+                                    full_url,
+                                    link_content,
+                                    approval_group_chatid,
+                                )
                             else:
                                 logging.info("Link doesn't contain a valid notice")
 

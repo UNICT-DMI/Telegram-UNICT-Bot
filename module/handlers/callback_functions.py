@@ -1,8 +1,8 @@
 from telegram import Update
 from telegram.ext import CallbackContext
 
-
-def callback_handle(update: Update, context: CallbackContext):
+# TODO: rendere funzionante il sistema di approve/disapprove
+def callback_handle(update: Update, context: CallbackContext) -> None:
     query = update.callback_query
     query_data = query.data.split(":")
 
@@ -17,7 +17,7 @@ def callback_handle(update: Update, context: CallbackContext):
         notice_disk_id = query_data[5]
 
         # reconstruct the file path using query data
-        notice_filename = "{}/in_approvazione/{}_{}.dat".format(channel_folder, page_name, notice_disk_id)
+        notice_filename = f"{channel_folder}/in_approvazione/{page_name}_{notice_disk_id}.dat"
         notice_text = open(notice_filename).read()
 
         result_message = "rifiutato ❌"
@@ -32,9 +32,11 @@ def callback_handle(update: Update, context: CallbackContext):
             result_message = "approvato ✔"
 
         try:
-            context.bot.edit_message_text(text="<b>L'avviso è stato {}</b>:\n\n{}".format(result_message, notice_text),
-                                          chat_id=query.message.chat_id,
-                                          message_id=query.message.message_id,
-                                          parse_mode='HTML')
+            context.bot.edit_message_text(
+                text="<b>L'avviso è stato {}</b>:\n\n{}".format(result_message, notice_text),
+                chat_id=query.message.chat_id,
+                message_id=query.message.message_id,
+                parse_mode="HTML",
+            )
         except Exception:
             pass
