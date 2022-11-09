@@ -1,4 +1,4 @@
-"""post_and_clear_log job"""
+"""Post and clear job"""
 import logging
 from datetime import datetime
 from telegram.ext import CallbackContext
@@ -15,12 +15,13 @@ def post_and_clear_log_job(context: CallbackContext) -> None:
     logging.info("Automatic sending current logfile into the group...")
 
     try:
-        context.bot.sendDocument(
-            chat_id=config_map["log_group_chatid"],
-            document=open("logfile.log", "rb"),
-            filename=f"unict-bot_logfile_({datetime.now().strftime('%d/%m/%Y, %H:%M:%S')})",
-            caption="Automatically generated logfile",
-        )
+        with open("logfile.log", "rb") as logfile:
+            context.bot.sendDocument(
+                chat_id=config_map["log_group_chatid"],
+                document=logfile,
+                filename=f"unict-bot_logfile_({datetime.now().strftime('%d/%m/%Y, %H:%M:%S')}",
+                caption="Automatically generated logfile",
+            )
     except FileNotFoundError:
         logging.info("No logfile found")
 

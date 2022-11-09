@@ -4,3 +4,4 @@
 4. Split the functions in separate files
 4. Add type hints
 5. Add docstrings
+6. Removed some incomplete (and non functioning) features such as an approval process for news

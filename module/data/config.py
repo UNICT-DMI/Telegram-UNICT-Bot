@@ -1,6 +1,23 @@
+"""Configuration map"""
 import os
 from typing import TypedDict
 import yaml
+
+
+class PageConfig(TypedDict):
+    """page sub-configuration type definition"""
+
+    label: str
+    urls: "list[str]"
+    channels: "list[str | int]"
+
+
+class GroupConfig(TypedDict):
+    """group sub-configuraiton type definition"""
+
+    base_url: str
+    approval_group_chatid: "int | None"
+    pages: "dict[str, PageConfig]"
 
 
 class Config(TypedDict):
@@ -14,7 +31,7 @@ class Config(TypedDict):
     max_messages_length: int
     max_length_footer: str
     max_connection_tries: int
-    notices_groups: dict
+    notices_groups: "dict[str, GroupConfig]"
 
 
 def load_configurations(path: str = "config/") -> Config:
@@ -30,7 +47,7 @@ def load_configurations(path: str = "config/") -> Config:
     with open(os.path.join(path, "settings.yaml"), "r", encoding="utf-8") as main_settings:
         new_config = yaml.load(main_settings, Loader=yaml.SafeLoader)
 
-        new_config["notices_groups"] = dict()
+        new_config["notices_groups"] = {}
 
         notices_groups_path = f"{path}/notices_groups"
 

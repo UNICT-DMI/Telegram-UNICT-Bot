@@ -2,7 +2,8 @@
 import logging
 from telegram.ext import Updater
 from module.data import config_map
-from module.handlers import add_handlers, add_jobs
+from module.handlers import add_handlers, set_commands
+from module.jobs import add_jobs
 
 
 def setup_logging(logs_file: str) -> None:
@@ -32,6 +33,7 @@ def main() -> None:
     logging.info("Initialization...")
 
     updater = Updater(config_map["token"])
+    set_commands(updater)
     add_handlers(updater.dispatcher)
     add_jobs(updater.job_queue)
 

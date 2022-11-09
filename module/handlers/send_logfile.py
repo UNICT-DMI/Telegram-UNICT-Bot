@@ -24,5 +24,5 @@ def send_logfile_cmd(update: Update, context: CallbackContext) -> None:
         context.bot.sendDocument(
             chat_id=config_map["log_group_chatid"],
             document=logfile,
-            filename=f"unict-bot_logfile_({datetime.now().strftime('%d/%m/%Y, %H:%M:%S')})",
+            filename=f"unict-bot_logfile_({datetime.now().strftime('%d/%m/%Y, %H:%M:%S')}",
         )
