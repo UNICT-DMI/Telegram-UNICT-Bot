@@ -10,7 +10,7 @@ DATA_FOLDER = 'tests/config_migration/data'
     "disum",
     "server_conf"
 ])
-def test_new_configuration_loading(test_case_id):
+def test_new_configuration_loading(test_case_id) -> None:
     test_case_data_folder = f'{DATA_FOLDER}/{test_case_id}'
 
     with open(f'{test_case_data_folder}/old/settings.yaml', 'r') as yaml_config:

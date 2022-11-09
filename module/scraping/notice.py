@@ -1,8 +1,11 @@
 """Notice class"""
+import time
 import logging
 import traceback
 import bs4
 import requests
+from telegram.ext import CallbackContext
+from telegram.error import BadRequest, Unauthorized, TelegramError, RetryAfter
 from module.data import config_map
 
 
@@ -96,3 +99,35 @@ class Notice:
             content = f"{content[:split_index]}{config_map['max_length_footer']}"
 
         return content
+
+    def send(self, context: CallbackContext, chat_ids: "str | int | list[str | int]") -> None:
+        """Try to send the notice to the given chat_id(s), retrying if necessary
+        after a delay up to the maximum number of retries specified in the config.
+
+        Args:
+            context: context passed by the handler
+            chat_ids: chat_id or list of chat_ids to send the message to
+        """
+        logging.info("Call send_notice(%s, %s, %s)", context, chat_ids, self)
+        if not isinstance(chat_ids, list):
+            chat_ids = [chat_ids]
+
+        for chat_id in chat_ids:
+            sent = False
+            tries = 0
+
+            while not sent and tries < config_map["max_connection_tries"]:
+                try:
+                    context.bot.sendMessage(
+                        chat_id=chat_id, text=self.formatted_message, parse_mode="HTML"
+                    )
+                    sent = True
+                    logging.info("Notice sent to %s", chat_id)
+                except RetryAfter as err:
+                    logging.warning("Retry after error encountered, retrying in 30 seconds")
+                    time.sleep(err.retry_after)
+                    tries += 1
+                    continue
+                except (BadRequest, Unauthorized, TelegramError):
+                    logging.exception("Exception on call enqueue_notice(%s)", context)
+                    logging.exception(traceback.format_exc())

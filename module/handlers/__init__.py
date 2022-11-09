@@ -15,7 +15,7 @@ from .send_logfile import send_logfile_cmd
 from .clear_logfile import clear_logfile_cmd
 
 
-def set_commands(updater: Updater):
+def set_commands(updater: Updater) -> None:
     """Adds the list of commands with their description to the bot
 
     Args:

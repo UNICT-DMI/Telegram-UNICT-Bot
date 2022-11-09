@@ -40,4 +40,5 @@ jobs:
           pylint main.py module
       # - name: Test with pytest
       #   run: |
-      #     pytest tests/unit/
+      #     pip3 install pytest
+      #     pytest tests

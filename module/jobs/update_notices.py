@@ -5,7 +5,7 @@ from module.data import config_map
 from module.scraping import scrape_group
 
 
-def update_notices_job(context: CallbackContext):
+def update_notices_job(context: CallbackContext) -> None:
     """Called at a fixed interval to check for new notices.
     Loops over all the groups and pages, and checks for new notices
     by ensuring the links are not present in the `scraped links`.

@@ -8,7 +8,6 @@ from telegram.ext import CallbackContext
 from module.data import GroupConfig
 from .notice import Notice
 from .scraper_links import get_links
-from .send import send_notice
 
 
 class NoticeData(TypedDict):
@@ -70,8 +69,7 @@ def scrape_group(context: CallbackContext, group_key: str, group: GroupConfig) -
                 # enqueue it to be sent in the channel or in an approval group
                 if notice is not None:
                     logging.info("Link is valid and seems to contain a notice, spamming")
-                    for channel in page["channels"]:
-                        send_notice(context, channel, notice)
+                    notice.send(context, page["channels"])
                 else:
                     logging.info("Link doesn't contain a valid notice")
 
