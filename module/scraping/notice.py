@@ -129,5 +129,6 @@ class Notice:
                     tries += 1
                     continue
                 except (BadRequest, Unauthorized, TelegramError):
+                    sent = True # avoid infinite loop
                     logging.exception("Exception on call enqueue_notice(%s)", context)
                     logging.exception(traceback.format_exc())
