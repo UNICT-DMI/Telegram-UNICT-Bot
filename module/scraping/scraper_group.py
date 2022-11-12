@@ -42,7 +42,11 @@ def scrape_group(context: CallbackContext, group_key: str, group: GroupConfig) -
 
         # Read the data about past notices
         with open(data_file_path, "r", encoding="utf-8") as data_file:
-            notices_data: NoticeData = yaml.safe_load(data_file)
+            notices_data: NoticeData = yaml.safe_load(data_file) or {
+                "scraped_links": [],
+                "pending_notices": [],
+            }
+            notices_data["scraped_links"] = notices_data.get("scraped_links", [])
 
         # Loop over all urls that need to be scraped
         for url in page["urls"]:
