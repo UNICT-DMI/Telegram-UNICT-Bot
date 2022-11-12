@@ -18,6 +18,9 @@ class Notice:
         self.content = content
         self.url = url
 
+    def __repr__(self) -> str:
+        return f"Notice({self.label}, {self.title}, {self.url})"
+
     @classmethod
     def from_url(cls, label: str, url: str) -> "Notice | None":
         """Generates a Notice object from the url of the notice.
@@ -129,5 +132,6 @@ class Notice:
                     tries += 1
                     continue
                 except (BadRequest, Unauthorized, TelegramError):
+                    sent = True  # avoid infinite loop
                     logging.exception("Exception on call enqueue_notice(%s)", context)
                     logging.exception(traceback.format_exc())

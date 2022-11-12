@@ -28,7 +28,7 @@ def log_msg(update: Update, _: CallbackContext) -> None:
             f"chat_type: {chat.type}\n"
             f"chat_title: {chat.title}\n"
             "___TESTO___\n"
-            f"text: {text}"
+            f"text: {text}\n"
             f"date: {date}"
             "\n_____________\n"
         )
