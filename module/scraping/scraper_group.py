@@ -2,19 +2,11 @@
 import logging
 import os
 import shutil
-from typing import TypedDict
 import yaml
 from telegram.ext import CallbackContext
-from module.data import GroupConfig
+from module.data import NoticeData, GroupConfig, DEFAULT_NOTICES_DATA
 from .notice import Notice
 from .scraper_links import get_links
-
-
-class NoticeData(TypedDict):
-    """notice data type definition"""
-
-    scraped_links: "list[str]"
-    pending_notices: "list[str]"
 
 
 def scrape_group(context: CallbackContext, group_key: str, group: GroupConfig) -> None:
@@ -42,10 +34,7 @@ def scrape_group(context: CallbackContext, group_key: str, group: GroupConfig) -
 
         # Read the data about past notices
         with open(data_file_path, "r", encoding="utf-8") as data_file:
-            notices_data: NoticeData = yaml.safe_load(data_file) or {
-                "scraped_links": [],
-                "pending_notices": [],
-            }
+            notices_data: NoticeData = yaml.safe_load(data_file) or DEFAULT_NOTICES_DATA
             notices_data["scraped_links"] = notices_data.get("scraped_links", [])
 
         # Loop over all urls that need to be scraped
