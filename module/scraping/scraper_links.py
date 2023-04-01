@@ -44,6 +44,10 @@ def get_links(url: str) -> "list[str] | None":
 
         if len(result) == 0:
             result = soup.select("strong.field-content a")
+        
+        # new design
+        if len(result) == 0:
+            result = soup.select("div.region.region-content a")
 
         links = []
         for link in result:
