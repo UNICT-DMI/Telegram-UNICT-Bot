@@ -77,6 +77,8 @@ class Notice:
         """Returns the title of the notice
             Args:
                 soup: BeautifulSoup object of the page
+            Returns:
+                the soup of the title
         """
         title = soup.find("h1", attrs={"class": "page-title"})
         return title if title else soup.find("section", attrs={"id": "content"}).find("h1")
