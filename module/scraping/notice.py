@@ -73,7 +73,7 @@ class Notice:
 
             return None
 
-    def __get_title(self, soup: bs4.BeautifulSoup) -> bs4.BeautifulSoup:
+    def __get_title(self, soup: bs4.BeautifulSoup) -> bs4.BeautifulSoup | None:
         """Returns the title of the notice
             Args:
                 soup: BeautifulSoup object of the page
@@ -81,7 +81,7 @@ class Notice:
                 the soup of the title
         """
         title = soup.find("h1", attrs={"class": "page-title"})
-        return title if title else soup.find("section", attrs={"id": "content"}).find("h1")
+        return title if title else soup.select_one("section#content h1")
 
     @property
     def formatted_url(self) -> str:
