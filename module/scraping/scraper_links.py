@@ -44,10 +44,10 @@ def get_links(url: str) -> "list[str] | None":
             soup.select("strong.field-content a") or \
             soup.select("div.region.region-content div.view-content a:not(span a, p a)")
 
+        exclude_links = [".pdf", ".doc", "/docenti/"]
         links = [link.get("href") for link in result
                 if link.get("href")
-                and not link.get("href").endswith(".pdf")
-                and not link.get("href").find("/docenti/")]
+                and not any(exclude in link.get("href") for exclude in exclude_links)]
 
         return links
     except bs4.FeatureNotFound:
