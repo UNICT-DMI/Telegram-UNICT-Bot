@@ -40,15 +40,15 @@ def get_links(url: str) -> "list[str] | None":
     try:
         soup = bs4.BeautifulSoup(req.content, "html.parser")
 
-        result = soup.select("span.field-content a")
+        result = soup.select("span.field-content a") or \
+            soup.select("strong.field-content a") or \
+            soup.select("div.region.region-content div.view-content a:not(span a, p a)")
 
-        if len(result) == 0:
-            result = soup.select("strong.field-content a")
+        exclude_links = [".pdf", ".doc", "/docenti/"]
+        links = [link.get("href") for link in result
+                if link.get("href")
+                and not any(exclude in link.get("href") for exclude in exclude_links)]
 
-        links = []
-        for link in result:
-            if (new_link := link.get("href")) is not None:
-                links.append(new_link)
         return links
     except bs4.FeatureNotFound:
         logging.exception("Exception on call get_links(%s)", url)

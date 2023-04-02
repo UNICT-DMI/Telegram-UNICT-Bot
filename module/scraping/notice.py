@@ -50,7 +50,7 @@ class Notice:
                         table_content += "\t".join(cols_text) + "\n"
                     table.decompose()  # remove table from content
 
-            title = soup.find("h1", attrs={"class": "page-title"})
+            title = cls.__get_title(cls, soup)
             content = soup.find("div", attrs={"class": "field-item even"})
             prof = soup.find("a", attrs={"class": "more-link"})
 
@@ -72,6 +72,16 @@ class Notice:
             logging.exception(traceback.format_exc())
 
             return None
+
+    def __get_title(self, soup: bs4.BeautifulSoup) -> bs4.BeautifulSoup | None:
+        """Returns the title of the notice
+            Args:
+                soup: BeautifulSoup object of the page
+            Returns:
+                the soup of the title
+        """
+        title = soup.find("h1", attrs={"class": "page-title"})
+        return title if title else soup.select_one("section#content h1")
 
     @property
     def formatted_url(self) -> str:

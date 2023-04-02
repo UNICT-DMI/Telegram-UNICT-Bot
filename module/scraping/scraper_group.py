@@ -4,7 +4,7 @@ import os
 import shutil
 import yaml
 from telegram.ext import CallbackContext
-from module.data import NoticeData, GroupConfig, DEFAULT_NOTICES_DATA
+from module.data import NoticeData, GroupConfig, DEFAULT_NOTICES_DATA, config_map
 from .notice import Notice
 from .scraper_links import get_links
 
@@ -65,6 +65,8 @@ def scrape_group(context: CallbackContext, group_key: str, group: GroupConfig) -
                     notice.send(context, page["channels"])
                 else:
                     logging.info("Link doesn't contain a valid notice")
+                    context.bot.sendMessage(chat_id=config_map["log_group_chatid"],
+                                            text=f"Link doesn't contain a valid notice: {link}")
 
                 # Appends current link to scraped ones
                 notices_data["scraped_links"].append(link)
