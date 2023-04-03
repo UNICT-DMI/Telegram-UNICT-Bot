@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.9.12-slim
 WORKDIR /unictbot
 
 COPY requirements.txt .
