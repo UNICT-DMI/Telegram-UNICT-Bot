@@ -52,7 +52,12 @@ class Notice:
 
             title = cls.__get_title(cls, soup)
             content = soup.find("div", attrs={"class": "field-item even"})
-            prof = soup.find("a", attrs={"class": "more-link"})
+
+            goto_prof_text = "Vai alla scheda del prof. "
+
+            if prof is None:
+                prof = soup.find("a", text=lambda text: text and goto_prof_text in text)
+
 
             if title is not None and content is not None:
                 title = title.get_text()
@@ -60,7 +65,8 @@ class Notice:
 
                 content = f"{content.strip()}\n{table_content}"
                 if prof is not None:
-                    title = f"[{prof.get_text().replace('Vai alla scheda del prof. ', '')}]\n{title}"
+                    title = f"[{prof.replace(goto_prof_text, '')}]\n{title}"
+
             else:
                 return None
 
