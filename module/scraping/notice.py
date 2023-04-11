@@ -84,7 +84,7 @@ class Notice:
         """
         goto_prof_text = "Vai alla scheda del prof. "
         prof = soup.find("a", text=lambda text: text and goto_prof_text in text)
-        return prof and prof.replace(goto_prof_text, '')
+        return prof and prof.get_text().replace(goto_prof_text, '')
 
     def __get_title(self, soup: bs4.BeautifulSoup) -> bs4.BeautifulSoup | None:
         """Returns the title of the notice
