@@ -52,7 +52,8 @@ class Notice:
 
             title = cls.__get_title(cls, soup)
             content = soup.find("div", attrs={"class": "field-item even"})
-            prof = soup.find("a", attrs={"class": "more-link"})
+
+            prof = cls.__get_prof(cls, soup)
 
             if title is not None and content is not None:
                 title = title.get_text()
@@ -60,7 +61,8 @@ class Notice:
 
                 content = f"{content.strip()}\n{table_content}"
                 if prof is not None:
-                    title = f"[{prof.get_text().replace('Vai alla scheda del prof. ', '')}]\n{title}"
+                    title = f"[{prof}]\n{title}"
+
             else:
                 return None
 
@@ -72,6 +74,17 @@ class Notice:
             logging.exception(traceback.format_exc())
 
             return None
+
+    def __get_prof(self, soup: bs4.BeautifulSoup) -> str | None:
+        """Returns the prof of the notice
+            Args:
+                soup: BeautifulSoup object of the page
+            Returns:
+                the filtered name of the prof
+        """
+        goto_prof_text = "Vai alla scheda del prof. "
+        prof = soup.find("a", text=lambda text: text and goto_prof_text in text)
+        return prof and prof.get_text().replace(goto_prof_text, '')
 
     def __get_title(self, soup: bs4.BeautifulSoup) -> bs4.BeautifulSoup | None:
         """Returns the title of the notice
