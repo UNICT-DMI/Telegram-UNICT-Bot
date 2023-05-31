@@ -122,9 +122,9 @@ class Notice:
             try:
                 while content[split_index] != " ":
                     split_index = split_index - 1
-            except Exception as e:
+            except IndexError as _e:
                 # fix for https://github.com/UNICT-DMI/Telegram-UNICT-Bot/issues/45
-                print(str(e))
+                print(str(_e))
                 return f"{content[:max_len-1]}{config_map['max_length_footer']}"
 
             content = f"{content[:split_index]}{config_map['max_length_footer']}"
