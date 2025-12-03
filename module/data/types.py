@@ -1,4 +1,5 @@
 """Type definitions."""
+
 from typing import TypedDict
 
 

@@ -1,8 +1,11 @@
 """Post and clear job"""
+
 import logging
 from datetime import datetime
+
 from telegram.ext import CallbackContext
-from module.data import config_map, CLEAR_LOGFILE_TEXT
+
+from module.data import CLEAR_LOGFILE_TEXT, config_map
 
 
 def post_and_clear_log_job(context: CallbackContext) -> None:
@@ -27,7 +30,11 @@ def post_and_clear_log_job(context: CallbackContext) -> None:
 
     logging.info("Deleting current logfile...")
 
-    with open("logfile.log", "w", encoding="utf-8"):  # overwrite the logfile with an empty file
+    with open(
+        "logfile.log", "w", encoding="utf-8"
+    ):  # overwrite the logfile with an empty file
         pass
 
-    context.bot.sendMessage(chat_id=config_map["log_group_chatid"], text=CLEAR_LOGFILE_TEXT)
+    context.bot.sendMessage(
+        chat_id=config_map["log_group_chatid"], text=CLEAR_LOGFILE_TEXT
+    )

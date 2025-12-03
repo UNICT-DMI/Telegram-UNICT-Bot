@@ -1,6 +1,9 @@
 """Scraping job"""
+
 import logging
+
 from telegram.ext import CallbackContext
+
 from module.data import config_map
 from module.scraping import scrape_group
 

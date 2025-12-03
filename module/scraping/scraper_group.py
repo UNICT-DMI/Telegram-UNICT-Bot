@@ -1,10 +1,14 @@
 """Scrape groups"""
+
 import logging
 import os
 import shutil
+
 import yaml
 from telegram.ext import CallbackContext
-from module.data import NoticeData, GroupConfig, DEFAULT_NOTICES_DATA, config_map
+
+from module.data import DEFAULT_NOTICES_DATA, GroupConfig, NoticeData, config_map
+
 from .notice import Notice
 from .scraper_links import get_links
 
@@ -24,7 +28,9 @@ def scrape_group(context: CallbackContext, group_key: str, group: GroupConfig) -
         logging.info("-- Page '%s'", page_key)
 
         # Generate page folder's path and subpaths
-        base_page_path = f"data/avvisi/{group_key.replace(' ', '_')}/{page_key.replace(' ', '_')}"
+        base_page_path = (
+            f"data/avvisi/{group_key.replace(' ', '_')}/{page_key.replace(' ', '_')}"
+        )
         data_file_path = f"{base_page_path}/notices_data.yaml"
 
         # Initialize folder and data file (if it doesn't exist)
@@ -52,21 +58,28 @@ def scrape_group(context: CallbackContext, group_key: str, group: GroupConfig) -
 
                 # If link has already been scraped
                 # (implying that's invalid page or already posted notice), skip it
-                if link in notices_data["scraped_links"]:
+                if not isinstance(link, str) or link in notices_data["scraped_links"]:
                     logging.info("Link is already present in the list")
                     continue
+
+                # Type guard for mypy to ensure link is str
+                assert isinstance(link, str)
 
                 notice = Notice.from_url(page["label"], group["base_url"] + link)
 
                 # If the notice is valid,
                 # enqueue it to be sent in the channel or in an approval group
                 if notice is not None:
-                    logging.info("Link is valid and seems to contain a notice, spamming")
+                    logging.info(
+                        "Link is valid and seems to contain a notice, spamming"
+                    )
                     notice.send(context, page["channels"])
                 else:
                     logging.info("Link doesn't contain a valid notice")
-                    context.bot.sendMessage(chat_id=config_map["log_group_chatid"],
-                                            text=f"Link doesn't contain a valid notice: {link}")
+                    context.bot.sendMessage(
+                        chat_id=config_map["log_group_chatid"],
+                        text=f"Link doesn't contain a valid notice: {link}",
+                    )
 
                 # Appends current link to scraped ones
                 notices_data["scraped_links"].append(link)

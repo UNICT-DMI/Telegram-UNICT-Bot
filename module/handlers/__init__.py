@@ -1,18 +1,20 @@
 """Handlers module"""
+
 from telegram import BotCommand
 from telegram.ext import (
-    Updater,
-    Dispatcher,
-    CommandHandler,
-    MessageHandler,
-    Filters,
     CallbackQueryHandler,
+    CommandHandler,
+    Dispatcher,
+    Filters,
+    MessageHandler,
+    Updater,
 )
-from .start import start_cmd
+
 from .chat_id import chat_id_cmd
+from .clear_logfile import clear_logfile_cmd
 from .log import log_msg
 from .send_logfile import send_logfile_cmd
-from .clear_logfile import clear_logfile_cmd
+from .start import start_cmd
 
 
 def set_commands(updater: Updater) -> None:
@@ -25,7 +27,7 @@ def set_commands(updater: Updater) -> None:
         BotCommand("start", "presentazione iniziale del bot"),
         BotCommand("chatid", "ottieni la chat id corrente"),
     ]
-    updater.bot.set_my_commands(commands=commands)
+    updater.bot.set_my_commands(commands=commands)  # type: ignore[has-type]
 
 
 def add_handlers(dp: Dispatcher) -> None:

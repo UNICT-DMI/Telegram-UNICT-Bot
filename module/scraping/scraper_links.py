@@ -10,7 +10,7 @@ import requests
 from module.data import config_map
 
 
-def get_links(url: str) -> "list[str] | None":
+def get_links(url: str) -> list[str | list[str] | None] | None:
     """Generates a list of links to the notices scraped from the page indicated by the url.
 
     Args:
@@ -56,7 +56,7 @@ def get_links(url: str) -> "list[str] | None":
             link.get("href")
             for link in result
             if link.get("href")
-            and not any(exclude in link.get("href") for exclude in exclude_links)
+            and not any(exclude in str(link.get("href")) for exclude in exclude_links)
         ]
 
         return links
