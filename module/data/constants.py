@@ -1,6 +1,6 @@
 """Constant strings"""
-from .types import NoticeData
 
+from .types import NoticeData
 
 START_TEXT = (
     "Benvenuto! Questo bot è stato realizzato dagli studenti di Informatica"
