@@ -1,7 +1,7 @@
 import pytest
 import yaml
 
-from module.config import load_configurations
+from module.config import load_configurations  # type: ignore
 
 DATA_FOLDER = "tests/config_migration/data"
 
