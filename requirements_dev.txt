@@ -3,3 +3,5 @@ isort==5.10.1
 mypy-extensions==0.4.3
 pylint==4.0.4
 pytest
+flake8
+mypy
