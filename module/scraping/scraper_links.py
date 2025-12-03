@@ -56,7 +56,7 @@ def get_links(url: str) -> list[str | list[str] | None] | None:
             link.get("href")
             for link in result
             if link.get("href")
-            and not any(exclude in link.get("href") for exclude in exclude_links)
+            and not any(exclude in str(link.get("href")) for exclude in exclude_links)
         ]
 
         return links

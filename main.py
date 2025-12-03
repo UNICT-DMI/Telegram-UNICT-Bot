@@ -39,8 +39,8 @@ def main() -> None:
 
     updater = Updater(config_map["token"])
     set_commands(updater)
-    add_handlers(updater.dispatcher)  # type: ignore[misc]
-    add_jobs(updater.job_queue)  # type: ignore[misc]
+    add_handlers(updater.dispatcher)  # type: ignore[has-type]
+    add_jobs(updater.job_queue)  # type: ignore[has-type]
 
     updater.start_polling()
     updater.idle()

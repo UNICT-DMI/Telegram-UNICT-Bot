@@ -62,7 +62,7 @@ class Notice:
                 title_text = title.get_text()
                 content_text = content.get_text()
 
-                content = f"{content_text.strip()}\n{table_content}"
+                final_content = f"{content_text.strip()}\n{table_content}"
                 if prof is not None:
                     title_text = f"[{prof}]\n{title_text}"
 
@@ -71,7 +71,7 @@ class Notice:
 
             title_text = f"\n{title_text}"
 
-            return cls(label, title_text, content, url)
+            return cls(label, title_text, final_content, url)
         except (
             requests.Timeout,
             requests.ConnectionError,

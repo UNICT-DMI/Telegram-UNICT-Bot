@@ -27,7 +27,7 @@ def set_commands(updater: Updater) -> None:
         BotCommand("start", "presentazione iniziale del bot"),
         BotCommand("chatid", "ottieni la chat id corrente"),
     ]
-    updater.bot.set_my_commands(commands=commands)  # type: ignore[misc]
+    updater.bot.set_my_commands(commands=commands)  # type: ignore[has-type]
 
 
 def add_handlers(dp: Dispatcher) -> None:
