@@ -6,3 +6,6 @@ pytest
 flake8
 mypy
 typed-ast
+types-PyYAML
+types-beautifulsoup4
+types-requests
