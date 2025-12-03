@@ -5,3 +5,4 @@ pylint==4.0.4
 pytest
 flake8
 mypy
+typed-ast

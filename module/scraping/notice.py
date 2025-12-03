@@ -53,25 +53,25 @@ class Notice:
                         table_content += "\t".join(cols_text) + "\n"
                     table.decompose()  # remove table from content
 
-            title = cls.__get_title(cls, soup)
+            title = cls.__get_title(soup)
             content = soup.find("div", attrs={"class": "field-item even"})
 
-            prof = cls.__get_prof(cls, soup)
+            prof = cls.__get_prof(soup)
 
             if title is not None and content is not None:
-                title = title.get_text()
-                content = content.get_text()
+                title_text = title.get_text()
+                content_text = content.get_text()
 
-                content = f"{content.strip()}\n{table_content}"
+                content = f"{content_text.strip()}\n{table_content}"
                 if prof is not None:
-                    title = f"[{prof}]\n{title}"
+                    title_text = f"[{prof}]\n{title_text}"
 
             else:
                 return None
 
-            title = f"\n{title}"
+            title_text = f"\n{title_text}"
 
-            return cls(label, title, content, url)
+            return cls(label, title_text, content, url)
         except (
             requests.Timeout,
             requests.ConnectionError,
@@ -83,7 +83,8 @@ class Notice:
 
             return None
 
-    def __get_prof(self, soup: bs4.BeautifulSoup) -> str | None:
+    @staticmethod
+    def __get_prof(soup: bs4.BeautifulSoup) -> str | None:
         """Returns the prof of the notice
         Args:
             soup: BeautifulSoup object of the page
@@ -92,9 +93,12 @@ class Notice:
         """
         goto_prof_text = "Vai alla scheda del prof. "
         prof = soup.find("a", text=lambda text: text and goto_prof_text in text)
-        return prof and prof.get_text().replace(goto_prof_text, "")
+        if isinstance(prof, bs4.Tag):
+            return prof.get_text().replace(goto_prof_text, "")
+        return None
 
-    def __get_title(self, soup: bs4.BeautifulSoup) -> bs4.BeautifulSoup | None:
+    @staticmethod
+    def __get_title(soup: bs4.BeautifulSoup) -> bs4.Tag | None:
         """Returns the title of the notice
         Args:
             soup: BeautifulSoup object of the page
@@ -102,7 +106,10 @@ class Notice:
             the soup of the title
         """
         title = soup.find("h1", attrs={"class": "page-title"})
-        return title if title else soup.select_one("section#content h1")
+        if isinstance(title, bs4.Tag):
+            return title
+        result = soup.select_one("section#content h1")
+        return result if isinstance(result, bs4.Tag) else None
 
     @property
     def formatted_url(self) -> str:

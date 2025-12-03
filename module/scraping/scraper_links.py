@@ -10,7 +10,7 @@ import requests
 from module.data import config_map
 
 
-def get_links(url: str) -> "list[str] | None":
+def get_links(url: str) -> list[str | list[str] | None] | None:
     """Generates a list of links to the notices scraped from the page indicated by the url.
 
     Args:
