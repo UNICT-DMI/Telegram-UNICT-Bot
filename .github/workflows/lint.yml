@@ -6,11 +6,6 @@ on:
       - ".gitignore"
       - "README.md"
       - "docs/**"
-  pull_request:
-    paths-ignore:
-      - ".gitignore"
-      - "README.md"
-      - "docs/**"
 
 jobs:
   build:
