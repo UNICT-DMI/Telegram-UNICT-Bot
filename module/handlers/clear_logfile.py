@@ -1,8 +1,11 @@
 """/clear_logfile command"""
+
 import logging
+
 from telegram import Update
 from telegram.ext import CallbackContext
-from module.data import config_map, CLEAR_LOGFILE_TEXT
+
+from module.data import CLEAR_LOGFILE_TEXT, config_map
 
 
 def clear_logfile_cmd(update: Update, context: CallbackContext) -> None:
@@ -19,6 +22,10 @@ def clear_logfile_cmd(update: Update, context: CallbackContext) -> None:
         return
 
     logging.info("Clearing logfile...")
-    with open("logfile.log", "w", encoding="utf-8"):  # overwrite the logfile with an empty file
+    with open(
+        "logfile.log", "w", encoding="utf-8"
+    ):  # overwrite the logfile with an empty file
         pass
-    context.bot.send_message(chat_id=config_map["log_group_chatid"], text=CLEAR_LOGFILE_TEXT)
+    context.bot.send_message(
+        chat_id=config_map["log_group_chatid"], text=CLEAR_LOGFILE_TEXT
+    )

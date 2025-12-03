@@ -1,6 +1,9 @@
 """Main module"""
+
 import logging
+
 from telegram.ext import Updater
+
 from module.data import config_map
 from module.handlers import add_handlers, set_commands
 from module.jobs import add_jobs
@@ -13,7 +16,9 @@ def setup_logging(logs_file: str) -> None:
     Args:
         logs_file: path to the log file
     """
-    formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+    formatter = logging.Formatter(
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    )
     logger = logging.getLogger()
 
     file_handler = logging.FileHandler(f"{logs_file}.log")
