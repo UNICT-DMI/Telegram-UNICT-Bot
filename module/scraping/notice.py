@@ -1,11 +1,14 @@
 """Notice class"""
-import time
+
 import logging
+import time
 import traceback
+
 import bs4
 import requests
+from telegram.error import BadRequest, RetryAfter, TelegramError, Unauthorized
 from telegram.ext import CallbackContext
-from telegram.error import BadRequest, Unauthorized, TelegramError, RetryAfter
+
 from module.data import config_map
 
 
@@ -34,7 +37,7 @@ class Notice:
             a new Notice object or None if the scraping fails
         """
         try:
-            req = requests.get(url, timeout=10)
+            req = requests.get(url, timeout=10, verify=False)
             soup = bs4.BeautifulSoup(req.content, "html.parser")
 
             table_content = ""
@@ -69,7 +72,12 @@ class Notice:
             title = f"\n{title}"
 
             return cls(label, title, content, url)
-        except (requests.Timeout, requests.ConnectionError, requests.ConnectTimeout, bs4.FeatureNotFound):
+        except (
+            requests.Timeout,
+            requests.ConnectionError,
+            requests.ConnectTimeout,
+            bs4.FeatureNotFound,
+        ):
             logging.exception("Exception on call get_content(%s)", url)
             logging.exception(traceback.format_exc())
 
@@ -77,21 +85,21 @@ class Notice:
 
     def __get_prof(self, soup: bs4.BeautifulSoup) -> str | None:
         """Returns the prof of the notice
-            Args:
-                soup: BeautifulSoup object of the page
-            Returns:
-                the filtered name of the prof
+        Args:
+            soup: BeautifulSoup object of the page
+        Returns:
+            the filtered name of the prof
         """
         goto_prof_text = "Vai alla scheda del prof. "
         prof = soup.find("a", text=lambda text: text and goto_prof_text in text)
-        return prof and prof.get_text().replace(goto_prof_text, '')
+        return prof and prof.get_text().replace(goto_prof_text, "")
 
     def __get_title(self, soup: bs4.BeautifulSoup) -> bs4.BeautifulSoup | None:
         """Returns the title of the notice
-            Args:
-                soup: BeautifulSoup object of the page
-            Returns:
-                the soup of the title
+        Args:
+            soup: BeautifulSoup object of the page
+        Returns:
+            the soup of the title
         """
         title = soup.find("h1", attrs={"class": "page-title"})
         return title if title else soup.select_one("section#content h1")
@@ -131,7 +139,9 @@ class Notice:
 
         return content
 
-    def send(self, context: CallbackContext, chat_ids: "str | int | list[str | int]") -> None:
+    def send(
+        self, context: CallbackContext, chat_ids: "str | int | list[str | int]"
+    ) -> None:
         """Try to send the notice to the given chat_id(s), retrying if necessary
         after a delay up to the maximum number of retries specified in the config.
 
@@ -155,7 +165,9 @@ class Notice:
                     sent = True
                     logging.info("Notice sent to %s", chat_id)
                 except RetryAfter as err:
-                    logging.warning("Retry after error encountered, retrying in 30 seconds")
+                    logging.warning(
+                        "Retry after error encountered, retrying in 30 seconds"
+                    )
                     time.sleep(err.retry_after)
                     tries += 1
                     continue
