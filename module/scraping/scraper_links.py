@@ -1,9 +1,12 @@
 """Notices scraper"""
+
 import logging
 import time
 import traceback
+
 import bs4
 import requests
+
 from module.data import config_map
 
 
@@ -23,7 +26,7 @@ def get_links(url: str) -> "list[str] | None":
 
     while req is None and tries < config_map["max_connection_tries"]:
         try:
-            req = requests.get(url, timeout=10)
+            req = requests.get(url, timeout=10, verify=False)
         except (requests.Timeout, requests.ConnectionError) as err:
             tries += 1
             logging.exception(
@@ -40,14 +43,21 @@ def get_links(url: str) -> "list[str] | None":
     try:
         soup = bs4.BeautifulSoup(req.content, "html.parser")
 
-        result = soup.select("span.field-content a") or \
-            soup.select("strong.field-content a") or \
-            soup.select("div.region.region-content div.view-content a:not(span a, p a)")
+        result = (
+            soup.select("span.field-content a")
+            or soup.select("strong.field-content a")
+            or soup.select(
+                "div.region.region-content div.view-content a:not(span a, p a)"
+            )
+        )
 
         exclude_links = [".pdf", ".doc", "/docenti/"]
-        links = [link.get("href") for link in result
-                if link.get("href")
-                and not any(exclude in link.get("href") for exclude in exclude_links)]
+        links = [
+            link.get("href")
+            for link in result
+            if link.get("href")
+            and not any(exclude in link.get("href") for exclude in exclude_links)
+        ]
 
         return links
     except bs4.FeatureNotFound:
